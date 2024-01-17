@@ -5,14 +5,8 @@ require_once(ROOT_PATH . '/includes/check_user.php');
 require_once(ROOT_PATH . '/includes/retrieve_data.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
-    <link rel="stylesheet" href="your_stylesheet.css">
-    <style>
+
+<style>
 
 
         form {
@@ -21,32 +15,36 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
-            margin: 0 auto;
+            margin: 20px auto;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 16px;
         }
 
         input {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 16px;
+            padding: 10px;
+            margin-bottom: 20px;
             box-sizing: border-box;
-            border: 1px solid #ccc;
+            border: 2px solid #3498db;
             border-radius: 4px;
+            font-size: 14px;
         }
 
         .button {
             background-color: #4caf50;
             color: #fff;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             display: block;
             margin: 0 auto;
+            font-size: 16px;
         }
 
         .button:hover {
@@ -62,8 +60,8 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
         <fieldset>
             <div>
                 <label>Please enter the name of your portfolio:</label>
-                <br>
                 <input type="text" name="name" id="name" placeholder="Enter portfolio name" required>
+                <input type="hidden" name="created_at" id="created_at">
                 <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
             </div>
             
@@ -72,5 +70,9 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
             </div>
         </fieldset>
     </form>
+    <script>
+        // JavaScript code to set the current date and time
+        document.getElementById("created_at").value = new Date().toISOString().slice(0, 19).replace("T", " ");
+    </script>
 </body>
 </html>

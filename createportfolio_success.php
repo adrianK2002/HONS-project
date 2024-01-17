@@ -1,11 +1,14 @@
-<?php require_once('config.php'); ?>
-<?php require_once(ROOT_PATH . '/includes/head_section.php'); ?>
-<?php require_once(ROOT_PATH . '/includes/check_user.php'); ?>
-<?php require_once(ROOT_PATH . '/includes/retrieve_data.php'); ?>
-<?php require_once(ROOT_PATH . '/includes/del+edit.php'); ?>
+<?php
+require_once('config.php');
+require_once(ROOT_PATH . '/includes/head_section.php');
+require_once(ROOT_PATH . '/includes/check_user.php');
+require_once(ROOT_PATH . '/includes/retrieve_data.php');
+require_once(ROOT_PATH . '/includes/del+edit.php');
+
+?>
 
 <head>
-    <link rel="stylesheet" href="static/table.css">
+	<link rel="stylesheet" href="static/table.css">
     <style>
         input[type=text],
         select {
@@ -59,7 +62,7 @@
         }
 
         /* Style for the action buttons in the table */
-        a.view-btn, a.update-btn, a.del-btn {
+        a.view-btn, a.update-btn, a.del-btn, a.insert-btn {
             display: inline-block;
             padding: 10px 15px;
             color: white;
@@ -82,45 +85,41 @@
             background-color: #F44336;
         }
 
-        a.view-btn:hover, a.update-btn:hover, a.del-btn:hover {
-            background-color: #333;
+        a.insert-btn {
+            background-color: #2196F3;
         }
 
-        /* Center the radio button */
-        td.radio-cell {
-            text-align: center;
+        a.view-btn:hover, a.update-btn:hover, a.del-btn:hover, a.insert-btn:hover {
+            background-color: #333;
         }
     </style>
 </head>
 
+
+
+<?php //print_r($_SESSION); ?>
 <body>
+    <!-- Your existing body content -->
     <!-- navbar -->
-    <?php include(ROOT_PATH . '/includes/navbar_logged_in.php'); ?>
+    <?php include(ROOT_PATH . '/includes/navbar_logged_in.php') ?>
     <!-- //navbar -->
 
-    <table class="styled-table">
+    <table>
         <thead>
             <tr>
                 <th>Portfolio Name</th>
                 <th colspan="3">Action</th>
-                <th>Select Portfolio to Display on your Profile</th> <!-- Moved to the end -->
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = $results->fetch_assoc()) { ?>
+            <?php while ($row = $newresults->fetch_assoc()) { ?>
                 <tr>
                     <td><?php echo $row['name']; ?></td>
                     <td>
-                        <a href="view_portfolio.php?exercise_id=<?php echo $row['id']?>" class="view-btn">View</a>
-                    </td>
-                    <td>
-                        <a href="update_portfolio.php?exercise_id=<?php echo $row['id']?>" class="update-btn">Update</a>
+                        <a href="edit_portfolio.php?exercise_id=<?php echo $row['id'] ?>" class="insert-btn">Insert Data</a>
                     </td>
                     <td>
                         <a href="viewmyportfolios.php?del=<?php echo $row['id']; ?>" class="del-btn">Delete</a>
-                    </td>
-                    <td class="radio-cell">
-                        <input type="radio" name="selected_portfolios[]" value="<?php echo $row['id']; ?>">
                     </td>
                 </tr>
             <?php } ?>

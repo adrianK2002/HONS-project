@@ -60,7 +60,7 @@
 .edit-portfolio-btn {
     background-color: #0066CC;
     color: white;
-    margin-top: 800px; /* Adjust as needed */
+    margin-top: 0px; /* Adjust as needed */
 }
 
 .edit-portfolio-btn:hover {
