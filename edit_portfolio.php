@@ -2,7 +2,7 @@
 <?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
 <?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
 <?php require_once( ROOT_PATH . '/includes/retrieve_data.php') ?>
-<?php require_once( ROOT_PATH . '/includes/del_exercise.php') ?>
+<?php require_once( ROOT_PATH . '/includes/del_port.php') ?>
 <head>
 	<link rel="stylesheet" href="static/table.css">
 	<style>
