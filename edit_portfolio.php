@@ -96,58 +96,75 @@ form {
 	<!-- navbar -->
 	<?php include( ROOT_PATH . '/includes/navbar_logged_in.php') ?>
 	<!-- //navbar -->
-	
+	<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 1: Personal Information</h1>
 	<section class="content-header">
 		<div class="container">
 			<form action="includes/post_portfolio_info.php" method="POST" enctype="multipart/form-data">
 			<div class="col-md-6 latest-job ">
                 <div class="form-group">
+							<label>Full Name</label>
 							<input class="form-control input-lg" type="text" id="firstname" name="firstname" placeholder="First Name *" required> 
 						</div>	
 						<div class="form-group">
 							<input class="form-control input-lg" type="text" id="lastname" name="lastname" placeholder="Last Name *" required> 
 						</div>	
 						<div class="form-group">
-							<input class="form-control input-lg" type="email" id="email" name="email" placeholder="Email *" required> 
-						</div>	
-						<div class="form-group">
-							<textarea class="form-control input-lg" rows="4" id="aboutme" name="aboutme" placeholder="Brief intro about yourself *" required></textarea>
-						</div>	
-						<div class="form-group">
 							<label>Date Of Birth</label>
                				 <input class="form-control input-lg" type="date" id="dob" min="1960-01-01" max="2008-01-31" name="dob" placeholder="Date Of Birth">
 						</div>	
+						
 						<div class="form-group">
-							<label>Passing Year</label>
-              				  <input class="form-control input-lg" type="date" id="passingyear" name="passingyear" placeholder="Passing Year">
-						</div>	
-						<div class="form-group">
-							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="Highest Qualification">
+						<label>Contact Details</label>
+							<input class="form-control input-lg" type="email" id="email" name="email" placeholder="Email *" required> 
 						</div>	
 						<div class="form-group">
 							<input class="form-control input-lg" type="text" id="phone" name="contactno" minlength="10" maxlength="10" onkeypress="return validatePhone(event);" placeholder="Phone Number">
 						</div>	
 						<div class="form-group">
+							<label>Home Address</label>
 							<textarea class="form-control input-lg" rows="4" id="address" name="address" placeholder="Address"></textarea>
 						</div>	
 						<div class="form-group">
 							<input class="form-control input-lg" type="text" id="city" name="city" placeholder="City">
 						</div>	
-						<div class="form-group">
-							<textarea class="form-control input-lg" rows="4" id="skills" name="skills" placeholder="Enter Skills"></textarea>
-						</div>	
 							<label style="color: red;">Profile Picutre(not required)</label>
                        		 <input type="file" name="profile_picture" class="btn btn-flat btn-danger">
 						</div>
-						
-							<input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>"> 	
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 2: About Me</h1>
+						<div class="col-md-6 latest-job ">
+						<div class="form-group">
+							<textarea class="form-control input-lg" rows="4" id="aboutme" name="aboutme" placeholder="Brief intro about yourself *" required></textarea>
+						</div>	
+						</div>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 3: Qualifications and Certificates</h1>
+						<div class="col-md-6 latest-job ">
+						<div class="form-group">
+						<label>Highest Qualification</label>
+							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="Highest Qualification">
+						</div>	
+						<div>
+							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="Passing Year">
+						</div>	
+						<br>
+						<div>
+							<input class="form-control input-lg" type="text" id="qualification_school_name" name="qualification_school_name" placeholder="University/College/School name">
+						</div>	
+						<br>
+						<div class="form-group">
+						<label>Certificates</label>
+							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="if there is no certificates just type in 'none'*">
+						</div>	
+
+						<input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>"> 	
 							<input type="hidden" name="portfolio_id" value="<?= $_GET['exercise_id']; ?>"> 
 
 						<div class="form-group" style="text-align: center;">
         					<button class="edit-portfolio-btn" type="submit">Publish Portfolio</button>
 							</div>
 			</form>
-	
+
+
+			
 </section>
 
 		

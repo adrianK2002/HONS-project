@@ -137,14 +137,7 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
                         <th>Certificates</th>
                         <td colspan="1"><?php echo $row['#']; ?></td>
             </tr>
-            <tr>
-                        <th>Date of obtaining</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
-            </tr>
-            <tr>
-                        <th>Organisation's Name</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
-            </tr>
+
  
             <?php } ?>
         </tbody>
