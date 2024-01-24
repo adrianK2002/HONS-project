@@ -143,7 +143,7 @@ form {
 							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="Highest Qualification">
 						</div>	
 						<div>
-							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="Passing Year">
+							<input class="form-control input-lg" type="date" id="passingyear" name="passingyear" placeholder="Passing Year">
 						</div>	
 						<br>
 						<div>
@@ -152,8 +152,109 @@ form {
 						<br>
 						<div class="form-group">
 						<label>Certificates</label>
-							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="if there is no certificates just type in 'none'*">
+							<input class="form-control input-lg" type="text" id="certificates" name="certificates" placeholder="if there is no certificates just type in 'none'*">
 						</div>	
+						<div class="form-group">
+						<label>Extra Qualifications</label>
+							<input class="form-control input-lg" type="text" id="extra_qualification" name="extra_qualification" placeholder="List all extra qualifications, if there is no certificates just type in 'none'*">
+						</div>	
+						</div>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 4: Education</h1>
+						<div class="col-md-6 latest-job ">
+						<div class="form-group">
+		
+						<label>Highschool/Middleschool education</label>
+							<input class="form-control input-lg" type="text" id="highschool_name" name="highschool_name" placeholder="School Name">
+						</div>	
+						<div>
+							<input class="form-control input-lg" type="date" id="hs_starting_date" name="hs_starting_date" placeholder="Starting Date">
+						</div>	
+						<br>
+						<div>
+							<input class="form-control input-lg" type="date" id="hs_fin_date" name="hs_fin_date" placeholder="Finishing Date">
+						</div>	
+						<br>
+						<div class="form-group">
+						<label>Courses and Grades</label>
+							<input class="form-control input-lg" type="text" id="hs_qualification" name="hs_qualification" placeholder="if none, just type in 'none'*">
+						</div>
+</div>
+						<div class="col-md-6 latest-job ">
+						<div class="form-group">
+						<label>Higher education(University/College)</label>
+							<input class="form-control input-lg" type="text" id="uni_name" name="uni_name" placeholder="School Name">
+						</div>	
+						<div>
+							<input class="form-control input-lg" type="date" id="uni_starting_date" name="uni_starting_date" placeholder="Starting Date">
+						</div>	
+						<br>
+						<div>
+							<input class="form-control input-lg" type="date" id="uni_fin_date" name="uni_fin_date" placeholder="Finishing Date">
+						</div>	
+						<br>
+						<div class="form-group">
+						<label>Courses and Grades</label>
+							<input class="form-control input-lg" type="text" id="uni_qualification" name="uni_qualification" placeholder="if none, just type in 'none'*">
+						</div>
+						</div>
+						
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 5: Employment</h1>
+
+							
+							<div class="col-md-6 latest-job ">
+						<div class="form-group">
+						<label>Current Employer</label>
+							<input class="form-control input-lg" type="text" id="current_job_title" name="current_job_title" placeholder="Job Title">
+						</div>	
+						<div>
+							<input class="form-control input-lg" type="text" id="current_employer_name" name="current_employer_name" placeholder="Employer Name">
+						</div>	
+						<br>
+						<div>
+							<input class="form-control input-lg" type="date" id="emp_starting_date" name="emp_starting_date" placeholder="Starting Date">
+						</div>	
+						<br>
+						<div>
+							<input class="form-control input-lg" type="text" id="respo" name="respo" placeholder="Responsibilities">
+						</div>	
+						<br>
+						<div class="form-group">
+						<label>Past Employers</label>
+						<div>
+							<input class="form-control input-lg" type="text" id="extra_emp" name="extra_emp" placeholder="List relevant past employers/organisations with durations and job title">
+						</div>	
+						</div>
+						</div>	
+					
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 6: Skills</h1>
+						<div class="col-md-6 latest-job ">
+						<div class="form-group">
+							<textarea class="form-control input-lg" rows="4" id="skills" name="skills" placeholder="List all the skills *" required></textarea>
+						</div>	
+						</div>
+
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 7: Projects</h1>
+						<div class="col-md-6 latest-job ">
+						<div class="form-group">
+							<textarea class="form-control input-lg" rows="4" id="project" name="project" placeholder="List all the projects; either paste a link here or upload documents below *" required></textarea>
+							<label style="color: red;">Upload Projet Files(not required)</label>
+							<!-- <input type="file" name="project_files" class="btn btn-flat btn-danger"> -->
+						</div>	
+						</div>
+
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 8: Hobbies</h1>
+						<div class="col-md-6 latest-job ">
+						<div class="form-group">
+							<textarea class="form-control input-lg" rows="4" id="hobbies" name="hobbies" placeholder="Talk briefly about yout hobbies(not required) *" ></textarea>
+						</div>	
+						</div>
+
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 9: References</h1>
+						<div class="col-md-6 latest-job ">
+						<div class="form-group">
+							<textarea class="form-control input-lg" rows="4" id="ref" name="ref" placeholder="List all references with contact details *" ></textarea>
+						</div>	
+						</div>
 
 						<input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>"> 	
 							<input type="hidden" name="portfolio_id" value="<?= $_GET['exercise_id']; ?>"> 

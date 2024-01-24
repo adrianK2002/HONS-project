@@ -131,11 +131,15 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
             </tr>
             <tr>
                         <th>University/College/School</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <td colspan="1"><?php echo $row['qualification_school_name']; ?></td>
             </tr>
             <tr>
                         <th>Certificates</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <td colspan="1"><?php echo $row['certificates']; ?></td>
+            </tr>
+            <tr>
+                        <th>Extra Qualifications</th>
+                        <td colspan="1"><?php echo $row['extra_qualification']; ?></td>
             </tr>
 
  
@@ -149,6 +153,11 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
                 <th class="section-header" colspan="4">Education</th>
             </tr>
         </thead>
+        <thead>
+            <tr>
+                <th class="section-header" colspan="4">Highschool/Middleschool</th>
+            </tr>
+        </thead>
         <tbody>
             <?php 
             // Reset the internal pointer to the beginning of the result set
@@ -157,21 +166,41 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
             while ($row = $portfolio_info->fetch_assoc()) { ?>
             <tr>
                         <th>School Name</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <td colspan="1"><?php echo $row['highschool_name']; ?></td>
             </tr>
             <tr>
                         <th>Starting Date</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <td colspan="1"><?php echo $row['hs_starting_date']; ?></td>
             </tr>
             <tr>
                         <th>Finishing Date</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <td colspan="1"><?php echo $row['hs_fin_date']; ?></td>
             </tr>
             <tr>
-                        <th>Qualifications/Grades</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <th>Courses and Grades</th>
+                        <td colspan="1"><?php echo $row['hs_qualification']; ?></td>
             </tr>
-            
+            <thead>
+            <tr>
+                <th class="section-header" colspan="4">Higher Education(University/College)</th>
+            </tr>
+            <tr>
+                        <th>School Name</th>
+                        <td colspan="1"><?php echo $row['uni_name']; ?></td>
+            </tr>
+            <tr>
+                        <th>Starting Date</th>
+                        <td colspan="1"><?php echo $row['uni_starting_date']; ?></td>
+            </tr>
+            <tr>
+                        <th>Finishing Date</th>
+                        <td colspan="1"><?php echo $row['uni_fin_date']; ?></td>
+            </tr>
+            <tr>
+                        <th>Courses and Grades</th>
+                        <td colspan="1"><?php echo $row['uni_qualification']; ?></td>
+            </tr>
+        </thead>
  
             <?php } ?>
         </tbody>
@@ -181,6 +210,7 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
         <thead>
             <tr>
                 <th class="section-header" colspan="4">Employment</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -189,69 +219,96 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
             $portfolio_info->data_seek(0);
                 
             while ($row = $portfolio_info->fetch_assoc()) { ?>
+            <th class="section-header" colspan="4">Current Employer</th>
             <tr>
                         <th>Job Title</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <td colspan="1"><?php echo $row['current_job_title']; ?></td>
             </tr>
             <tr>
                         <th>Employer Name</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <td colspan="1"><?php echo $row['current_employer_name']; ?></td>
             </tr>
             <tr>
                         <th>Starting Date</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
-            </tr>
-            <tr>
-                        <th>Finishing Date</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <td colspan="1"><?php echo $row['emp_starting_date']; ?></td>
             </tr>
             <tr>
                         <th>Responsibilities</th>
-                        <td colspan="1"><?php echo $row['#']; ?></td>
+                        <td colspan="1"><?php echo $row['respo']; ?></td>
             </tr>
- 
+
+            <th class="section-header" colspan="4">Past Employers</th>
+            <tr>
+                        <th>Relevant past employers/organisations with duration and job title</th>
+                        <td colspan="1"><?php echo $row['extra_emp']; ?></td>
+            </tr>
             <?php } ?>
         </tbody>
         <table class="resume-table">
+        <?php 
+            // Reset the internal pointer to the beginning of the result set
+            $portfolio_info->data_seek(0);
+                
+            while ($row = $portfolio_info->fetch_assoc()) { ?>
         <thead>
             <tr>
                 <th class="section-header" colspan="4">Skills</th>
             </tr>
         </thead>
         <tbody>
-
+          <td colspan="1"><?php echo $row['skills']; ?></td>
         </tbody>
     </table>
+    <?php } ?>
     <table class="resume-table">
+    <?php 
+            // Reset the internal pointer to the beginning of the result set
+            $portfolio_info->data_seek(0);
+                
+            while ($row = $portfolio_info->fetch_assoc()) { ?>
         <thead>
             <tr>
                 <th class="section-header" colspan="4">Projects</th>
             </tr>
         </thead>
         <tbody>
-
+          <td colspan="1"><?php echo $row['project']; ?></td>
+          <td colspan="1"><?php echo $row['project_files']; ?></td>
         </tbody>
     </table>
+    <?php } ?>
     <table class="resume-table">
+    <?php 
+            // Reset the internal pointer to the beginning of the result set
+            $portfolio_info->data_seek(0);
+                
+            while ($row = $portfolio_info->fetch_assoc()) { ?>
         <thead>
             <tr>
                 <th class="section-header" colspan="4">Hobbies</th>
             </tr>
         </thead>
         <tbody>
-
+           <td colspan="1"><?php echo $row['hobbies']; ?></td>
         </tbody>
     </table>
+    <?php } ?>
     <table class="resume-table">
+    <?php 
+            // Reset the internal pointer to the beginning of the result set
+            $portfolio_info->data_seek(0);
+                
+            while ($row = $portfolio_info->fetch_assoc()) { ?>
         <thead>
             <tr>
                 <th class="section-header" colspan="4">References</th>
             </tr>
         </thead>
         <tbody>
-
+               <td colspan="1"><?php echo $row['ref']; ?></td>
         </tbody>
     </table>
+    <?php } ?>
 </div>
 
 </body>
