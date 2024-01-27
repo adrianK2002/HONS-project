@@ -1,6 +1,7 @@
 <?php require_once('config.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/head_section.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/check_user.php'); ?>
+<?php require_once(ROOT_PATH . '/includes/retrieve_data.php'); ?>
 <?php //print_r($_SESSION); ?>
 
 <head>
@@ -29,8 +30,9 @@
 <body>
     <?php include(ROOT_PATH . '/includes/navbar_logged_in.php'); ?>
     
-    <a href="viewmyprofile.php" class="button">View my Proflie</a>
+
 	<a href="viewmyportfolios.php" class="button">View my Portfolios</a>
     <a href="createportfolio.php" class="button">Create New Portfolio</a>
+    <a href="search_preferences.php" class="button">Search Preferences</a>
 </body>
 </html>

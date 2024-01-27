@@ -1,8 +1,11 @@
-<?php require_once('config.php'); ?>
+<?php
+require_once('config.php');
+?>
 <?php require_once(ROOT_PATH . '/includes/head_section.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/check_user.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/retrieve_data.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/del+edit.php'); ?>
+
 
 <head>
     <link rel="stylesheet" href="static/table.css">
@@ -91,6 +94,18 @@
             text-align: center;
         }
     </style>
+     <script>
+        // JavaScript code to set the selected radio button based on the stored ID
+        window.onload = function () {
+            <?php
+            // Check if the session variable is set
+            if (isset($_SESSION['selected_portfolio_id'])) {
+                $selectedId = $_SESSION['selected_portfolio_id'];
+                echo "document.querySelector('input[name=\"selected_portfolios[]\"][value=\"$selectedId\"]').checked = true;";
+            }
+            ?>
+        };
+    </script>
 </head>
 
 <body>
@@ -120,9 +135,11 @@
                         <a href="viewmyportfolios.php?del=<?php echo $row['id']; ?>" class="del-btn">Delete</a>
                     </td>
                     <td class="radio-cell">
-                        <input type="radio" name="selected_portfolios[]" value="<?php echo $row['id']; ?>">
+                    <input type="radio" name="submit" value="Submit Selected Portfolio">
+
                     </td>
                 </tr>
+                
             <?php } ?>
         </tbody>
     </table>

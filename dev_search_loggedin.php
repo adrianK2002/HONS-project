@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 <body>
     <!-- navbar -->
-    <?php include(ROOT_PATH . '/includes/navbar.php') ?>
+    <?php include(ROOT_PATH . '/includes/navbar_logged_in.php') ?>
     <!-- //navbar -->
 
     <div class="container">
