@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result) {
             // Preferences deleted successfully
-            echo "<script>alert('Preferences deleted!'); window.location.href='myportfolio.php';</script>";
+            echo "<script>alert('Profile picture deleted!'); window.location.href='myportfolio.php';</script>";
             exit(); // Make sure to exit to prevent further execution of the page
         } else {
             // Error in deletion
@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </p>
         <table class="styled-table">
             <?php
-            while ($row = $preferences->fetch_assoc()) {
+            while ($row = $pictures->fetch_assoc()) {
                 // Display the user preferences without showing the 'id' column
                 ?>
                 <tr>

@@ -3,7 +3,54 @@
 <?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
 <?php require_once( ROOT_PATH . '/includes/retrieve_data.php') ?>
 <?php require_once( ROOT_PATH . '/includes/del_port.php') ?>
+<?php
+// Add check for last submission time
+$createdBy = $_SESSION['id']; // Assuming createdBy is equivalent to user_id
 
+if ($createdBy) {
+    $dbConnection = new PDO("mysql:host=localhost;dbname=recruitment_website", 'root', '');
+    $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmtCheckSubmission = $dbConnection->prepare('SELECT MAX(created_at) FROM profile_pictures WHERE createdBy = ?');
+    $stmtCheckSubmission->execute([$createdBy]);
+    $lastSubmissionTime = $stmtCheckSubmission->fetchColumn();
+
+    // Check if the last submission was within the last 48 hours
+    $seconds = 10; // Set the initial value of $seconds
+    if ($lastSubmissionTime) {
+        $timeDifference = time() - strtotime($lastSubmissionTime);
+        $hoursDifference = floor($timeDifference / 3600);
+        if ($hoursDifference < 48) {
+            echo '<div id="message" style="text-align: center; font-size: 24px; margin-top: 20px;">
+                    You can only submit profile picture once. If you would like to change them, delete the existing profile picture and start again.
+                  </div>';
+            
+            // Display the countdown timer in the middle of the page
+            echo '<div id="countdown-container" style="text-align: center; font-size: 24px; margin-top: 20px;">
+                    <div id="countdown">Redirecting in ' . $seconds . ' seconds...</div>
+                  </div>';
+            
+            echo '<script>
+                var seconds = 10;
+                function updateCountdown() {
+                    document.getElementById("countdown").innerHTML = "Redirecting in " + seconds + " seconds...";
+                    if (seconds === 0) {
+                        window.location.href = "myportfolio.php";
+                    } else {
+                        seconds--;
+                        setTimeout(updateCountdown, 1000);
+                    }
+                }
+                setTimeout(updateCountdown, 1000);
+            </script>';
+        
+            exit();
+        }
+    }
+
+    $dbConnection = null;
+}
+?>
 <style>
         body {
             font-family: 'Arial', sans-serif;
