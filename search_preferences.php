@@ -2,10 +2,58 @@
 require_once('config.php');
 require_once(ROOT_PATH . '/includes/head_section.php');
 require_once(ROOT_PATH . '/includes/check_user.php');
-require_once(ROOT_PATH . '/includes/retrieve_data.php');  // Make sure this is the correct path
-require_once(ROOT_PATH . '/includes/del+edit.php');
+require_once(ROOT_PATH . '/includes/retrieve_data.php');
 
+// Add check for last submission time
+$createdBy = $_SESSION['id']; // Assuming createdBy is equivalent to user_id
+
+if ($createdBy) {
+    $dbConnection = new PDO("mysql:host=localhost;dbname=recruitment_website", 'root', '');
+    $dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmtCheckSubmission = $dbConnection->prepare('SELECT MAX(created_at) FROM user_preferences WHERE createdBy = ?');
+    $stmtCheckSubmission->execute([$createdBy]);
+    $lastSubmissionTime = $stmtCheckSubmission->fetchColumn();
+
+    // Check if the last submission was within the last 48 hours
+    $seconds = 10; // Set the initial value of $seconds
+    if ($lastSubmissionTime) {
+        $timeDifference = time() - strtotime($lastSubmissionTime);
+        $hoursDifference = floor($timeDifference / 3600);
+        if ($hoursDifference < 48) {
+            echo '<div id="message" style="text-align: center; font-size: 24px; margin-top: 20px;">
+                    You can only submit preferences once. If you would like to change them, delete the existing preferences and start again.
+                  </div>';
+            
+            // Display the countdown timer in the middle of the page
+            echo '<div id="countdown-container" style="text-align: center; font-size: 24px; margin-top: 20px;">
+                    <div id="countdown">Redirecting in ' . $seconds . ' seconds...</div>
+                  </div>';
+            
+            echo '<script>
+                var seconds = 10;
+                function updateCountdown() {
+                    document.getElementById("countdown").innerHTML = "Redirecting in " + seconds + " seconds...";
+                    if (seconds === 0) {
+                        window.location.href = "myportfolio.php";
+                    } else {
+                        seconds--;
+                        setTimeout(updateCountdown, 1000);
+                    }
+                }
+                setTimeout(updateCountdown, 1000);
+            </script>';
+        
+            exit();
+        }
+        
+        
+    }
+
+    $dbConnection = null;
+}
 ?>
+
 
 
 
@@ -127,7 +175,65 @@ require_once(ROOT_PATH . '/includes/del+edit.php');
 
             <input type="submit" id="saveButton" value="Save Preferences" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
         </form>
-    </div>
+        </div>
+<!-- Display user's preferences in a table -->
+</div>
+<!-- Display user's preferences in a table -->
+<div class="profile-container">
+    <h3>User Preferences</h3>
+    <table class="styled-table">
+        <?php
+        $previousUserId = null;
+
+        while ($row = $preferences->fetch_assoc()) {
+            // Check if the user ID has changed
+            if ($previousUserId !== $row['createdBy']) {
+                // If it has changed, display a new set of preferences
+                ?>
+                <tr>
+                    <th>User ID</th>
+                    <td><?php echo $row['createdBy']; ?></td>
+                </tr>
+                <tr>
+                    <th>Programming Languages</th>
+                    <td><?php echo $row['language']; ?></td>
+                </tr>
+                <tr>
+                    <th>Software Tools</th>
+                    <td><?php echo $row['tool']; ?></td>
+                </tr>
+                <tr>
+                    <th>Experience Level</th>
+                    <td><?php echo $row['experience']; ?></td>
+                </tr>
+                <?php
+            } else {
+                // If the user ID is the same, only display the new set of preferences
+                ?>
+                <tr>
+                    <th>Programming Languages</th>
+                    <td><?php echo $row['language']; ?></td>
+                </tr>
+                <tr>
+                    <th>Software Tools</th>
+                    <td><?php echo $row['tool']; ?></td>
+                </tr>
+                <tr>
+                    <th>Experience Level</th>
+                    <td><?php echo $row['experience']; ?></td>
+                </tr>
+                <?php
+            }
+
+            // Update the previous user ID
+            $previousUserId = $row['createdBy'];
+        }
+        ?>
+    </table>
+</div>
+</div>
+
+</div>
     <script>
         function validateForm() {
             // Get all selected programming languages checkboxes

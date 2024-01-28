@@ -2,7 +2,9 @@
 <?php require_once(ROOT_PATH . '/includes/head_section.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/check_user.php'); ?>
 <?php require_once(ROOT_PATH . '/includes/retrieve_data.php'); ?>
+<?php require_once(ROOT_PATH . '/includes/delete_preferences.php'); ?>
 <?php //print_r($_SESSION); ?>
+
 
 <head>
     <style>
@@ -33,6 +35,9 @@
 
 	<a href="viewmyportfolios.php" class="button">View my Portfolios</a>
     <a href="createportfolio.php" class="button">Create New Portfolio</a>
-    <a href="search_preferences.php" class="button">Search Preferences</a>
+    <a href="search_preferences.php" class="button">Set Search Preferences</a>
+    <a href="display_preferences.php" class="button">Display Current Preferences</a>
+    <a href="myportfolio.php?del=<?php $row['id']; ?>" class="button">Delete Search Preferences</a>
+
 </body>
 </html>
