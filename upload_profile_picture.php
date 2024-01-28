@@ -20,7 +20,7 @@ if ($createdBy) {
     if ($lastSubmissionTime) {
         $timeDifference = time() - strtotime($lastSubmissionTime);
         $hoursDifference = floor($timeDifference / 3600);
-        if ($hoursDifference < 48) {
+        if ($hoursDifference < 9999999) {
             echo '<div id="message" style="text-align: center; font-size: 24px; margin-top: 20px;">
                     You can only submit profile picture once. If you would like to change them, delete the existing profile picture and start again.
                   </div>';
