@@ -2,7 +2,7 @@
 require_once('config.php');
 require_once(ROOT_PATH . '/includes/head_section.php');
 require_once(ROOT_PATH . '/includes/check_user.php');
-require_once(ROOT_PATH . '/includes/retrieve_data.php');
+require_once(ROOT_PATH . '/includes/retrieve_data.php');  // Make sure this is the correct path
 require_once(ROOT_PATH . '/includes/del+edit.php');
 
 ?>
@@ -87,7 +87,8 @@ require_once(ROOT_PATH . '/includes/del+edit.php');
         <h2>User Profile</h2>
 
         <!-- Form for logged-in users to select preferences -->
-        <form action="includes/user_preferences.php" method="post" class="profile-form">
+        <form action="includes/user_preferences.php" method="post" class="profile-form" onsubmit="return validateForm()">
+            <div class="filter-section">
             <div class="filter-section">
                 <label>Select Programming Languages:</label><br>
                 <input type="checkbox" name="languages[]" value="javascript"> JavaScript<br>
@@ -124,9 +125,33 @@ require_once(ROOT_PATH . '/includes/del+edit.php');
             <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
             <br>
 
-            <input type="submit" value="Save Preferences" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+            <input type="submit" id="saveButton" value="Save Preferences" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
         </form>
     </div>
+    <script>
+        function validateForm() {
+            // Get all selected programming languages checkboxes
+            var checkboxes = document.querySelectorAll('input[name="languages[]"]:checked');
+
+            // Check if at least one checkbox is checked
+            if (checkboxes.length === 0) {
+                alert('Please select at least one programming language.');
+                return false; // Prevent form submission
+            }
+
+            // Get the selected experience level radio buttons
+            var experienceRadios = document.querySelectorAll('input[name="experience"]:checked');
+
+            // Check if at least one experience level is selected
+            if (experienceRadios.length === 0) {
+                alert('Please select an experience level.');
+                return false; // Prevent form submission
+            }
+
+            // If validation passes, allow form submission
+            return true;
+        }
+    </script>
 </body>
 
 </html>
