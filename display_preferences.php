@@ -8,71 +8,71 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
 
 
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
 
-        .profile-container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    .profile-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        h2, h3 {
-            color: #333;
-        }
+    h2, h3 {
+        color: #333;
+    }
 
-        section {
-            margin-bottom: 20px;
-        }
+    section {
+        margin-bottom: 20px;
+    }
 
-        table.styled-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    table.styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
 
-        table.styled-table th, table.styled-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+    table.styled-table th, table.styled-table td {
+        border: 1px solid #ddd;
+        padding: 12px; /* Increased padding for cells */
+        text-align: left;
+    }
 
-        table.styled-table th {
-            background-color: #f2f2f2;
-        }
+    table.styled-table th {
+        background-color: #f2f2f2;
+    }
 
-        .radio-cell {
-            text-align: center;
-            margin-top: 10px;
-        }
+    .radio-cell {
+        text-align: center;
+        margin-top: 10px;
+    }
 
-        .radio-cell input {
-            margin: 0;
-        }
+    .radio-cell input {
+        margin: 0;
+    }
 
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-align: center;
-        }
+    .btn {
+        display: inline-block;
+        padding: 12px 24px; /* Increased padding for buttons */
+        background-color: #4CAF50;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: center;
+    }
 
-        .btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+    .btn:hover {
+        background-color: #45a049;
+    }
+</style>
 
 <head>
     <!-- Your existing head styles -->

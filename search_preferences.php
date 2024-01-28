@@ -46,17 +46,19 @@ if ($createdBy) {
         
             exit();
         }
-        
-        
     }
 
     $dbConnection = null;
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
 
-
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,7 +67,7 @@ if ($createdBy) {
             padding: 0;
         }
 
-        .profile-container {
+        .container {
             max-width: 800px;
             margin: 20px auto;
             background-color: #fff;
@@ -74,92 +76,85 @@ if ($createdBy) {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        h2, h3 {
+        h2 {
             color: #333;
         }
 
-        section {
+        .filter-section {
             margin-bottom: 20px;
+            text-align: left; /* Left-align content within the filter-section */
         }
 
-        table.styled-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        label {
+            font-weight: bold;
         }
 
-        table.styled-table th, table.styled-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+        input[type="checkbox"] {
+            margin-right: 5px;
         }
 
-        table.styled-table th {
-            background-color: #f2f2f2;
+        input[type="radio"] {
+            margin-right: 5px;
         }
 
-        .radio-cell {
-            text-align: center;
-            margin-top: 10px;
+        #saveButtonContainer {
+            text-align: center; /* Center-align content within the container */
         }
 
-        .radio-cell input {
-            margin: 0;
-        }
-
-        .btn {
-            display: inline-block;
+        #saveButton {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #007bff;
             color: #fff;
-            text-decoration: none;
+            border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
         }
 
-        .btn:hover {
-            background-color: #45a049;
+        #message {
+            font-size: 24px;
+            margin-top: 20px;
+            text-align: center; /* Center-align content within the message */
+        }
+
+        #countdown-container {
+            font-size: 24px;
+            margin-top: 20px;
         }
     </style>
-
-<head>
-    <!-- Your existing head styles -->
 </head>
 
 <body>
-    <!-- navbar -->
     <?php include(ROOT_PATH . '/includes/navbar_logged_in.php') ?>
-    <!-- //navbar -->
-
+    <div id="message">
+        <p>Select appropriate values that reflect your knowledge/experience</p>
+    </div>
     <div class="container">
         <h2>User Profile</h2>
 
         <!-- Form for logged-in users to select preferences -->
         <form action="includes/user_preferences.php" method="post" class="profile-form" onsubmit="return validateForm()">
             <div class="filter-section">
-            <div class="filter-section">
                 <label>Select Programming Languages:</label><br>
-                <input type="checkbox" name="languages[]" value="javascript"> JavaScript<br>
-                <input type="checkbox" name="languages[]" value="python"> Python<br>
-                <input type="checkbox" name="languages[]" value="java"> Java<br>
-                <input type="checkbox" name="languages[]" value="csharp"> C#<br>
-                <input type="checkbox" name="languages[]" value="php"> PHP<br>
-                <input type="checkbox" name="languages[]" value="ruby"> Ruby<br>
-                <input type="checkbox" name="languages[]" value="swift"> Swift<br>
-                <input type="checkbox" name="languages[]" value="go"> Go<br>
-                <input type="checkbox" name="languages[]" value="typescript"> TypeScript<br>
-                <input type="checkbox" name="languages[]" value="htmlcss"> HTML/CSS<br>
-                <!-- Add more checkboxes as needed -->
+                <input type="checkbox" name="languages[]" value=" Javascript"> JavaScript<br>
+                <input type="checkbox" name="languages[]" value=" Python "> Python<br>
+                <input type="checkbox" name="languages[]" value=" Java"> Java<br>
+                <input type="checkbox" name="languages[]" value=" C#"> C#<br>
+                <input type="checkbox" name="languages[]" value=" PHP"> PHP<br>
+                <input type="checkbox" name="languages[]" value=" Ruby"> Ruby<br>
+                <input type="checkbox" name="languages[]" value=" Rwift"> Swift<br>
+                <input type="checkbox" name="languages[]" value=" Go"> Go<br>
+                <input type="checkbox" name="languages[]" value=" TypeScript"> TypeScript<br>
+                <input type="checkbox" name="languages[]" value=" HTML/CSS"> HTML/CSS<br>
             </div>
 
             <div class="filter-section">
                 <label>Select Software Tools:</label><br>
-                <input type="checkbox" name="tools[]" value="git"> Git<br>
-                <input type="checkbox" name="tools[]" value="docker"> Docker<br>
-                <input type="checkbox" name="tools[]" value="vscode"> Visual Studio Code<br>
-                <input type="checkbox" name="tools[]" value="intellij"> IntelliJ IDEA<br>
-                <input type="checkbox" name="tools[]" value="eclipse"> Eclipse<br>
-                <!-- Add more checkboxes as needed -->
+                <input type="checkbox" name="tools[]" value=" Git"> Git<br>
+                <input type="checkbox" name="tools[]" value=" Docker"> Docker<br>
+                <input type="checkbox" name="tools[]" value=" Visual Studio Code"> Visual Studio Code<br>
+                <input type="checkbox" name="tools[]" value=" Intellij IDEA"> IntelliJ IDEA<br>
+                <input type="checkbox" name="tools[]" value=" Eclipse"> Eclipse<br>
             </div>
 
             <div class="filter-section">
@@ -173,67 +168,10 @@ if ($createdBy) {
             <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
             <br>
 
-            <input type="submit" id="saveButton" value="Save Preferences" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+            <input type="submit" id="saveButton" value="Save Preferences">
         </form>
-        </div>
-<!-- Display user's preferences in a table -->
-</div>
-<!-- Display user's preferences in a table -->
-<div class="profile-container">
-    <h3>User Preferences</h3>
-    <table class="styled-table">
-        <?php
-        $previousUserId = null;
+    </div>
 
-        while ($row = $preferences->fetch_assoc()) {
-            // Check if the user ID has changed
-            if ($previousUserId !== $row['createdBy']) {
-                // If it has changed, display a new set of preferences
-                ?>
-                <tr>
-                    <th>User ID</th>
-                    <td><?php echo $row['createdBy']; ?></td>
-                </tr>
-                <tr>
-                    <th>Programming Languages</th>
-                    <td><?php echo $row['language']; ?></td>
-                </tr>
-                <tr>
-                    <th>Software Tools</th>
-                    <td><?php echo $row['tool']; ?></td>
-                </tr>
-                <tr>
-                    <th>Experience Level</th>
-                    <td><?php echo $row['experience']; ?></td>
-                </tr>
-                <?php
-            } else {
-                // If the user ID is the same, only display the new set of preferences
-                ?>
-                <tr>
-                    <th>Programming Languages</th>
-                    <td><?php echo $row['language']; ?></td>
-                </tr>
-                <tr>
-                    <th>Software Tools</th>
-                    <td><?php echo $row['tool']; ?></td>
-                </tr>
-                <tr>
-                    <th>Experience Level</th>
-                    <td><?php echo $row['experience']; ?></td>
-                </tr>
-                <?php
-            }
-
-            // Update the previous user ID
-            $previousUserId = $row['createdBy'];
-        }
-        ?>
-    </table>
-</div>
-</div>
-
-</div>
     <script>
         function validateForm() {
             // Get all selected programming languages checkboxes
