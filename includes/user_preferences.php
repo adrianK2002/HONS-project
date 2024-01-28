@@ -5,6 +5,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if preferences already exist for the user
     $userId = $_SESSION['user_id'];
 
+    // Ensure that the user_id is valid (you might want to add additional validation)
+    if (!$userId) {
+        echo "Invalid user ID";
+        // You may redirect the user or provide a link to go back to the portfolio page
+        // header('Location: ../myportfolio.php');
+        // exit();
+    }
+
     // Database connection details
     $host = 'localhost';
     $dbname = 'recruitment_website';
