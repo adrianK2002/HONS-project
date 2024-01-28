@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $delete_id = mysqli_real_escape_string($link, $_POST['delete_id']);
 
         // Perform the delete operation
-        $query = "DELETE FROM user_preferences WHERE id = '$delete_id'";
+        $query = "DELETE FROM profile_pictures WHERE id = '$delete_id'";
         $result = mysqli_query($link, $query);
 
         if ($result) {
@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
    <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -91,36 +92,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 <body>
-<?php include(ROOT_PATH . '/includes/navbar_logged_in.php'); ?>
+    <?php include(ROOT_PATH . '/includes/navbar_logged_in.php'); ?>
 
-<!-- Your existing HTML content -->
-
-<div class="profile-container" style="text-align: center;">
-    
-    <p style="font-size: 18px; margin-top: 20px;">
-        Are you sure you want to delete your preferences?
-    </p>
-    <table class="styled-table">
-        <?php
-        $previousUserId = null;
-
-        while ($row = $preferences->fetch_assoc()) {
-            // Display the user preferences without showing the 'id' column
-            ?>
+    <div class="profile-container" style="text-align: center;">
         
-                    <!-- Form to delete the record -->
-                    <form method="post" action="">
-                        <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
-                        <button type="submit">Delete Current Preferences</button>
-                    </form>
-                </td>
-            </tr>
+        <p style="font-size: 18px; margin-top: 20px;">
+            Are you sure you want to delete your profile picture?
+        </p>
+        <table class="styled-table">
             <?php
-        }
-        ?>
-    </table>
+            while ($row = $preferences->fetch_assoc()) {
+                // Display the user preferences without showing the 'id' column
+                ?>
+                <tr>
+                 
+                        <!-- Form to delete the record -->
+                        <form method="post" action="">
+                            <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
+                            <button type="submit">Delete Current Profile Picture</button>
+                        </form>
+                
+                </tr>
+            <?php
+            }
+            ?>
+        </table>
 
-    <!-- Add a big message: Are you sure you want to delete your preferences? -->
+        <!-- Add a big message: Are you sure you want to delete your preferences? -->
 
-</div>
+    </div>
 </body>

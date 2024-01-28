@@ -64,7 +64,7 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
                     <tr>
                         <th>Full Name</th>
                         <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
-                        <td rowspan="6" colspan="0"><img class="picture" src="<?php echo $row['picture']; ?>" alt="Profile Picture"></td>
+                        <td rowspan="6" colspan="0">Uplaod profile picture at 'MY PORTFOLIO'</td>
                     </tr>
                     <tr>
                         <th>Date of Birth</th>

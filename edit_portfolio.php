@@ -127,8 +127,8 @@ form {
 						<div class="form-group">
 							<input class="form-control input-lg" type="text" id="city" name="city" placeholder="City">
 						</div>	
-							<label style="color: red;">Profile Picutre(not required)</label>
-                       		 <input type="file" name="profile_picture" class="btn btn-flat btn-danger">
+							<label for="profile_picture">Profile Picture: PROFILE PICTURE IS OPTIONAL, IT CAN BE UPLOADED LATER</label>
+   					 <
 						</div>
 						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 2: About Me</h1>
 						<div class="col-md-6 latest-job ">

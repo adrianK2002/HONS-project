@@ -13,7 +13,6 @@ error_reporting(NONE);*/
     <!-- Navbar -->
     <?php include(ROOT_PATH . '/includes/navbar_logged_in.php'); ?>
     <!-- //Navbar -->
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,28 +23,41 @@ error_reporting(NONE);*/
             margin: 20px auto;
         }
 
-        .resume-table {
+        .resume-table, .styled-table, .software-skills-table, .project-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
-        .resume-table th, .resume-table td {
-            border: 2px solid #ddd;
-            padding: 16px;
+        .resume-table th, .resume-table td,
+        .styled-table th, .styled-table td,
+        .software-skills-table th, .software-skills-table td,
+        .project-table th, .project-table td {
+            padding: 10px;
             text-align: left;
-            font-size: 16px;
+            border-bottom: 1px solid #ddd;
         }
 
-        .resume-table th {
+        .resume-table th,
+        .styled-table th,
+        .software-skills-table th,
+        .project-table th {
             background-color: #f2f2f2;
         }
 
-        .section-header {
+        .resume-table th,
+        .resume-table td,
+        .section-header,
+        .project-header {
+            font-size: 16px;
+        }
+
+        .section-header,
+        .project-header {
             font-weight: bold;
-            font-size: 20px;
             background-color: #3498db;
             color: black;
+            padding: 16px;
         }
 
         .picture {
@@ -58,100 +70,34 @@ error_reporting(NONE);*/
             display: flex;
         }
 
-        .personal-details, .picture-section, .skills-section {
+        .personal-details, .picture-section, .skills-section,
+        .profile-container {
             flex: 1;
             padding: 0 20px;
-        }
-
-        .bottom-section {
-            margin-top: 20px;
-        }
-        .profile-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-.styled-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    
-}
-
-.styled-table th,
-.styled-table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.styled-table th {
-    background-color: #f2f2f2;
-}
-
-.styled-table td {
-    background-color: #fff;
-}
-
-.styled-table th:first-child,
-.styled-table td:first-child {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-
-.styled-table th:last-child,
-.styled-table td:last-child {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
-.software-skills-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            border: 2px solid #3498db; /* Add border color of your choice */
+            margin: 20px;
+            border: 1px solid #ddd;
             border-radius: 8px;
         }
 
-        .software-skills-table th,
-        .software-skills-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .software-skills-table th {
-            background-color: #f2f2f2;
-        }
-
-        .software-skills-table td {
-            background-color: #fff;
-        }
-
-        .software-skills-table th:first-child,
-        .software-skills-table td:first-child {
-            border-top-left-radius: 8px;
-            border-bottom-left-radius: 8px;
-        }
-
-        .software-skills-table th:last-child,
-        .software-skills-table td:last-child {
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
         .button-link {
-    display: inline-block;
-    padding: 10px;
-    background-color: #3498db; /* Button background color */
-    color: #fff; /* Button text color */
-    text-decoration: none;
-    border-radius: 5px; /* Rounded corners */
-}
+            display: inline-block;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
 
-.button-link:hover {
-    background-color: #2980b9; /* Button background color on hover */
-}
+        .button-link:hover {
+            background-color: #2980b9;
+        }
+        .project-container {
+            flex: 1;
+            padding: 0 20px;
+            margin: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
     </style>
   <?php if (isset($getSelectedPortfolio) && mysqli_num_rows($getSelectedPortfolio) > 0) { ?>
         <div class="resume-container">
@@ -174,7 +120,31 @@ error_reporting(NONE);*/
 
                 ?>
                     <tr>
-                    <td rowspan="6" colspan="0"><img class="picture" src="<?php echo $row['picture']; ?>" alt="Profile Picture"></td>
+                    <td rowspan="6" colspan="0">
+    <?php
+    // Fetch profile picture details from the database
+    $query = "SELECT filename, file_content, file_type FROM profile_pictures WHERE createdBy = ?";
+    $stmt = mysqli_prepare($link, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $row['createdBy']);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $filename, $fileContent, $fileType);
+
+    // Check if a profile picture is found
+    if (mysqli_stmt_fetch($stmt)) {
+        // Display the profile picture
+        echo '<img class="picture" src="data:' . $fileType . ';base64,' . base64_encode($fileContent) . '" alt="Profile Picture">';
+    } else {
+        // If no profile picture is found, you can display a default image or show an alternative message
+        // For example, you can use a default image:
+        // echo '<img class="picture" src="path/to/default/image.jpg" alt="Default Profile Picture">';
+        // Or show a placeholder image with an alternative message:
+        echo '<img class="picture" src="path/to/placeholder/image.jpg" alt="Profile Picture Not Found">';
+    }
+
+    // Close the database statement
+    mysqli_stmt_close($stmt);
+    ?>
+</td>
                     <th>Name</th>
                         <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
                         
@@ -350,7 +320,6 @@ error_reporting(NONE);*/
             <td colspan="4"><?php echo $row['current_job_title']; ?></td>
         </tr>
     </tbody>
-    </tbody>
     <thead>
         <tr>
             <th class="section-header" colspan="4">Links to projects</th>
@@ -403,18 +372,7 @@ error_reporting(NONE);*/
         <?php } ?>
     </tr>
 </tbody>
-<thead>
-    <tr>
-        <th class="section-header" colspan="4">Resume</th>
-    </tr>
-</thead>
-<tbody>
-    <tr>
-        <td colspan="4">
-            <a href="work_experience.php" class="button-link">View your CV</a>
-        </td>
-    </tr>
-</tbody>
-</table>
+
 <?php } ?>
+
 </body>
