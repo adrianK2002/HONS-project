@@ -90,7 +90,7 @@ function loginForm(){
                 $("#exit").click(function () {
                     var exit = confirm("Are you sure you want to end the session?");
                     if (exit == true) {
-                    window.location = "home.php?logout=true";
+                    window.location = "dashboard.php?logout=true";
                     }
                 });
             });
