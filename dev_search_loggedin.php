@@ -18,10 +18,122 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 ?>
-
+<?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
+<?php require_once( ROOT_PATH . '/includes/retrieve_data.php') ?>
 <!-- Add a link to your CSS file -->
 <link rel="stylesheet" type="text/css" href="styles.css">
+<style>
+    /* Resetting default margin and padding for better consistency */
+    body, h1, h2, h3, p, ul, li {
+      margin: 0;
+      padding: 0;
+    }
 
+    /* Body styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    /* Header styling */
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* Main section styling */
+    section {
+      margin: 20px;
+    }
+
+    /* Search container styling */
+    #search-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    /* Search bar styling */
+    #search-bar {
+      flex-grow: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Search button styling */
+    #search-button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Page content styling */
+    #page-content {
+      padding: 20px;
+      background-color: #fff;
+    }
+
+    /* Bottom page styling */
+    #bottom-page {
+      height: 300px; /* Adjust the height as needed */
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Dropdown list styling */
+    #search-filter {
+      width: 150px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Styled table for search results */
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .styled-table th, .styled-table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .styled-table th {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .styled-table tbody tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* Styled button for View, Contact, Write Review, Rate */
+    .view-btn {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 8px 12px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      margin-right: 5px; /* Provide some space between buttons */
+    }
+
+    .view-btn:hover {
+      background-color: #45a049;
+    }
+  </style>
 <body>
     <!-- navbar -->
     <?php include(ROOT_PATH . '/includes/navbar_logged_in.php') ?>
@@ -70,19 +182,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         </form>
 
-        <h2>Search Results</h2>
-
-        <?php
-        // Display search results
-        if (!empty($results)) {
-            foreach ($results as $result) {
-                echo '<p>' . $result['name'] . '</p>';
-                // Add more details or customize the display as needed
-            }
-        } else {
-            echo '<p>No results found.</p>';
-        }
-        ?>
+     
+        <h2>(Test, only for presentation purposes)Search Results</h2>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Profile Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- PHP Loop for displaying search results -->
+                <?php
+                    while ($row = $portfolio_search_test->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>{$row['name']}</td>";
+                        echo "<td><a href='view_portfolio.php?exercise_id={$row['id']}' class='view-btn'>View</a></td>";
+                        echo "<td><a href='view_portfolio.php?exercise_id={$row['id']}' class='view-btn'>Contact</a></td>";
+                        echo "<td><a href='view_portfolio.php?exercise_id={$row['id']}' class='view-btn'>Write Review</a></td>";
+                        echo "<td><a href='view_portfolio.php?exercise_id={$row['id']}' class='view-btn'>Rate</a></td>";
+                        echo "</tr>";
+                    }
+                ?>
+            </tbody>
+        </table>
     </div>
 </body>
 

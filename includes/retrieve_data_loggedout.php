@@ -1,4 +1,4 @@
-<?php include_once 'check_user.php' ?>
+
 <?php
 	
 	
