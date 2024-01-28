@@ -135,9 +135,13 @@ require_once('config.php');
                         <a href="viewmyportfolios.php?del=<?php echo $row['id']; ?>" class="del-btn">Delete</a>
                     </td>
                     <td class="radio-cell">
-                    <input type="radio" name="submit" value="Submit Selected Portfolio">
-
+                        <?php if($row['selected_portfolio'] == "1"){ ?>
+                    <input type="radio" onclick="window.location.href='select_portfolio.php?exercise_id=<?php echo $row['id'];?>&&createdBy=<?php echo $row['createdBy'];?>'" checked>  
+                <?php } else { ?>
+                          <input type="radio" onclick="window.location.href='select_portfolio.php?exercise_id=<?php echo $row['id'];?>&&createdBy=<?php echo $row['createdBy'];?>'">
+                <?php } ?>
                     </td>
+                }
                 </tr>
                 
             <?php } ?>
