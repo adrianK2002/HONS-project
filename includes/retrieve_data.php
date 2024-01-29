@@ -5,6 +5,7 @@
 	
 	$results = mysqli_query($link, "SELECT * FROM portfolio_name WHERE createdBy={$_SESSION['id']}");
 	$results1 = mysqli_query($link, "SELECT * FROM portfolio_name WHERE createdBy={$_SESSION['id']} AND selected_portfolio=1");
+	$search_results = mysqli_query($link, "SELECT * FROM portfolio_name WHERE selected_portfolio=1");
 	//$users = mysqli_query($link, "SELECT * FROM portfolio_name WHERE selected_portfolio=1");
 	$portfolio_search_test = mysqli_query($link, "SELECT * FROM portfolio_name");
 	$newresults = mysqli_query($link, "SELECT * FROM portfolio_name WHERE createdBy={$_SESSION['id']} AND created_at >= NOW() - INTERVAL 5 MINUTE");

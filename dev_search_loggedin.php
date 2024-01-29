@@ -168,51 +168,38 @@ require_once(ROOT_PATH . '/includes/head_section.php');
             <input type="submit" value="Search" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
 
         </form>
-
-     
-        <h2>(Test, only for presentation purposes)Search Results</h2>
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>Profile Name</th>
-                </tr>
-            </thead>
-            <?php
-$query1 = "
-SELECT portfolio_name.createdBy, portfolio_info.firstname, portfolio_info.lastname, portfolio_name.selected_portfolio
-FROM portfolio_name
-JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
-WHERE portfolio_name.selected_portfolio = 1";
-
-
-$users = mysqli_query($link, $query1);
-
-if ($users) {
-    ?>
-    <h1 style="color: black">Software Develoeprs</h1>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>View Resume</th>
-        </tr>
         <?php
-        while ($row = mysqli_fetch_assoc($users)) {
-            // Process each row
-            // $row['firstname'], $row['lastname'] to access column values
-            ?>
+// Assuming you have established a database connection ($link) before this point
+
+$search_results = mysqli_query($link, "SELECT * FROM portfolio_name WHERE selected_portfolio=1");
+
+if ($search_results) {
+    ?>
+    <h1 style="color: black">Software Developers</h1>
+    <table class="styled-table">
+        <thead>
             <tr>
-            <td><?php echo $row['firstname'] . ' ' . $row['lastname']. ' ' . $row['createdBy']; ?></td>
-       
-              <td>
+                <th>User</th>
+                <th>View Portfolio</th>
                 
-                        
-                    </td>
-         
             </tr>
+        </thead>
+        <tbody>
             <?php
-        }
-        mysqli_free_result($users);
-        ?>
+            while ($portfolio = mysqli_fetch_assoc($search_results)) {
+                ?>
+                <tr>
+                    <td><?php echo $portfolio['createdBy']; ?></td>
+                    <td>
+                        <!-- Assuming you want to link to a page like "view_portfolio.php" for viewing the portfolio -->
+                        <a href="view_portfolio.php?username=<?php echo $portfolio['createdBy']; ?>" class="view-btn">View Portfolio</a>
+                    </td>
+                </tr>
+                <?php
+            }
+            mysqli_free_result($search_results);
+            ?>
+        </tbody>
     </table>
     <?php
 } else {
@@ -223,9 +210,3 @@ if ($users) {
 mysqli_close($link);
 ?>
 
-            </tbody>
-        </table>
-    </div>
-</body>
-
-</html>
