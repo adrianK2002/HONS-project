@@ -1,8 +1,18 @@
-<?php require_once('config.php') ?>
-<?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
-<?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
-<?php require_once( ROOT_PATH . '/includes/retrieve_data.php') ?>
-<?php require_once( ROOT_PATH . '/includes/del_port.php') ?>
+<?php
+require_once('config.php');
+require_once(ROOT_PATH . '/includes/head_section.php');
+require_once(ROOT_PATH . '/includes/check_user.php');
+require_once(ROOT_PATH . '/includes/retrieve_data.php');
+require_once(ROOT_PATH . '/includes/del_port.php');
+
+$portfolio_id = mysqli_real_escape_string($link, $_GET['exercise_id']);
+$query = "SELECT * FROM portfolio_info WHERE portfolio_id = '$portfolio_id'";
+$result = mysqli_query($link, $query);
+
+if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+}
+?>
 <head>
 	<link rel="stylesheet" href="static/table.css">
 	<style>
@@ -85,9 +95,10 @@ form {
 .form-group textarea {
     resize: vertical;
 }
-
-/* Add more styling as needed */
-
+.form-control.input-lg {
+        height: auto; /* Set height to auto to allow content to determine the height */
+        resize: vertical; /* Allow vertical resizing */
+    }
 </style>
 </head>
 
@@ -103,60 +114,62 @@ form {
 			<div class="col-md-6 latest-job ">
                 <div class="form-group">
 							<label>Full Name</label>
-							<input class="form-control input-lg" type="text" id="firstname" name="firstname" placeholder="First Name *" required> 
+							<input class="form-control input-lg" type="text" id="firstname" name="firstname" placeholder="First Name *" value="<?= isset($row['firstname']) ? $row['firstname'] : ''; ?>">
 						</div>	
 						<div class="form-group">
-							<input class="form-control input-lg" type="text" id="lastname" name="lastname" placeholder="Last Name *" required> 
+						<input class="form-control input-lg" type="text" id="lastname" name="lastname" placeholder="Last Name *" value="<?= isset($row['lastname']) ? $row['lastname'] : ''; ?>">
 						</div>	
 						<div class="form-group">
 							<label>Date Of Birth</label>
-               				 <input class="form-control input-lg" type="date" id="dob" min="1960-01-01" max="2008-01-31" name="dob" placeholder="Date Of Birth">
+							<input class="form-control input-lg" type="date" id="dob" min="1960-01-01" max="2008-01-31" name="dob" placeholder="Date Of Birth" value="<?= isset($row['dob']) ? $row['dob'] : ''; ?>">
 						</div>	
 						
 						<div class="form-group">
 						<label>Contact Details</label>
-							<input class="form-control input-lg" type="email" id="email" name="email" placeholder="Email *" required> 
+							<input class="form-control input-lg" type="email" id="email" name="email" placeholder="Email*" value="<?= isset($row['email']) ? $row['email'] : ''; ?>" > 
 						</div>	
 						<div class="form-group">
-							<input class="form-control input-lg" type="text" id="phone" name="contactno" minlength="10" maxlength="10" onkeypress="return validatePhone(event);" placeholder="Phone Number">
+							<input class="form-control input-lg" type="text" id="phone" name="contactno" minlength="10" maxlength="10" onkeypress="return validatePhone(event);" placeholder="Phone Number" value="<?= isset($row['contactno']) ? $row['contactno'] : ''; ?>">
 						</div>	
 						<div class="form-group">
 							<label>Home Address</label>
-							<textarea class="form-control input-lg" rows="4" id="address" name="address" placeholder="Address"></textarea>
+							<textarea class="form-control input-lg" rows="4" id="address" name="address" placeholder="Address" value="<?= isset($row['address']) ? $row['address'] : ''; ?>"></textarea>
 						</div>	
 						<div class="form-group">
-							<input class="form-control input-lg" type="text" id="city" name="city" placeholder="City">
+							<input class="form-control input-lg" type="text" id="city" name="city" placeholder="City" value="<?= isset($row['city']) ? $row['city'] : ''; ?>">
 						</div>	
 							<label style="color: red;">Profile Picture: PROFILE PICTURE IS OPTIONAL, IT CAN BE UPLOADED LATER</label>
 							
 						</div>
-						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 2: About Me</h1>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;" >Section 2: About Me</h1>
 						<div class="col-md-6 latest-job ">
 						<div class="form-group">
-							<textarea class="form-control input-lg" rows="4" id="aboutme" name="aboutme" placeholder="Brief intro about yourself *" required></textarea>
+							<div>
+							<textarea class="form-control input-lg" id="aboutme" name="aboutme" placeholder="Brief intro about yourself *" rows="4"><?= isset($row['aboutme']) ? $row['aboutme'] : ''; ?></textarea>
+   						 </div>
 						</div>	
 						</div>
 						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 3: Qualifications and Certificates</h1>
 						<div class="col-md-6 latest-job ">
 						<div class="form-group">
 						<label>Highest Qualification</label>
-							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="Highest Qualification">
+							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="Highest Qualification" value="<?= isset($row['qualification']) ? $row['qualification'] : ''; ?>">
 						</div>	
 						<div>
-							<input class="form-control input-lg" type="date" id="passingyear" name="passingyear" placeholder="Passing Year">
+							<input class="form-control input-lg" type="date" id="passingyear" name="passingyear" placeholder="Passing Year" value="<?= isset($row['passingyear']) ? $row['passingyear'] : ''; ?>">
 						</div>	
 						<br>
 						<div>
-							<input class="form-control input-lg" type="text" id="qualification_school_name" name="qualification_school_name" placeholder="University/College/School name">
+							<input class="form-control input-lg" type="text" id="qualification_school_name" name="qualification_school_name" placeholder="University/College/School name" value="<?= isset($row['qualification_school_name']) ? $row['qualification_school_name'] : ''; ?>">
 						</div>	
 						<br>
 						<div class="form-group">
 						<label>Certificates</label>
-							<input class="form-control input-lg" type="text" id="certificates" name="certificates" placeholder="if there is no certificates just type in 'none'*">
+							<input class="form-control input-lg" type="text" id="certificates" name="certificates" placeholder="if there is no certificates just type in 'none'*" value="<?= isset($row['certificates']) ? $row['certificates'] : ''; ?>">
 						</div>	
 						<div class="form-group">
 						<label>Extra Qualifications</label>
-							<input class="form-control input-lg" type="text" id="extra_qualification" name="extra_qualification" placeholder="List all extra qualifications, if there is no certificates just type in 'none'*">
+							<input class="form-control input-lg" type="text" id="extra_qualification" name="extra_qualification" placeholder="List all extra qualifications, if there is no certificates just type in 'none'*" value="<?= isset($row['extra_qualification']) ? $row['extra_qualification'] : ''; ?>">
 						</div>	
 						</div>
 						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 4: Education</h1>
@@ -164,37 +177,37 @@ form {
 						<div class="form-group">
 		
 						<label>Highschool/Middleschool education</label>
-							<input class="form-control input-lg" type="text" id="highschool_name" name="highschool_name" placeholder="School Name">
+							<input class="form-control input-lg" type="text" id="highschool_name" name="highschool_name" placeholder="School Name" value="<?= isset($row['highschool_name']) ? $row['highschool_name'] : ''; ?>">
 						</div>	
 						<div>
-							<input class="form-control input-lg" type="date" id="hs_starting_date" name="hs_starting_date" placeholder="Starting Date">
+							<input class="form-control input-lg" type="date" id="hs_starting_date" name="hs_starting_date" placeholder="Starting Date" value="<?= isset($row['hs_starting_date']) ? $row['hs_starting_date'] : ''; ?>">
 						</div>	
 						<br>
 						<div>
-							<input class="form-control input-lg" type="date" id="hs_fin_date" name="hs_fin_date" placeholder="Finishing Date">
+							<input class="form-control input-lg" type="date" id="hs_fin_date" name="hs_fin_date" placeholder="Finishing Date" value="<?= isset($row['hs_fin_date']) ? $row['hs_fin_date'] : ''; ?>">
 						</div>	
 						<br>
 						<div class="form-group">
 						<label>Courses and Grades</label>
-							<input class="form-control input-lg" type="text" id="hs_qualification" name="hs_qualification" placeholder="if none, just type in 'none'*">
+							<input class="form-control input-lg" type="text" id="hs_qualification" name="hs_qualification" placeholder="if none, just type in 'none'*" value="<?= isset($row['hs_qualification']) ? $row['hs_qualification'] : ''; ?>">
 						</div>
 </div>
 						<div class="col-md-6 latest-job ">
 						<div class="form-group">
 						<label>Higher education(University/College)</label>
-							<input class="form-control input-lg" type="text" id="uni_name" name="uni_name" placeholder="School Name">
+							<input class="form-control input-lg" type="text" id="uni_name" name="uni_name" placeholder="School Name" value="<?= isset($row['uni_name']) ? $row['uni_name'] : ''; ?>">
 						</div>	
 						<div>
-							<input class="form-control input-lg" type="date" id="uni_starting_date" name="uni_starting_date" placeholder="Starting Date">
+							<input class="form-control input-lg" type="date" id="uni_starting_date" name="uni_starting_date" placeholder="Starting Date" value="<?= isset($row['uni_starting_date']) ? $row['uni_starting_date'] : ''; ?>">
 						</div>	
 						<br>
 						<div>
-							<input class="form-control input-lg" type="date" id="uni_fin_date" name="uni_fin_date" placeholder="Finishing Date">
+							<input class="form-control input-lg" type="date" id="uni_fin_date" name="uni_fin_date" placeholder="Finishing Date" value="<?= isset($row['uni_fin_date']) ? $row['uni_fin_date'] : ''; ?>">
 						</div>	
 						<br>
 						<div class="form-group">
 						<label>Courses and Grades</label>
-							<input class="form-control input-lg" type="text" id="uni_qualification" name="uni_qualification" placeholder="if none, just type in 'none'*">
+							<input class="form-control input-lg" type="text" id="uni_qualification" name="uni_qualification" placeholder="if none, just type in 'none'*" value="<?= isset($row['uni_qualification']) ? $row['uni_qualification'] : ''; ?>">
 						</div>
 						</div>
 						
@@ -204,56 +217,63 @@ form {
 							<div class="col-md-6 latest-job ">
 						<div class="form-group">
 						<label>Current Employer</label>
-							<input class="form-control input-lg" type="text" id="current_job_title" name="current_job_title" placeholder="Job Title">
+							<input class="form-control input-lg" type="text" id="current_job_title" name="current_job_title" placeholder="Job Title" value="<?= isset($row['current_job_title']) ? $row['current_job_title'] : ''; ?>">
 						</div>	
 						<div>
-							<input class="form-control input-lg" type="text" id="current_employer_name" name="current_employer_name" placeholder="Employer Name">
-						</div>	
-						<br>
-						<div>
-							<input class="form-control input-lg" type="date" id="emp_starting_date" name="emp_starting_date" placeholder="Starting Date">
+							<input class="form-control input-lg" type="text" id="current_employer_name" name="current_employer_name" placeholder="Employer Name" value="<?= isset($row['current_employer_name']) ? $row['current_employer_name'] : ''; ?>">
 						</div>	
 						<br>
 						<div>
-							<input class="form-control input-lg" type="text" id="respo" name="respo" placeholder="Responsibilities">
+							<input class="form-control input-lg" type="date" id="emp_starting_date" name="emp_starting_date" placeholder="Starting Date" value="<?= isset($row['emp_starting_date']) ? $row['emp_starting_date'] : ''; ?>">
+						</div>	
+						<br>
+						<div>
+							<input class="form-control input-lg" type="text" id="respo" name="respo" placeholder="Responsibilities" value="<?= isset($row['respo']) ? $row['respo'] : ''; ?>">
 						</div>	
 						<br>
 						<div class="form-group">
 						<label>Past Employers</label>
 						<div>
-							<input class="form-control input-lg" type="text" id="extra_emp" name="extra_emp" placeholder="List relevant past employers/organisations with durations and job title">
+							<input class="form-control input-lg" type="text" id="extra_emp" name="extra_emp" placeholder="List relevant past employers/organisations with durations and job title" value="<?= isset($row['extra_emp']) ? $row['extra_emp'] : ''; ?>">
 						</div>	
 						</div>
 						</div>	
 					
-						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 6: Skills</h1>
-						<div class="col-md-6 latest-job ">
-						<div class="form-group">
-							<textarea class="form-control input-lg" rows="4" id="skills" name="skills" placeholder="List all the skills *" required></textarea>
-						</div>	
+							<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 6: Skills</h1>
+						<div class="col-md-6 latest-job">
+							<div class="form-group">
+								<!-- Use <textarea> instead of <input> for multiline input -->
+								<textarea class="form-control input-lg" id="skills" name="skills" placeholder="List all the skills *" rows="4"><?= isset($row['skills']) ? $row['skills'] : ''; ?></textarea>
+							</div>
 						</div>
 
 						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 7: Projects</h1>
-						<div class="col-md-6 latest-job ">
-						<div class="form-group">
-							<textarea class="form-control input-lg" rows="4" id="project" name="project" placeholder="List all the projects; either paste a link here or upload documents below *" required></textarea>
-							<label style="color: red;">Upload Projet Files(not required)</label>
-							<!-- <input type="file" name="project_files" class="btn btn-flat btn-danger"> -->
-						</div>	
+						<div class="col-md-6 latest-job">
+							<div class="form-group">
+								<!-- Use <textarea> instead of <input> for multiline input -->
+								<textarea class="form-control input-lg" id="project" name="project" placeholder="List all the projects; either paste a link here or upload documents below *" rows="4"><?= isset($row['project']) ? $row['project'] : ''; ?></textarea>
+								<label style="color: red;">Upload Project Files (not required)</label>
+								<!-- <input type="file" name="project_files" class="btn btn-flat btn-danger"> -->
+							</div>
 						</div>
 
 						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 8: Hobbies</h1>
-						<div class="col-md-6 latest-job ">
-						<div class="form-group">
-							<textarea class="form-control input-lg" rows="4" id="hobbies" name="hobbies" placeholder="Talk briefly about yout hobbies(not required) *" ></textarea>
-						</div>	
+						<div class="col-md-6 latest-job">
+							<div class="form-group">
+								<!-- Use <textarea> instead of <input> for multiline input -->
+								<textarea class="form-control input-lg" id="hobbies" name="hobbies" placeholder="Talk briefly about your hobbies *" rows="4"><?= isset($row['hobbies']) ? $row['hobbies'] : ''; ?></textarea>
+							</div>
 						</div>
 
 						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 9: References</h1>
-						<div class="col-md-6 latest-job ">
-						<div class="form-group">
-							<textarea class="form-control input-lg" rows="4" id="ref" name="ref" placeholder="List all references with contact details *" ></textarea>
-						</div>	
+						<div class="col-md-6 latest-job">
+							<div class="form-group">
+								<!-- Use <textarea> instead of <input> for multiline input -->
+								<textarea class="form-control input-lg" id="ref" name="ref" placeholder="List all references with contact details *" rows="4"><?= isset($row['ref']) ? $row['ref'] : ''; ?></textarea>
+							</div>
+						</div>
+
+
 						</div>
 
 						<input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>"> 	
