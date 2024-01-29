@@ -237,7 +237,7 @@ form {
 						<div class="col-md-6 latest-job ">
 						<div class="form-group">
 							<textarea class="form-control input-lg" rows="4" id="project" name="project" placeholder="List all the projects; either paste a link here or upload documents below *" required></textarea>
-							<label style="color: red;">Upload Projet Files(not required)</label>
+							<label style="color: red;">Project files can be uploaded at "My portfolio". Links to projects can be pasted in section 7.</label>
 							<!-- <input type="file" name="project_files" class="btn btn-flat btn-danger"> -->
 						</div>	
 						</div>

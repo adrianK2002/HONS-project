@@ -40,5 +40,7 @@
     <a href="delete_preferences.php" class="button">Delete Search Preferences</a>
     <a href="upload_profile_picture.php" class="button">Upload Profile Picture</a>
     <a href="delete_profile_picture.php" class="button">Delete Profile Picture</a>
+    <a href="upload_projects.php" class="button">My Projects</a>
+
 </body>
 </html>

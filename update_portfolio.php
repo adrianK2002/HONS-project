@@ -252,7 +252,7 @@ form {
 							<div class="form-group">
 								<!-- Use <textarea> instead of <input> for multiline input -->
 								<textarea class="form-control input-lg" id="project" name="project" placeholder="List all the projects; either paste a link here or upload documents below *" rows="4"><?= isset($row['project']) ? $row['project'] : ''; ?></textarea>
-								<label style="color: red;">Upload Project Files (not required)</label>
+								<label style="color: red;">Project files can be uploaded at "My portfolio". Links to projects can be pasted in section 7.</label>
 								<!-- <input type="file" name="project_files" class="btn btn-flat btn-danger"> -->
 							</div>
 						</div>

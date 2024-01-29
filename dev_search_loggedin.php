@@ -3,23 +3,10 @@
 require_once('config.php');
 require_once(ROOT_PATH . '/includes/head_section.php');
 
-// Initialize an empty array to store search results
-$results = [];
-
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Fetch selected options from the form
-    $selectedLanguages = isset($_GET['languages']) ? $_GET['languages'] : [];
-    $selectedTools = isset($_GET['tools']) ? $_GET['tools'] : [];
-    $selectedExperience = isset($_GET['experience']) ? $_GET['experience'] : '';
-
-    // Perform search based on selected options (You need to implement this part)
-    // Example: $results = performSearch($selectedLanguages, $selectedTools, $selectedExperience);
-}
-
 ?>
 <?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
 <?php require_once( ROOT_PATH . '/includes/retrieve_data.php') ?>
+
 <!-- Add a link to your CSS file -->
 <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
@@ -190,19 +177,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     <th>Profile Name</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- PHP Loop for displaying search results -->
-                <?php
-                    while ($row = $portfolio_search_test->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>{$row['name']}</td>";
-                        echo "<td><a href='view_portfolio.php?exercise_id={$row['id']}' class='view-btn'>View</a></td>";
-                        echo "<td><a href='view_portfolio.php?exercise_id={$row['id']}' class='view-btn'>Contact</a></td>";
-                        echo "<td><a href='view_portfolio.php?exercise_id={$row['id']}' class='view-btn'>Write Review</a></td>";
-                        echo "<td><a href='view_portfolio.php?exercise_id={$row['id']}' class='view-btn'>Rate</a></td>";
-                        echo "</tr>";
-                    }
-                ?>
+            <?php
+$query1 = "
+SELECT portfolio_name.createdBy, portfolio_info.firstname, portfolio_info.lastname, portfolio_name.selected_portfolio
+FROM portfolio_name
+JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
+WHERE portfolio_name.selected_portfolio = 1";
+
+
+$users = mysqli_query($link, $query1);
+
+if ($users) {
+    ?>
+    <h1 style="color: black">Software Develoeprs</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>View Resume</th>
+        </tr>
+        <?php
+        while ($row = mysqli_fetch_assoc($users)) {
+            // Process each row
+            // $row['firstname'], $row['lastname'] to access column values
+            ?>
+            <tr>
+            <td><?php echo $row['firstname'] . ' ' . $row['lastname']. ' ' . $row['createdBy']; ?></td>
+       
+              <td>
+                
+                        
+                    </td>
+         
+            </tr>
+            <?php
+        }
+        mysqli_free_result($users);
+        ?>
+    </table>
+    <?php
+} else {
+    echo "Error: " . mysqli_error($link);
+}
+
+// Close the connection
+mysqli_close($link);
+?>
+
             </tbody>
         </table>
     </div>
