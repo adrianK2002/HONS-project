@@ -171,7 +171,16 @@ require_once(ROOT_PATH . '/includes/head_section.php');
         <?php
 // Assuming you have established a database connection ($link) before this point
 
-$search_results = mysqli_query($link, "SELECT * FROM portfolio_name WHERE selected_portfolio=1");
+$search_results = mysqli_query($link, "
+    SELECT portfolio_name.*, 
+           portfolio_info.firstname,
+           portfolio_info.lastname
+    FROM portfolio_name
+    
+    JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
+    WHERE portfolio_name.selected_portfolio = 1
+    GROUP BY portfolio_name.createdBy
+");
 
 if ($search_results) {
     ?>
@@ -180,8 +189,9 @@ if ($search_results) {
         <thead>
             <tr>
                 <th>User</th>
+                <th>User Full Name</th>
+                <th>Portfolio Name</th>
                 <th>View Portfolio</th>
-                
             </tr>
         </thead>
         <tbody>
@@ -190,9 +200,13 @@ if ($search_results) {
                 ?>
                 <tr>
                     <td><?php echo $portfolio['createdBy']; ?></td>
+                    <td><?php echo $portfolio['firstname'] . ' ' . $portfolio['lastname']; ?></td>
+                    <td><?php echo $portfolio['name']; ?></td>
                     <td>
                         <!-- Assuming you want to link to a page like "view_portfolio.php" for viewing the portfolio -->
-                        <a href="view_portfolio.php?username=<?php echo $portfolio['createdBy']; ?>" class="view-btn">View Portfolio</a>
+                        <?php while ($row = $results->fetch_assoc()) { ?>
+                        <a href="view_portfolio.php?exercise_id=<?php echo $row['id']?>" class="view-btn">View</a>
+                        <?php } ?>
                     </td>
                 </tr>
                 <?php
