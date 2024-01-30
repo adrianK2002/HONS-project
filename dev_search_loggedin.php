@@ -128,48 +128,55 @@ require_once(ROOT_PATH . '/includes/head_section.php');
 
     <div class="container">
         <h2>Search Page</h2>
+<div id="search-container">
+    <form method="GET" action="">
+        <select name="language" id="search-filter">
+            <option value="">Select Language</option>
+            <!-- Add options dynamically based on available languages in your database -->
+            <option value="JavaSctipt">JavaSctipt</option>
+            <option value="Python">Python</option>
+            <option value="Java">Java</option>
+            <option value="C#">C#</option>
+            <option value="PHP">PHP</option>
+            <option value="Ruby">Ruby</option>
+            <option value="Swift">Swift</option>
+            <option value="Go">Go</option>
+            <option value="TypeScript">TypeScript</option>
+            <option value="HTML/CSS">HTML/CSS</option>
+        </select>
 
-        <!-- Single form with all filter options -->
-        <form action="index.php" method="get" class="search-form">
-            <div class="filter-section">
-                <label>Select Programming Languages:</label><br>
-                <input type="checkbox" name="languages[]" value="javascript"> JavaScript<br>
-                <input type="checkbox" name="languages[]" value="python"> Python<br>
-                <input type="checkbox" name="languages[]" value="java"> Java<br>
-                <input type="checkbox" name="languages[]" value="csharp"> C#<br>
-                <input type="checkbox" name="languages[]" value="php"> PHP<br>
-                <input type="checkbox" name="languages[]" value="ruby"> Ruby<br>
-                <input type="checkbox" name="languages[]" value="swift"> Swift<br>
-                <input type="checkbox" name="languages[]" value="go"> Go<br>
-                <input type="checkbox" name="languages[]" value="typescript"> TypeScript<br>
-                <input type="checkbox" name="languages[]" value="htmlcss"> HTML/CSS<br>
-            </div>
+        <select name="tool" id="search-filter">
+            <option value="">Select Tool</option>
+            <!-- Add options dynamically based on available tools in your database -->
+            <option value="Git">Git</option>
+            <option value="Docker">Docker</option>
+            <option value="Visual Studio Code">Visual Studio Code</option>
+            <option value="IntelliK IDEA">IntelliK IDEA</option>
+            <option value="Eclipse">Eclipse</option>
+        </select>
 
-            <div class="filter-section">
-                <label>Select Software Tools:</label><br>
-                <input type="checkbox" name="tools[]" value="git"> Git<br>
-                <input type="checkbox" name="tools[]" value="docker"> Docker<br>
-                <input type="checkbox" name="tools[]" value="vscode"> Visual Studio Code<br>
-                <input type="checkbox" name="tools[]" value="intellij"> IntelliJ IDEA<br>
-                <input type="checkbox" name="tools[]" value="eclipse"> Eclipse<br>
-            </div>
+        <select name="experience" id="search-filter">
+            <option value="">Select Experience</option>
+            <!-- Add options dynamically based on available experience levels in your database -->
+            <option value="1-2">1-2 years</option>
+            <option value="3-5">3-5 years</option>
+            <option value="6-10">6-10 years</option>
+            <option value="11-15">11-15 years</option>
+            <option value="15+">15+ years</option>
+    
+        </select>
 
-            <div class="filter-section">
-                <label>Select Experience Level:</label><br>
-                <label><input type="radio" name="experience" value="1-2"> 1-2 years</label>
-                <label><input type="radio" name="experience" value="3-5"> 3-5 years</label>
-                <label><input type="radio" name="experience" value="6-10"> 6-10 years</label>
-                <label><input type="radio" name="experience" value="11-15"> 11-15 years</label>
-                <label><input type="radio" name="experience" value="15+"> 15+ years</label>
-            </div>
+        <button type="submit" id="search-button">Filter</button>
+    </form>
+</div>
 
-            <br>
-
-            <input type="submit" value="Search" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
-
-        </form>
         <?php
 // Assuming you have established a database connection ($link) before this point
+$results1 = mysqli_query($link, "
+    SELECT * 
+    FROM portfolio_name 
+    WHERE selected_portfolio = 1
+");
 
 $search_results = mysqli_query($link, "
     SELECT portfolio_name.*, 
@@ -182,32 +189,80 @@ $search_results = mysqli_query($link, "
     GROUP BY portfolio_name.createdBy
 ");
 
-if ($search_results) {
+        // Constructing the WHERE clause
+        $where_clause = !empty($where_conditions) ? "WHERE " . implode(' AND ', $where_conditions) : '';
+
+        // Adding the WHERE clause to the SQL query
+        $search_results = mysqli_query($link, "
+            SELECT portfolio_name.*, 
+                   portfolio_info.firstname,
+                   portfolio_info.lastname
+            FROM portfolio_name
+            
+            JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
+            $where_clause
+            GROUP BY portfolio_name.createdBy
+        ");
+
+  if ($search_results) {
     ?>
     <h1 style="color: black">Software Developers</h1>
     <table class="styled-table">
         <thead>
             <tr>
-                <th>User</th>
                 <th>User Full Name</th>
                 <th>Portfolio Name</th>
+                <th>View Full Profile (not working yet)</th>
                 <th>View Portfolio</th>
+                <th>Skills</th>
+                <th>Experience</th>
+                <th>View User Projects (not working yet)</th>
+                <th>Reviews (not working yet)</th>
             </tr>
         </thead>
         <tbody>
             <?php
             while ($portfolio = mysqli_fetch_assoc($search_results)) {
+                // Fetch skills for the current user from the user_preferences table
+                $query_skills = "SELECT language, tool, experience FROM user_preferences WHERE createdBy = ?";
+                $stmt_skills = mysqli_prepare($link, $query_skills);
+
+                if ($stmt_skills) {
+                    mysqli_stmt_bind_param($stmt_skills, 'i', $portfolio['createdBy']);
+                    mysqli_stmt_execute($stmt_skills);
+                    mysqli_stmt_bind_result($stmt_skills, $language, $tool, $experience);
+
+                    // Check if skills are found
+                    if (mysqli_stmt_fetch($stmt_skills)) {
+                        $skills_html = "<strong>Languages:</strong> $language<br>";
+                        $skills_html .= "<strong>Tools:</strong> $tool<br>";
+
+                        // Check if experience is set
+                        $experience_html = isset($experience) ? "<strong>Experience:</strong> $experience years" : "No experience specified";
+                    } else {
+                        $skills_html = "No skills found";
+                        $experience_html = "No experience specified";
+                    }
+
+                    // Close the skills statement
+                    mysqli_stmt_close($stmt_skills);
+                } else {
+                    $skills_html = "Error fetching skills";
+                    $experience_html = "Error fetching experience";
+                }
                 ?>
+                <!-- Displaying search results -->
                 <tr>
-                    <td><?php echo $portfolio['createdBy']; ?></td>
                     <td><?php echo $portfolio['firstname'] . ' ' . $portfolio['lastname']; ?></td>
                     <td><?php echo $portfolio['name']; ?></td>
+                    <td></td>
                     <td>
-                        <!-- Assuming you want to link to a page like "view_portfolio.php" for viewing the portfolio -->
-                        <?php while ($row = $results->fetch_assoc()) { ?>
-                        <a href="view_portfolio.php?exercise_id=<?php echo $row['id']?>" class="view-btn">View</a>
-                        <?php } ?>
+                        <a href="view_portfolio1.php?exercise_id=<?php echo $portfolio['id']?>" class="view-btn">View</a>
                     </td>
+                    <td><?php echo $skills_html; ?></td>
+                    <td><?php echo $experience_html; ?></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <?php
             }
@@ -223,4 +278,6 @@ if ($search_results) {
 // Close the connection
 mysqli_close($link);
 ?>
+<!-- Your existing JavaScript code for handling AJAX -->
 
+</body>

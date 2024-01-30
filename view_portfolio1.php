@@ -60,7 +60,7 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = $portfolio_info->fetch_assoc()) { ?>
+            <?php while ($row = $portfolio_info1->fetch_assoc()) { ?>
                     <tr>
                         <th>Full Name</th>
                         <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>

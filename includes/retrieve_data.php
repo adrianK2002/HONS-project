@@ -4,8 +4,8 @@
 	
 	
 	$results = mysqli_query($link, "SELECT * FROM portfolio_name WHERE createdBy={$_SESSION['id']}");
-	$results1 = mysqli_query($link, "SELECT * FROM portfolio_name WHERE createdBy={$_SESSION['id']} AND selected_portfolio=1");
-	$search_results = mysqli_query($link, "SELECT * FROM portfolio_name WHERE selected_portfolio=1");
+	
+	
 	//$users = mysqli_query($link, "SELECT * FROM portfolio_name WHERE selected_portfolio=1");
 	$portfolio_search_test = mysqli_query($link, "SELECT * FROM portfolio_name");
 	$newresults = mysqli_query($link, "SELECT * FROM portfolio_name WHERE createdBy={$_SESSION['id']} AND created_at >= NOW() - INTERVAL 5 MINUTE");
@@ -14,7 +14,9 @@
 	if (isset($_GET['exercise_id'])) {
 	$portfolio_info = mysqli_query($link, "SELECT * FROM portfolio_info WHERE createdBy={$_SESSION['id']} AND portfolio_id={$_GET['exercise_id']}");
 	}
-
+	if (isset($_GET['exercise_id'])) {
+		$portfolio_info1 = mysqli_query($link, "SELECT * FROM portfolio_info WHERE createdBy AND portfolio_id={$_GET['exercise_id']}");
+		}
 
 
 	if (isset($_POST['submit'])) {
