@@ -2,7 +2,7 @@
 // Include the configuration file and any other necessary files
 require_once('config.php');
 require_once(ROOT_PATH . '/includes/head_section.php');
-
+require_once(ROOT_PATH . '/includes/ratings.php');
 ?>
 <?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
 <?php require_once( ROOT_PATH . '/includes/retrieve_data.php') ?>
@@ -171,6 +171,7 @@ require_once(ROOT_PATH . '/includes/head_section.php');
 </div>
 
         <?php
+        
 // Assuming you have established a database connection ($link) before this point
 $results1 = mysqli_query($link, "
     SELECT * 
@@ -217,7 +218,7 @@ $search_results = mysqli_query($link, "
                 <th>Skills</th>
                 <th>Experience</th>
                 <th>View User Projects (not working yet)</th>
-                <th>Reviews (not working yet)</th>
+                <th>Rating (not working yet)</th>
             </tr>
         </thead>
         <tbody>
@@ -261,8 +262,8 @@ $search_results = mysqli_query($link, "
                     </td>
                     <td><?php echo $skills_html; ?></td>
                     <td><?php echo $experience_html; ?></td>
-                    <td></td>
-                    <td></td>
+                    <td><a href="#" class="view-btn">View</a></td>
+                    <td><?php echo number_format($averageRating, 1); ?> out of 5 <a href="rate_profile.php>" class="view-btn">Rate Profile</a></td>
                 </tr>
                 <?php
             }
