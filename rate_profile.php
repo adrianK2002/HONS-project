@@ -79,6 +79,6 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
         <div class="average-rating">
             Average Rating: <?php echo number_format($averageRating, 1); ?> out of 5
         </div>
-
+        
     </body>
     </html>
