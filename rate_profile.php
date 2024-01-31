@@ -29,7 +29,7 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
             </div>
 
             <div class="review-container">
-                <label for="review">Leave a Review:</label>
+                <label for="review">Leave a Review (not required):</label>
                 <textarea name="review" id="review" rows="4" cols="50"></textarea>
             </div>
 
