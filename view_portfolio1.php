@@ -123,9 +123,9 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
         <tbody>
             <?php 
             // Reset the internal pointer to the beginning of the result set
-            $portfolio_info->data_seek(0);
+            $portfolio_info1->data_seek(0);
 
-            while ($row = $portfolio_info->fetch_assoc()) { ?>
+            while ($row = $portfolio_info1->fetch_assoc()) { ?>
                 <tr>
                     <td colspan="4"><?php echo $row['aboutme']; ?></td>
                 </tr>
@@ -142,9 +142,9 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
         <tbody>
             <?php 
             // Reset the internal pointer to the beginning of the result set
-            $portfolio_info->data_seek(0);
+            $portfolio_info1->data_seek(0);
                 
-            while ($row = $portfolio_info->fetch_assoc()) { ?>
+            while ($row = $portfolio_info1->fetch_assoc()) { ?>
             <tr>
                         <th>Highest Qualification</th>
                         <td colspan="1"><?php echo $row['qualification']; ?></td>
@@ -185,9 +185,9 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
         <tbody>
             <?php 
             // Reset the internal pointer to the beginning of the result set
-            $portfolio_info->data_seek(0);
+            $portfolio_info1->data_seek(0);
                 
-            while ($row = $portfolio_info->fetch_assoc()) { ?>
+            while ($row = $portfolio_info1->fetch_assoc()) { ?>
             <tr>
                         <th>School Name</th>
                         <td colspan="1"><?php echo $row['highschool_name']; ?></td>
@@ -240,9 +240,9 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
         <tbody>
             <?php 
             // Reset the internal pointer to the beginning of the result set
-            $portfolio_info->data_seek(0);
+            $portfolio_info1->data_seek(0);
                 
-            while ($row = $portfolio_info->fetch_assoc()) { ?>
+            while ($row = $portfolio_info1->fetch_assoc()) { ?>
             <th class="section-header" colspan="4">Current Employer</th>
             <tr>
                         <th>Job Title</th>
@@ -271,9 +271,9 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
         <table class="resume-table">
         <?php 
             // Reset the internal pointer to the beginning of the result set
-            $portfolio_info->data_seek(0);
+            $portfolio_info1->data_seek(0);
                 
-            while ($row = $portfolio_info->fetch_assoc()) { ?>
+            while ($row = $portfolio_info1->fetch_assoc()) { ?>
         <thead>
             <tr>
                 <th class="section-header" colspan="4">Skills</th>
@@ -287,9 +287,9 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
     <table class="resume-table">
     <?php 
             // Reset the internal pointer to the beginning of the result set
-            $portfolio_info->data_seek(0);
+            $portfolio_info1->data_seek(0);
                 
-            while ($row = $portfolio_info->fetch_assoc()) { ?>
+            while ($row = $portfolio_info1->fetch_assoc()) { ?>
         <thead>
             <tr>
                 <th class="section-header" colspan="4">Projects</th>
@@ -304,9 +304,9 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
     <table class="resume-table">
     <?php 
             // Reset the internal pointer to the beginning of the result set
-            $portfolio_info->data_seek(0);
+            $portfolio_info1->data_seek(0);
                 
-            while ($row = $portfolio_info->fetch_assoc()) { ?>
+            while ($row = $portfolio_info1->fetch_assoc()) { ?>
         <thead>
             <tr>
                 <th class="section-header" colspan="4">Hobbies</th>
@@ -320,9 +320,9 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
     <table class="resume-table">
     <?php 
             // Reset the internal pointer to the beginning of the result set
-            $portfolio_info->data_seek(0);
+            $portfolio_info1->data_seek(0);
                 
-            while ($row = $portfolio_info->fetch_assoc()) { ?>
+            while ($row = $portfolio_info1->fetch_assoc()) { ?>
         <thead>
             <tr>
                 <th class="section-header" colspan="4">References</th>

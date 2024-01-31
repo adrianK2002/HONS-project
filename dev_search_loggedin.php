@@ -2,7 +2,7 @@
 // Include the configuration file and any other necessary files
 require_once('config.php');
 require_once(ROOT_PATH . '/includes/head_section.php');
-require_once(ROOT_PATH . '/includes/ratings.php');
+require_once(ROOT_PATH . '/includes/rate_profile.php');
 ?>
 <?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
 <?php require_once( ROOT_PATH . '/includes/retrieve_data.php') ?>
@@ -10,11 +10,7 @@ require_once(ROOT_PATH . '/includes/ratings.php');
 <!-- Add a link to your CSS file -->
 <link rel="stylesheet" type="text/css" href="styles.css">
 <style>
-    /* Resetting default margin and padding for better consistency */
-    body, h1, h2, h3, p, ul, li {
-      margin: 0;
-      padding: 0;
-    }
+
 
     /* Body styling */
     body {
@@ -127,12 +123,13 @@ require_once(ROOT_PATH . '/includes/ratings.php');
     <!-- //navbar -->
 
     <div class="container">
-        <h2>Search Page</h2>
+        <h2>Filter Develoeprs</h2>
 <div id="search-container">
     <form method="GET" action="">
         <select name="language" id="search-filter">
             <option value="">Select Language</option>
             <!-- Add options dynamically based on available languages in your database -->
+            <option value="None">None</option>
             <option value="JavaSctipt">JavaSctipt</option>
             <option value="Python">Python</option>
             <option value="Java">Java</option>
@@ -148,6 +145,7 @@ require_once(ROOT_PATH . '/includes/ratings.php');
         <select name="tool" id="search-filter">
             <option value="">Select Tool</option>
             <!-- Add options dynamically based on available tools in your database -->
+            <option value="None">None</option>
             <option value="Git">Git</option>
             <option value="Docker">Docker</option>
             <option value="Visual Studio Code">Visual Studio Code</option>
@@ -158,11 +156,23 @@ require_once(ROOT_PATH . '/includes/ratings.php');
         <select name="experience" id="search-filter">
             <option value="">Select Experience</option>
             <!-- Add options dynamically based on available experience levels in your database -->
+            <option value="None">None</option>
             <option value="1-2">1-2 years</option>
             <option value="3-5">3-5 years</option>
             <option value="6-10">6-10 years</option>
             <option value="11-15">11-15 years</option>
             <option value="15+">15+ years</option>
+    
+        </select>
+        <select name="rating" id="search-filter">
+            <option value="">Select Rating</option>
+            <!-- Add options dynamically based on available experience levels in your database -->
+            <option value="5">5</option>
+            <option value="4+">4+</option>
+            <option value="3+">3+</option>
+            <option value="2+">2+</option>
+            <option value="1+">1+</option>
+            <option value="0+">0+</option>
     
         </select>
 
@@ -211,14 +221,15 @@ $search_results = mysqli_query($link, "
     <table class="styled-table">
         <thead>
             <tr>
-                <th>User Full Name</th>
-                <th>Portfolio Name</th>
-                <th>View Full Profile (not working yet)</th>
-                <th>View Portfolio</th>
+                <th>Developer's Full Name</th>
                 <th>Skills</th>
                 <th>Experience</th>
+                <th>Rating</th>
+                <th>Reviews</th>
+                <th>View Full Profile (not working yet)</th>
+                <th>View Portfolio</th>                
                 <th>View User Projects (not working yet)</th>
-                <th>Rating (not working yet)</th>
+                <th>Review and Rate Developer (not working yet)</th>
             </tr>
         </thead>
         <tbody>
@@ -252,19 +263,39 @@ $search_results = mysqli_query($link, "
                     $experience_html = "Error fetching experience";
                 }
                 ?>
-                <!-- Displaying search results -->
-                <tr>
-                    <td><?php echo $portfolio['firstname'] . ' ' . $portfolio['lastname']; ?></td>
-                    <td><?php echo $portfolio['name']; ?></td>
-                    <td></td>
-                    <td>
-                        <a href="view_portfolio1.php?exercise_id=<?php echo $portfolio['id']?>" class="view-btn">View</a>
-                    </td>
-                    <td><?php echo $skills_html; ?></td>
-                    <td><?php echo $experience_html; ?></td>
-                    <td><a href="#" class="view-btn">View</a></td>
-                    <td><?php echo number_format($averageRating, 1); ?> out of 5 <a href="rate_profile.php>" class="view-btn">Rate Profile</a></td>
-                </tr>
+                <?php
+                  // Calculate the average rating
+          // Retrieve ratings for the specific portfolio_id from the database
+          $portfolio_id = $portfolio['id'];
+          $sql = "SELECT rating FROM ratings WHERE portfolio_id = $portfolio_id";
+          $result = mysqli_query($link, $sql);
+
+          $ratings = [];
+
+          if ($result->num_rows > 0) {
+              // Fetch ratings from the result set
+              while ($row = $result->fetch_assoc()) {
+                  $ratings[] = (int)$row['rating'];
+              }
+          }
+
+          // Calculate the average rating
+          $averageRating = empty($ratings) ? 0 : array_sum($ratings) / count($ratings);
+          ?>
+          <!-- Displaying search results -->
+          <tr>
+              <td><?php echo $portfolio['firstname'] . ' ' . $portfolio['lastname']; ?></td>
+              <td><?php echo $skills_html; ?></td>
+              <td><?php echo $experience_html; ?></td>
+              <td><?php echo number_format($averageRating, 1); ?></td>
+              <td><a href="reviews.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View</a></td>
+              <td></td>
+              <td>
+                  <a href="view_portfolio1.php?exercise_id=<?php echo $portfolio['id']?>" class="view-btn">View</a>
+              </td>
+              <td><a href="#" class="view-btn">View</a></td>
+              <td><a href="rate_profile.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">Rate and Review Profile</a></td>
+          </tr>
                 <?php
             }
             mysqli_free_result($search_results);

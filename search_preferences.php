@@ -136,6 +136,7 @@ if ($createdBy) {
         <form action="includes/user_preferences.php" method="post" class="profile-form" onsubmit="return validateForm()">
             <div class="filter-section">
                 <label>Select Programming Languages:</label><br>
+                <input type="checkbox" name="languages[]" value=" None"> None<br>
                 <input type="checkbox" name="languages[]" value=" Javascript"> JavaScript<br>
                 <input type="checkbox" name="languages[]" value=" Python "> Python<br>
                 <input type="checkbox" name="languages[]" value=" Java"> Java<br>
@@ -150,6 +151,7 @@ if ($createdBy) {
 
             <div class="filter-section">
                 <label>Select Software Tools:</label><br>
+                <input type="checkbox" name="tools[]" value=" None"> None<br>
                 <input type="checkbox" name="tools[]" value=" Git"> Git<br>
                 <input type="checkbox" name="tools[]" value=" Docker"> Docker<br>
                 <input type="checkbox" name="tools[]" value=" Visual Studio Code"> Visual Studio Code<br>
@@ -159,6 +161,7 @@ if ($createdBy) {
 
             <div class="filter-section">
                 <label>Select Experience Level:</label><br>
+                <label><input type="radio" name="experience" value="None"> None</label>
                 <label><input type="radio" name="experience" value="1-2"> 1-2 years</label>
                 <label><input type="radio" name="experience" value="3-5"> 3-5 years</label>
                 <label><input type="radio" name="experience" value="6-10"> 6-10 years</label>
