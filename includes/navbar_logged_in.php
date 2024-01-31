@@ -8,7 +8,7 @@
 	  <li><a class="active" href="dashboard.php">Home</a></li>
 	  <li><a class="active" href="logout.php">Logout</a></li>
 	  <li><a href="myportfolio.php">My Portfolio</a></li>
-	  <li><a href="rate_profile_test.php">My Reviews</a></li>
+	  <li><a href="my_reviews.php">My Reviews</a></li>
 	  <li><a href="livechat.php">Live chat with other Developers!</a></li>
 	  <li><a href="viewmyprofile.php">View my Proflie</a>
 	  <li><a href="privacy_policy_loggedin.php">Privacy Policy</a></li>

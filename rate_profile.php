@@ -69,7 +69,7 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
                 
             </div>
             <div>
-            <textarea name="review" id="review">Write a review about developer!(not required)</textarea>
+            <textarea name="review" id="review"></textarea>
             </div>
             <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
             <input type="hidden" name="portfolio_id" value="<?= $portfolio_id; ?>">
