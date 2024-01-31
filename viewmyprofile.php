@@ -247,7 +247,7 @@ error_reporting(NONE);*/
  }  ?>
 
 <div class="profile-container">
-    <h3>Software Develoepr Skills</h3>
+    <h3>Software Developer Skills</h3>
     <table class="styled-table">
         <?php
         $previousUserId = null;

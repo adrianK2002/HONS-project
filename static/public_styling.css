@@ -12,7 +12,7 @@ body {
 }
 /* HEADINGS DEFAULT */
 h1 { color: white;
- font-family: 'Averia Serif Libre', cursive; 
+ font-family: 'Helvetica', cursive; 
  font-size: 40px;
  margin-left: 30px;
  margin-bottom: 5px;
@@ -21,7 +21,7 @@ a { text-decoration: none; }
 
 /*paragraph*/
 p { color: black;
- font-family: 'Averia Serif Libre' ; 
+ font-family: 'Helvetica' ; 
  margin-left: 30px;
  }
 
@@ -40,7 +40,7 @@ p { color: black;
 }
 .navbar ul li {
     float: left;
-    font-family: 'Averia Serif Libre' , cursive;
+    font-family: 'Helvetica' , cursive;
 	border: 1px solid black;
     margin-left: 5px;
 	margin-right: 5px;
@@ -69,7 +69,7 @@ p { color: black;
 }
 .form {
 	color: white;
-	font-family: 'Averia Serif Libre' ; 
+	font-family: 'Helvetica' ; 
    background-color: #0066CC;
 }
 
@@ -84,7 +84,7 @@ p { color: black;
 	border-style: solid;
 	border-color: black; 
 	background-color: #0066CC;
-	font-family: 'Averia Serif Libre', cursive; 
+	font-family: 'Helvetica', cursive; 
 }
 
  #wrapper,
@@ -195,7 +195,7 @@ p { color: black;
   }
 
 table.paleBlueRows {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Helvetica", Times, serif;
   border: 1px solid #FFFFFF;
   width: 350px;
   height: 200px;

@@ -116,14 +116,19 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
     .view-btn:hover {
       background-color: #45a049;
     }
+    #search-container {
+    display: none;
+    /* Other styles... */
+}
   </style>
 <body>
     <!-- navbar -->
     <?php include(ROOT_PATH . '/includes/navbar_logged_in.php') ?>
     <!-- //navbar -->
 
-    <div class="container">
+    <div class="container" style="text-align: center">
         <h2>Filter Develoeprs</h2>
+        <button type="button" id="reveal-options-button">Reveal Options</button>
 <div id="search-container">
     <form method="GET" action="">
         <select name="language" id="search-filter">
@@ -179,7 +184,19 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
         <button type="submit" id="search-button">Filter</button>
     </form>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get references to the button and search container
+        var revealButton = document.getElementById("reveal-options-button");
+        var searchContainer = document.getElementById("search-container");
 
+        // Add a click event listener to the button
+        revealButton.addEventListener("click", function () {
+            // Toggle the display property of the search container
+            searchContainer.style.display = (searchContainer.style.display === "none" || searchContainer.style.display === "") ? "block" : "none";
+        });
+    });
+</script>
         <?php
         
 // Assuming you have established a database connection ($link) before this point
@@ -217,7 +234,8 @@ $search_results = mysqli_query($link, "
 
   if ($search_results) {
     ?>
-    <h1 style="color: black">Software Developers</h1>
+    <h1 style="color: black; font-family: Helvetica, Arial, sans-serif;text-align: center">Software Developers</h1>
+
     <table class="styled-table">
         <thead>
             <tr>
@@ -226,10 +244,11 @@ $search_results = mysqli_query($link, "
                 <th>Experience</th>
                 <th>Rating</th>
                 <th>Reviews</th>
-                <th>View Full Profile (not working yet)</th>
+                <!-- <th>View Full Profile (not working yet)</th> -->
                 <th>View Portfolio</th>                
                 <th>View User Projects (not working yet)</th>
-                <th>Review and Rate Developer (not working yet)</th>
+                <th>Review and Rate Developer</th>
+                <th>Contact Developer</th>
             </tr>
         </thead>
         <tbody>
@@ -289,12 +308,13 @@ $search_results = mysqli_query($link, "
               <td><?php echo $experience_html; ?></td>
               <td><?php echo number_format($averageRating, 1); ?></td>
               <td><a href="reviews.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View</a></td>
-              <td></td>
+              <!-- <td></td> -->
               <td>
                   <a href="view_portfolio1.php?exercise_id=<?php echo $portfolio['id']?>" class="view-btn">View</a>
               </td>
               <td><a href="#" class="view-btn">View</a></td>
               <td><a href="rate_profile.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">Rate and Review Profile</a></td>
+              <td></td>
           </tr>
                 <?php
             }
