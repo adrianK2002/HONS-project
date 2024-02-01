@@ -3,6 +3,7 @@
 <?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
 <?php require_once( ROOT_PATH . '/includes/retrieve_data.php') ?>
 <?php require_once( ROOT_PATH . '/includes/del_port.php') ?>
+<?php require_once( ROOT_PATH . '/includes/project.php') ?>
 <?php
 
 ?>

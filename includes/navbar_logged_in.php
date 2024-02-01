@@ -5,11 +5,11 @@
 	</div>
 	<ul>
 	  <li><a class="active" href="dashboard.php">Home</a></li>
-	  <li><a class="active" href="logout.php">Logout</a></li>
+	  
 	  <li><a href="viewmyprofile.php">View my Proflie</a>
 	  <li><a href="myportfolio.php">My Profile Settings</a></li>
 	  <!-- <li><a href="livechat.php">Live chat with other Developers!</a></li> -->
-	  
+	  <li><a class="active" href="logout.php">Logout</a></li>
 	  <!-- <li><a href="privacy_policy_loggedin.php">Privacy Policy</a></li> -->
 	</ul>
 

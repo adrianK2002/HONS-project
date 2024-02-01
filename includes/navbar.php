@@ -5,7 +5,6 @@
 	<ul>
 	  <li><a class="active" href="login.php">Login</a></li>
 	  <li><a class="active" href="register.php">Register</a></li>
-	  <li><a class="active" href="dev_search.php">Search for Software Developers</a></li>
 	  <li><a href="privacy_policy.php">Privacy Policy</a></li>
 	</ul>
 </div>
