@@ -1,45 +1,73 @@
 <?php require_once('config.php') ?>
 <?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
 <?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
+<?php require_once( ROOT_PATH . '/config.php') ?>
 
  <body>
 	<!-- navbar -->
 	<?php include( ROOT_PATH . '/includes/navbar_logged_in.php') ?>
 	<!-- //navbar -->
-	<?php
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messenger Messages</title>
+</head>
+<body>
 
+<?php
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "recruitment_website";
 
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-// Function to display messages
-function displayMessages($link, $portfolio_id) {
-    $sql = "SELECT id, message, createdBy FROM messenger WHERE portfolio_id = $portfolio_id";
-    $result = $link->query($sql);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo '<div>';
-            echo '<p>' . $row['message'] . '</p>';
-            echo '<p>By: ' . $row['createdBy'] . '</p>';
-            echo '<a href="reply.php?id=' . $row['id'] . '">Reply</a> | ';
-            echo '<a href="delete.php?id=' . $row['id'] . '">Delete</a> | ';
-            echo '<a href="report.php?id=' . $row['id'] . '">Report</a>';
-            echo '</div>';
-        }
-    } else {
-        echo 'No messages found.';
+// Fetch messages sent within the last 48 hours
+$sqlRecent = "SELECT * FROM messenger WHERE created_at >= NOW() - INTERVAL 2 DAY ";
+$resultRecent = $conn->query($sqlRecent);
+
+if ($resultRecent->num_rows > 0) {
+    echo "<h2>Messages received within the last 48 hours:</h2>";
+
+    while ($row = $resultRecent->fetch_assoc()) {
+        displayMessage($row);
     }
+} else {
+    echo "<p>No recent messages.</p>";
 }
 
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle actions based on form submission (e.g., reply, delete, report)
-    // Implement the logic for handling these actions
+// Fetch messages older than 48 hours
+$sqlOlder = "SELECT * FROM messenger WHERE created_at < NOW() - INTERVAL 2 DAY";
+$resultOlder = $conn->query($sqlOlder);
+
+if ($resultOlder->num_rows > 0) {
+    echo "<h2>Messages older than 48 hours:</h2>";
+
+    while ($row = $resultOlder->fetch_assoc()) {
+        displayMessage($row);
+    }
+} else {
+    echo "<p>No older messages.</p>";
 }
 
-// Close the database connection
-$link->close();
+$conn->close();
+
+function displayMessage($row) {
+    echo "<div>";
+    echo "<strong>Sender:</strong> " . $row["createdBy"] . "<br>";
+    echo "<strong>Message:</strong> " . $row["message"] . "<br>";
+    echo "<strong>Timestamp:</strong> " . $row["created_at"] . "<br>";
+    echo "</div><br>";
+}
 ?>
 
-
 </body>
-  </body>
+</html>

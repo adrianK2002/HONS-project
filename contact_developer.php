@@ -94,7 +94,7 @@ $userInfo = mysqli_fetch_assoc($result);
 
                 <textarea name="message" id="message" rows="4" cols="150"></textarea>
             </div>
-
+            <input type="hidden" name="created_at" id="created_at">
             <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
             <input type="hidden" name="portfolio_id" value="<?= $portfolio_id; ?>">
             <input type="submit" value="Send Message!" class="submit-btn">
@@ -102,7 +102,10 @@ $userInfo = mysqli_fetch_assoc($result);
 
     
     </div>
-
+    <script>
+        // JavaScript code to set the current date and time
+        document.getElementById("created_at").value = new Date().toISOString().slice(0, 19).replace("T", " ");
+    </script>
 
 
 </body>

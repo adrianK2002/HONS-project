@@ -128,7 +128,7 @@ form {
 							<input class="form-control input-lg" type="text" id="city" name="city" placeholder="City">
 						</div>	
 							<label for="profile_picture">Profile Picture: PROFILE PICTURE IS OPTIONAL, IT CAN BE UPLOADED LATER</label>
-   					 <
+   					 
 						</div>
 						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 2: About Me</h1>
 						<div class="col-md-6 latest-job ">
@@ -143,6 +143,8 @@ form {
 							<input class="form-control input-lg" type="text" id="qualification" name="qualification" placeholder="Highest Qualification">
 						</div>	
 						<div>
+						
+							<label>Passing Year</label>
 							<input class="form-control input-lg" type="date" id="passingyear" name="passingyear" placeholder="Passing Year">
 						</div>	
 						<br>
@@ -167,10 +169,13 @@ form {
 							<input class="form-control input-lg" type="text" id="highschool_name" name="highschool_name" placeholder="School Name">
 						</div>	
 						<div>
+							
+							<label>Starting date</label>
 							<input class="form-control input-lg" type="date" id="hs_starting_date" name="hs_starting_date" placeholder="Starting Date">
 						</div>	
 						<br>
 						<div>
+							<label>Finishing date</label>
 							<input class="form-control input-lg" type="date" id="hs_fin_date" name="hs_fin_date" placeholder="Finishing Date">
 						</div>	
 						<br>
@@ -185,10 +190,12 @@ form {
 							<input class="form-control input-lg" type="text" id="uni_name" name="uni_name" placeholder="School Name">
 						</div>	
 						<div>
+						<label>Starting date</label>
 							<input class="form-control input-lg" type="date" id="uni_starting_date" name="uni_starting_date" placeholder="Starting Date">
 						</div>	
 						<br>
 						<div>
+						<label>Finishing date</label>
 							<input class="form-control input-lg" type="date" id="uni_fin_date" name="uni_fin_date" placeholder="Finishing Date">
 						</div>	
 						<br>
@@ -211,6 +218,7 @@ form {
 						</div>	
 						<br>
 						<div>
+							<label>Starting Date</label>
 							<input class="form-control input-lg" type="date" id="emp_starting_date" name="emp_starting_date" placeholder="Starting Date">
 						</div>	
 						<br>

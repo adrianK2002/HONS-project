@@ -21,11 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = isset($_POST['message']) ? $conn->real_escape_string($_POST['message']) : '';
     $createdBy = isset($_POST['createdBy']) ? $conn->real_escape_string($_POST['createdBy']) : '';
     $portfolio_id = isset($_POST['portfolio_id']) ? (int)$_POST['portfolio_id'] : 0;
+    $created_at = mysqli_real_escape_string($link, $_POST['created_at']);
 
     // Validate the input if needed
 
     // Save the rating and createdBy to the database for the specific portfolio_id
-    $sql = "INSERT INTO messanger (message, createdBy, portfolio_id) VALUES ('$message', '$createdBy', $portfolio_id)";
+    $sql = "INSERT INTO messenger (message, createdBy, portfolio_id,created_at) VALUES ('$message', '$createdBy', $portfolio_id, '$created_at')";
     if ($conn->query($sql) === TRUE) {
         // Display a new window with the success message
         echo '<script>window.open("", "_blank").document.write("<h1>Message sent!</h1>");</script>';
