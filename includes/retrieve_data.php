@@ -54,3 +54,5 @@ if ($users) {
 } else {
     echo "Error: " . mysqli_error($link);
 }
+ $portfolio_id = isset($_GET['exercise_id']) ? (int)$_GET['exercise_id'] : 0;
+$getSelectedPortfolio1 = mysqli_query($link, "SELECT * FROM portfolio_info WHERE portfolio_id = $portfolio_id");

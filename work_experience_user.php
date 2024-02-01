@@ -199,5 +199,7 @@ error_reporting(NONE);*/
  }  ?>
 
 
-
+<div style="text-align: center; margin-top: 20px;">
+    <a href="view_user_profile.php" class="button-link">Go Back to Portfolio</a>
+</div>
 </body>

@@ -245,6 +245,7 @@ $search_results = mysqli_query($link, "
                 <th>Rating</th>
                 <th>Reviews</th>
                 <!-- <th>View Full Profile (not working yet)</th> -->
+                <th>View Profile</th>           
                 <th>View Portfolio</th>                
                 <th>View User Projects (not working yet)</th>
                 <th>Review and Rate Developer</th>
@@ -307,13 +308,15 @@ $search_results = mysqli_query($link, "
               <td><?php echo $skills_html; ?></td>
               <td><?php echo $experience_html; ?></td>
               <td><?php echo number_format($averageRating, 1); ?></td>
-              <td><a href="reviews.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View</a></td>
-              <!-- <td></td> -->
+              <td><a href="reviews.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View Reviews</a></td>
+              <td><a href="view_user_profile.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View Profile</a></td>
               <td>
-                  <a href="view_portfolio1.php?exercise_id=<?php echo $portfolio['id']?>" class="view-btn">View</a>
+                  <a href="view_portfolio1.php?exercise_id=<?php echo $portfolio['id']?>" class="view-btn">View Portfolio</a>
               </td>
-              <td><a href="#" class="view-btn">View</a></td>
+              <td><a href=".php" class="view-btn">View Projects</a></td>
               <td><a href="rate_profile.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">Rate and Review Profile</a></td>
+              <td><a href="contact_developer.php?exercise_id=<?php echo $portfolio['id']; ?>"class="view-btn">Contact Developer</a></td>
+
               <td></td>
           </tr>
                 <?php

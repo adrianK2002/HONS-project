@@ -155,38 +155,68 @@ error_reporting(NONE);*/
     </style>
   <?php if (isset($getSelectedPortfolio) && mysqli_num_rows($getSelectedPortfolio) > 0) { ?>
     <table class="resume-table">
-
+        <thead>
+            <tr>
+                <th class="section-header" colspan="4">Education</th>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+                <th class="section-header" colspan="4">Highschool/Middleschool</th>
+            </tr>
+        </thead>
         <tbody>
             <?php 
             // Reset the internal pointer to the beginning of the result set
             $portfolio_info->data_seek(0);
                 
             while ($row = $portfolio_info->fetch_assoc()) { ?>
-            <th class="section-header" colspan="4">Current Employer</th>
             <tr>
-                        <th>Job Title</th>
-                        <td colspan="1"><?php echo $row['current_job_title']; ?></td>
-            </tr>
-            <tr>
-                        <th>Employer Name</th>
-                        <td colspan="1"><?php echo $row['current_employer_name']; ?></td>
+                        <th>School Name</th>
+                        <td colspan="1"><?php echo $row['highschool_name']; ?></td>
             </tr>
             <tr>
                         <th>Starting Date</th>
-                        <td colspan="1"><?php echo $row['emp_starting_date']; ?></td>
+                        <td colspan="1"><?php echo $row['hs_starting_date']; ?></td>
             </tr>
             <tr>
-                        <th>Responsibilities</th>
-                        <td colspan="1"><?php echo $row['respo']; ?></td>
+                        <th>Finishing Date</th>
+                        <td colspan="1"><?php echo $row['hs_fin_date']; ?></td>
             </tr>
-
-            <th class="section-header" colspan="4">Past Employers</th>
             <tr>
-                        <th>Relevant past employers/organisations with duration and job title</th>
-                        <td colspan="1"><?php echo $row['extra_emp']; ?></td>
+                        <th>Courses and Grades</th>
+                        <td colspan="1"><?php echo $row['hs_qualification']; ?></td>
             </tr>
+            <thead>
+            <tr>
+                <th class="section-header" colspan="4">Higher Education(University/College)</th>
+            </tr>
+            <tr>
+                        <th>School Name</th>
+                        <td colspan="1"><?php echo $row['uni_name']; ?></td>
+            </tr>
+            <tr>
+                        <th>Starting Date</th>
+                        <td colspan="1"><?php echo $row['uni_starting_date']; ?></td>
+            </tr>
+            <tr>
+                        <th>Finishing Date</th>
+                        <td colspan="1"><?php echo $row['uni_fin_date']; ?></td>
+            </tr>
+            <tr>
+                        <th>Courses and Grades</th>
+                        <td colspan="1"><?php echo $row['uni_qualification']; ?></td>
+            </tr>
+        </thead>
+ 
             <?php } ?>
         </tbody>
+    </table>
+
+
+
+      
+
 
 
   
@@ -197,7 +227,6 @@ error_reporting(NONE);*/
  <?php } else {
     echo "Please select a portfolio to show.";
  }  ?>
-
 
 
 </body>
