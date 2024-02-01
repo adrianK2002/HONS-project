@@ -26,9 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Save the rating and createdBy to the database for the specific portfolio_id
     $sql = "INSERT INTO messanger (message, createdBy, portfolio_id) VALUES ('$message', '$createdBy', $portfolio_id)";
-    
     if ($conn->query($sql) === TRUE) {
-        echo "Message inserted successfully";
+        // Display a new window with the success message
+        echo '<script>window.open("", "_blank").document.write("<h1>Message sent!</h1>");</script>';
+
+        // Redirect to dev_search_loggedin.php with a success message
+        header("Location: dev_search_loggedin.php?message=sent");
+        exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

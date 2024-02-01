@@ -41,6 +41,7 @@
     <a href="upload_profile_picture.php" class="button">Upload Profile Picture</a>
     <a href="delete_profile_picture.php" class="button">Delete Profile Picture</a>
     <a href="upload_projects.php" class="button">My Projects(not working yet)</a>
+    <a href="my_reviews.php" class="button">My Reviews</a>
 
 </body>
 </html>
