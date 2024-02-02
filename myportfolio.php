@@ -58,6 +58,19 @@
         .button:hover {
             background-color: #f9f9f9;
         }
+        .delete-btn {
+        padding: 10px 20px;
+        background-color: #f44336;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .delete-btn:hover {
+        background-color: #d32f2f;
+    }
     </style>
 </head>
 
@@ -90,7 +103,8 @@
             <h3>Project and Reviews</h3>
             <!-- Miscellaneous Section -->
             <div class="button-group">
-                <a href="upload_projects.php" class="button">My Projects (not working yet)</a>
+                <a href="upload_projects.php" class="button">Manage my Projects</a>
+                <a href="guide_projects.php" class="button">Guide to Display Projects</a>
                 <a href="my_reviews.php" class="button">My Reviews</a>
                 </div>
                 <h3>Misc</h3>
