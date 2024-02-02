@@ -4,6 +4,7 @@ require_once(ROOT_PATH . '/includes/head_section.php');
 require_once(ROOT_PATH . '/includes/check_user.php');
 require_once(ROOT_PATH . '/includes/retrieve_data.php');
 require_once(ROOT_PATH . '/includes/del_port.php');
+
 //require_once(ROOT_PATH . '/includes/project.php');
 $numProjects = 1;  // You can adjust this number based on your requirements
 // Check if the form is submitted
@@ -17,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $targetFile = $targetDir . basename($_FILES["project{$i}"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-
+ $portfolio_id = isset($_POST['portfolio_id']) ? (int)$_POST['portfolio_id'] : 0;
             // Check if the file already exists
             if (file_exists($targetFile)) {
                 echo "Sorry, file already exists.";
@@ -199,6 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <label for="project<?php echo $i; ?>-info">Project <?php echo $i; ?> Information:</label>
                             <textarea id="project<?php echo $i; ?>-info" name="project<?php echo $i; ?>-info"></textarea>
                             <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
+                            <input type="hidden" name="portfolio_id" value="<?= $portfolio_id; ?>">
                         </div>
 
                         <!-- Remove button for Project <?php echo $i; ?> -->
@@ -282,7 +284,10 @@ $stmt->close();
             xhr.send("projectId=" + projectId);
         }
     }
+    xhr.open("POST", "delete_project.php", true);
+
 </script>
+
 </body>
 </body>
 

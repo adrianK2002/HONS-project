@@ -313,7 +313,7 @@ $search_results = mysqli_query($link, "
               <td>
                   <a href="view_portfolio1.php?exercise_id=<?php echo $portfolio['id']?>" class="view-btn">View Portfolio</a>
               </td>
-              <td><a href=".php" class="view-btn">View Projects</a></td>
+              <td><a href="user_projects.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View Projects</a></td>
               <td><a href="rate_profile.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">Rate and Review Profile</a></td>
               <td><a href="contact_developer.php?exercise_id=<?php echo $portfolio['id']; ?>"class="view-btn">Contact Developer</a></td>
 
