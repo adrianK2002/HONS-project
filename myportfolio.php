@@ -1,9 +1,36 @@
-<?php require_once('config.php'); ?>
-<?php require_once(ROOT_PATH . '/includes/head_section.php'); ?>
-<?php require_once(ROOT_PATH . '/includes/check_user.php'); ?>
-<?php require_once(ROOT_PATH . '/includes/retrieve_data.php'); ?>
+<?php
+require_once('config.php');
+require_once(ROOT_PATH . '/includes/head_section.php');
+require_once(ROOT_PATH . '/includes/check_user.php');
+require_once(ROOT_PATH . '/includes/retrieve_data.php');
 
-<?php //print_r($_SESSION); ?>
+// Assuming you have established a database connection ($link) before this point
+$results1 = mysqli_query($link, "SELECT * FROM portfolio_name WHERE selected_portfolio = 1");
+
+// Retrieve the user's ID from the session
+$userId = isset($_SESSION['id']) ? $_SESSION['id'] : null;
+
+if ($userId !== null) {
+    $search_results = mysqli_query($link, "
+        SELECT portfolio_name.*, 
+               portfolio_info.firstname,
+               portfolio_info.lastname
+        FROM portfolio_name
+        JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
+        WHERE portfolio_name.selected_portfolio = 1
+        AND portfolio_name.createdBy = $userId
+        GROUP BY portfolio_name.createdBy
+    ");
+} else {
+    // Handle the case when the user is not logged in
+    // You can redirect them to the login page or handle it in another way
+    header("Location: login.php");
+    exit();
+}
+
+?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <style>
@@ -58,19 +85,20 @@
         .button:hover {
             background-color: #f9f9f9;
         }
-        .delete-btn {
-        padding: 10px 20px;
-        background-color: #f44336;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
 
-    .delete-btn:hover {
-        background-color: #d32f2f;
-    }
+        .delete-btn {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
     </style>
 </head>
 
@@ -103,12 +131,14 @@
             <h3>Project and Reviews</h3>
             <!-- Miscellaneous Section -->
             <div class="button-group">
-                <a href="upload_projects.php" class="button">Manage my Projects</a>
+                <?php while ($portfolio = mysqli_fetch_assoc($search_results)) : ?>
+                    <a href="upload_projects.php?exercise_id=<?php echo $portfolio['id']; ?>" class="button">Manage my Projects</a>
+                <?php endwhile; ?>
                 <a href="guide_projects.php" class="button">Guide to Display Projects</a>
                 <a href="my_reviews.php" class="button">My Reviews</a>
-                </div>
-                <h3>Misc</h3>
-                <div class="button-group">
+            </div>
+            <h3>Misc</h3>
+            <div class="button-group">
                 <a href="livechat.php" class="button">Live Chat</a>
                 <a href="privacy_policy.php" class="button">Privacy Policy</a>
             </div>

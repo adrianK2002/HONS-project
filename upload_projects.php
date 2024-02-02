@@ -5,11 +5,12 @@ require_once(ROOT_PATH . '/includes/check_user.php');
 require_once(ROOT_PATH . '/includes/retrieve_data.php');
 require_once(ROOT_PATH . '/includes/del_port.php');
 
-//require_once(ROOT_PATH . '/includes/project.php');
-$numProjects = 1;  // You can adjust this number based on your requirements
-// Check if the form is submitted
+$numProjects = 1;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Loop through each project input
+    // Check if the form includes the 'portfolio_id' field
+    $portfolio_id = isset($_POST['portfolio_id']) ? (int)$_POST['portfolio_id'] : 0;
+
     for ($i = 1; $i <= $numProjects; $i++) {
         // Check if file is uploaded for the current project
         if (isset($_FILES["project{$i}"]) && !empty($_FILES["project{$i}"]["name"])) {
@@ -18,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $targetFile = $targetDir . basename($_FILES["project{$i}"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
- $portfolio_id = isset($_POST['portfolio_id']) ? (int)$_POST['portfolio_id'] : 0;
+
             // Check if the file already exists
             if (file_exists($targetFile)) {
                 echo "Sorry, file already exists.";
@@ -32,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             // Allow only specific file formats (you can adjust the allowed formats)
-            if ($imageFileType != "pdf" && $imageFileType != "doc" && $imageFileType != "docx") {
+            $allowedFormats = ["pdf", "doc", "docx"];
+            if (!in_array($imageFileType, $allowedFormats)) {
                 echo "Sorry, only PDF, DOC, and DOCX files are allowed.";
                 $uploadOk = 0;
             }
@@ -46,11 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $projectInfo = $_POST["project{$i}-info"];
                     $created_at = date('Y-m-d H:i:s');
 
-                    // Insert project details into the database
-                   // Insert project details into the database
-                    $insertQuery = "INSERT INTO projects (filename, file_content, file_type, created_at, createdBy) VALUES (?, ?, ?, ?, ?)";
+                    // Insert project details into the database with the retrieved portfolio_id
+                    $insertQuery = "INSERT INTO projects (filename, file_content, file_type, created_at, createdBy, portfolio_id) VALUES (?, ?, ?, ?, ?, ?)";
                     $insertStmt = $link->prepare($insertQuery);
-                    $insertStmt->bind_param("ssssi", basename($_FILES["project{$i}"]["name"]), $projectInfo, $imageFileType, $created_at, $_SESSION['id']);
+                    $insertStmt->bind_param("ssssii", basename($_FILES["project{$i}"]["name"]), $projectInfo, $imageFileType, $created_at, $_SESSION['id'], $portfolio_id);
 
                     if ($insertStmt->execute()) {
                         echo "The file " . htmlspecialchars(basename($_FILES["project{$i}"]["name"])) . " has been uploaded and the project details added to the database.";
@@ -165,6 +166,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s;
+    }   .download-btn {
+        padding: 10px 20px;
+        background-color: blueviolet;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
     }
 
     .delete-btn:hover {
@@ -193,19 +202,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <label for="project<?php echo $i; ?>">Project <?php echo $i; ?>:</label>
                             <input type="file" id="project<?php echo $i; ?>" name="project<?php echo $i; ?>" class="upload-btn">
                             <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
+                            <input type="hidden" name="portfolio_id" value="<?= $portfolio_id; ?>">
+                            
                         </div>
 
                         <!-- Add box for Project <?php echo $i; ?> information -->
                         <div class="file-input">
                             <label for="project<?php echo $i; ?>-info">Project <?php echo $i; ?> Information:</label>
                             <textarea id="project<?php echo $i; ?>-info" name="project<?php echo $i; ?>-info"></textarea>
-                            <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
-                            <input type="hidden" name="portfolio_id" value="<?= $portfolio_id; ?>">
-                        </div>
 
+                        </div>
+                        <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
+                            <input type="hidden" name="portfolio_id" value="<?= $portfolio_id; ?>">
                         <!-- Remove button for Project <?php echo $i; ?> -->
                         
-
+                        
                         <!-- Submit button for Project <?php echo $i; ?> -->
                         <button type="submit" class="upload-btn">Submit</button>
                     </div>
@@ -258,6 +269,7 @@ $stmt->close();
                         <td><?php echo $project['createdBy']; ?></td>
                         <td>
                             <button class="delete-btn" onclick="deleteProject(<?php echo $project['id']; ?>)">Delete</button>
+                            <button class="download-btn" onclick="(<?php echo $project['id']; ?>)">Download</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -11,13 +11,14 @@ require_once(ROOT_PATH . '/includes/review_del.php');
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-color: #f8f9fa;
     }
 
     .container {
         max-width: 800px;
         margin: 20px auto;
         padding: 20px;
-        background-color: #f5f5f5;
+        background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
@@ -45,10 +46,20 @@ require_once(ROOT_PATH . '/includes/review_del.php');
         color: white;
     }
 
-    /* Added styles for the delete button */
+    .projects-table tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .project-info {
+        max-width: 300px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
     .delete-btn {
-        background-color: #e74c3c; /* Red color */
-        color: #fff; /* White text */
+        background-color: #e74c3c;
+        color: #fff;
         border: none;
         padding: 8px 12px;
         border-radius: 4px;
@@ -57,23 +68,22 @@ require_once(ROOT_PATH . '/includes/review_del.php');
     }
 
     .delete-btn:hover {
-        background-color: #c0392b; /* Darker red color on hover */
+        background-color: #c0392b;
     }
 </style>
 
-<?php include(ROOT_PATH . '/includes/navbar_logged_in.php'); 
+<?php include(ROOT_PATH . '/includes/navbar_logged_in.php'); ?>
 
-?>
 <?php
 $exercise_id = isset($_GET['exercise_id']) ? intval($_GET['exercise_id']) : null;
 
 if ($exercise_id !== null) {
     // Retrieve project details from the database for the current user
     $userId = $_SESSION['id'];
-    $query = "SELECT id, filename, file_content, file_type, created_at, createdBy FROM projects WHERE createdBy = ?";
+    $query = "SELECT id, filename, file_content, file_type, created_at, createdBy FROM projects WHERE portfolio_id = ?";
     
     $stmt = $link->prepare($query);
-    $stmt->bind_param("i", $userId);
+    $stmt->bind_param("i", $exercise_id);
     $stmt->execute();
     
     $result = $stmt->get_result();
@@ -82,7 +92,6 @@ if ($exercise_id !== null) {
     $stmt->close();
 }
 ?>
-
 
 <?php if (!empty($projects)) : ?>
     <div class="table-container">
@@ -94,19 +103,19 @@ if ($exercise_id !== null) {
                     <th>File Type</th>
                     <th>Created At</th>
                     <th>Created By</th>
-                    <th>Action</th> <!-- New column for Delete button -->
+                    <th>Action</th> <!-- New column for Download button -->
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($projects as $project) : ?>
                     <tr>
                         <td><?php echo $project['filename']; ?></td>
-                        <td><?php echo $project['file_content']; ?></td>
+                        <td class="project-info"><?php echo $project['file_content']; ?></td>
                         <td><?php echo $project['file_type']; ?></td>
                         <td><?php echo $project['created_at']; ?></td>
                         <td><?php echo $project['createdBy']; ?></td>
                         <td>
-                            <button>Download</button>
+                            <button class="delete-btn" onclick="downloadProject(<?php echo $project['id']; ?>)">Download</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
