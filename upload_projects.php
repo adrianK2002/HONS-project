@@ -99,6 +99,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['del']) && $_POST['del'
         echo "Item ID not provided.";
     }
 }
+// Check if the Download button is pressed
+if (isset($_GET['download_project'])) {
+    $fileId = $_GET['download_project'];
+
+    $sql = "SELECT filename, file_content, file_type FROM projects WHERE id = $fileId";
+    $result = $link->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
+        // Set headers for file download
+        header('Content-Type: ' . $row['file_type']);
+        header('Content-Disposition: attachment; filename="' . $row['filename'] . '"');
+
+        // Output the file content
+        echo $row['file_content'];
+        exit(); // Stop further execution after file download
+    } else {
+        echo "File not found";
+    }
+}
 ?>
 
 <style>
@@ -287,7 +308,7 @@ $stmt->close();
                     <th>Information</th>
                     <th>File Type</th>
                     <th>Created At</th>
-                    <th>Created By</th>
+                   
                     <th>Action</th> <!-- New column for Delete button -->
                 </tr>
             </thead>
@@ -298,11 +319,12 @@ $stmt->close();
                         <td><?php echo $project['file_content']; ?></td>
                         <td><?php echo $project['file_type']; ?></td>
                         <td><?php echo $project['created_at']; ?></td>
-                        <td><?php echo $project['createdBy']; ?></td>
+                       
                         <td>
-                            <button class="delete-btn" onclick="deleteProject(<?php echo $project['id']; ?>)">Delete</button>
-                            <button class="download-btn" onclick="(<?php echo $project['id']; ?>)">Download</button>
-                        </td>
+    <button class="delete-btn" onclick="deleteProject(<?php echo $project['id']; ?>)">Delete</button>
+    <a class="download-btn" href="?download_project=<?php echo $project['id']; ?>">Download</a>
+</td>
+
                     </tr>
                 <?php endforeach; ?>
             </tbody>

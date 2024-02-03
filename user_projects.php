@@ -81,15 +81,37 @@ if ($exercise_id !== null) {
     // Retrieve project details from the database for the current user
     $userId = $_SESSION['id'];
     $query = "SELECT id, filename, file_content, file_type, created_at, createdBy FROM projects WHERE portfolio_id = ?";
-    
+
     $stmt = $link->prepare($query);
     $stmt->bind_param("i", $exercise_id);
     $stmt->execute();
-    
+
     $result = $stmt->get_result();
     $projects = $result->fetch_all(MYSQLI_ASSOC);
-    
+
     $stmt->close();
+}
+
+// Check if the Download button is pressed
+if (isset($_GET['download_project'])) {
+    $fileId = $_GET['download_project'];
+
+    $sql = "SELECT filename, file_content, file_type FROM projects WHERE id = $fileId";
+    $result = $link->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
+        // Set headers for file download
+        header('Content-Type: ' . $row['file_type']);
+        header('Content-Disposition: attachment; filename="' . $row['filename'] . '"');
+
+        // Output the file content
+        echo $row['file_content'];
+        exit(); // Stop further execution after file download
+    } else {
+        echo "File not found";
+    }
 }
 ?>
 
@@ -102,7 +124,7 @@ if ($exercise_id !== null) {
                     <th>Information</th>
                     <th>File Type</th>
                     <th>Created At</th>
-                    <th>Created By</th>
+
                     <th>Action</th> <!-- New column for Download button -->
                 </tr>
             </thead>
@@ -113,9 +135,9 @@ if ($exercise_id !== null) {
                         <td class="project-info"><?php echo $project['file_content']; ?></td>
                         <td><?php echo $project['file_type']; ?></td>
                         <td><?php echo $project['created_at']; ?></td>
-                        <td><?php echo $project['createdBy']; ?></td>
+
                         <td>
-                            <button class="delete-btn" onclick="downloadProject(<?php echo $project['id']; ?>)">Download</button>
+                            <a href="?download_project=<?php echo $project['id']; ?>" class="delete-btn">Download</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
