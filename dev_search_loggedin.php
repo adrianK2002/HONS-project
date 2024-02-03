@@ -147,7 +147,7 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
             <option value="HTML/CSS">HTML/CSS</option>
         </select>
 
-        <select name="tool" id="tool-filter">
+        <select name="tool" id="tool">
             <option value="">Select Tool</option>
             <!-- Add options dynamically based on available tools in your database -->
             <option value="None">None</option>
@@ -158,7 +158,7 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
             <option value="Eclipse">Eclipse</option>
         </select>
 
-        <select name="experience" id="experience-filter">
+        <select name="experience" id="experience">
             <option value="">Select Experience</option>
             <!-- Add options dynamically based on available experience levels in your database -->
             <option value="None">None</option>
@@ -169,7 +169,7 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
             <option value="15+">15+ years</option>
     
         </select>
-        <select name="rating" id="rating-filter">
+        <select name="rating" id="rating">
             <option value="">Select Rating</option>
             <!-- Add options dynamically based on available experience levels in your database -->
             <option value="5">5</option>
@@ -206,13 +206,13 @@ $where_conditions = array();
 
 // Add these lines inside the WHERE clause
 if (isset($_GET['language']) && $_GET['language'] !== "") {
-  $language_filter = mysqli_real_escape_string($link, $_GET['language']);
-  $where_conditions[] = "(user_preferences.language = '$language_filter' OR user_preferences.language IS NULL)";
+    $language_filter = mysqli_real_escape_string($link, $_GET['language']);
+    $where_conditions[] = "(user_preferences.language = '$language_filter' OR user_preferences.language IS NULL)";
 }
 
 if (isset($_GET['tool']) && $_GET['tool'] !== "") {
-  $tool_filter = mysqli_real_escape_string($link, $_GET['tool']);
-  $where_conditions[] = "(user_preferences.tool = '$tool_filter' OR user_preferences.tool IS NULL)";
+    $tool_filter = mysqli_real_escape_string($link, $_GET['tool']);
+    $where_conditions[] = "(user_preferences.tool = '$tool_filter' OR user_preferences.tool IS NULL)";
 }
 
 if (isset($_GET['experience']) && $_GET['experience'] !== "") {
@@ -220,10 +220,14 @@ if (isset($_GET['experience']) && $_GET['experience'] !== "") {
     $where_conditions[] = "user_preferences.experience = '$experience_filter'";
 }
 
+// Initialize the HAVING conditions array
+$having_conditions = array();
+$having_params = array();
+
 if (isset($_GET['rating']) && $_GET['rating'] !== "") {
-  $rating_filter = floatval($_GET['rating']);
-  $having_conditions[] = "AVG(ratings.rating) >= ?";
-  $having_params[] = $rating_filter;
+    $rating_filter = floatval($_GET['rating']);
+    $having_conditions[] = "AVG(ratings.rating) >= ?";
+    $having_params[] = $rating_filter;
 }
 
 // Constructing the WHERE clause
@@ -232,8 +236,8 @@ $where_clause = !empty($where_conditions) ? "WHERE " . implode(' AND ', $where_c
 // Constructing the HAVING clause
 $having_clause = !empty($having_conditions) ? "HAVING " . implode(' AND ', $having_conditions) : '';
 
-// Adding the HAVING clause to the SQL query
-$search_results = mysqli_query($link, "
+// Prepare the SQL query with placeholders
+$sql = "
     SELECT portfolio_name.*, 
            portfolio_info.firstname,
            portfolio_info.lastname,
@@ -245,7 +249,22 @@ $search_results = mysqli_query($link, "
     $where_clause
     GROUP BY portfolio_name.createdBy
     $having_clause
-");
+";
+
+// Prepare the statement
+$stmt = mysqli_prepare($link, $sql);
+
+// Bind parameters for the HAVING clause
+if (!empty($having_params)) {
+    $param_types = str_repeat('d', count($having_params)); // Assuming 'd' for double/float
+    mysqli_stmt_bind_param($stmt, $param_types, ...$having_params);
+}
+
+// Execute the statement
+mysqli_stmt_execute($stmt);
+
+// Get the result
+$search_results = mysqli_stmt_get_result($stmt);
 
 if ($search_results) {
 ?>
