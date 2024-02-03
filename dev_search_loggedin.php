@@ -129,13 +129,14 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
     <div class="container" style="text-align: center">
         <h2>Filter Develoeprs</h2>
         <button type="button" id="reveal-options-button">Reveal Options</button>
+        <button type="button" id="reset-button">Reset</button>
 <div id="search-container">
     <form method="GET" action="">
-        <select name="language" id="language-filter">
+        <select name="language" id="language">
             <option value="">Select Language</option>
             <!-- Add options dynamically based on available languages in your database -->
             <option value="None">None</option>
-            <option value="JavaSctipt">JavaSctipt</option>
+            <option value="JavaScript">JavaScript</option>
             <option value="Python">Python</option>
             <option value="Java">Java</option>
             <option value="C#">C#</option>
@@ -185,40 +186,53 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
     </form>
 </div>
 <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Get references to the button and search container
-                var revealButton = document.getElementById("reveal-options-button");
-                var searchContainer = document.getElementById("search-container");
+document.addEventListener("DOMContentLoaded", function () {
+    // Get references to the buttons and search container
+    var revealButton = document.getElementById("reveal-options-button");
+    var resetButton = document.getElementById("reset-button");
+    var searchContainer = document.getElementById("search-container");
 
-                // Add a click event listener to the button
-                revealButton.addEventListener("click", function () {
-                    // Toggle the display property of the search container
-                    searchContainer.style.display = (searchContainer.style.display === "none" || searchContainer.style.display === "") ? "block" : "none";
-                });
-            });
-        </script>
+    // Add a click event listener to the "Reveal Options" button
+    revealButton.addEventListener("click", function () {
+        // Toggle the display property of the search container
+        searchContainer.style.display = (searchContainer.style.display === "none" || searchContainer.style.display === "") ? "block" : "none";
+    });
+
+    // Add a click event listener to the "Reset" button
+    resetButton.addEventListener("click", function () {
+        // Clear the selected options and submit the form
+        document.getElementById("language").value = "";
+        document.getElementById("tool").value = "";
+        document.getElementById("experience").value = "";
+        document.getElementById("rating").value = "";
+        document.querySelector("form").submit();
+    });
+});
+</script>
 
 <?php
 // Assuming you have established a database connection ($link) before this point
 
 // Initialize the WHERE conditions array
+// Initialize the WHERE conditions array
 $where_conditions = array();
 
 // Add these lines inside the WHERE clause
 if (isset($_GET['language']) && $_GET['language'] !== "") {
-    $language_filter = mysqli_real_escape_string($link, $_GET['language']);
-    $where_conditions[] = "(user_preferences.language = '$language_filter' OR user_preferences.language IS NULL)";
+  $language_filter = mysqli_real_escape_string($link, $_GET['language']);
+  $where_conditions[] = "user_preferences.language = '$language_filter'";
 }
 
 if (isset($_GET['tool']) && $_GET['tool'] !== "") {
-    $tool_filter = mysqli_real_escape_string($link, $_GET['tool']);
-    $where_conditions[] = "(user_preferences.tool = '$tool_filter' OR user_preferences.tool IS NULL)";
+  $tool_filter = mysqli_real_escape_string($link, $_GET['tool']);
+  $where_conditions[] = "user_preferences.tool = '$tool_filter'";
 }
 
 if (isset($_GET['experience']) && $_GET['experience'] !== "") {
-    $experience_filter = mysqli_real_escape_string($link, $_GET['experience']);
-    $where_conditions[] = "user_preferences.experience = '$experience_filter'";
+  $experience_filter = mysqli_real_escape_string($link, $_GET['experience']);
+  $where_conditions[] = "user_preferences.experience = '$experience_filter'";
 }
+
 
 // Initialize the HAVING conditions array
 $having_conditions = array();
@@ -236,11 +250,14 @@ $where_clause = !empty($where_conditions) ? "WHERE " . implode(' AND ', $where_c
 // Constructing the HAVING clause
 $having_clause = !empty($having_conditions) ? "HAVING " . implode(' AND ', $having_conditions) : '';
 
-// Prepare the SQL query with placeholders
+// Your existing SQL query with the corrected WHERE and HAVING clauses
 $sql = "
     SELECT portfolio_name.*, 
            portfolio_info.firstname,
            portfolio_info.lastname,
+           user_preferences.experience,
+           user_preferences.tool,
+           user_preferences.language,
            AVG(ratings.rating) AS avg_rating
     FROM portfolio_name
     JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
@@ -250,6 +267,7 @@ $sql = "
     GROUP BY portfolio_name.createdBy
     $having_clause
 ";
+
 
 // Prepare the statement
 $stmt = mysqli_prepare($link, $sql);
@@ -267,6 +285,7 @@ mysqli_stmt_execute($stmt);
 $search_results = mysqli_stmt_get_result($stmt);
 
 if ($search_results) {
+    // Your code continues here
 ?>
     <h1 style="color: black; font-family: Helvetica, Arial, sans-serif;text-align: center">Software Developers</h1>
 

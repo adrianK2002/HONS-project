@@ -68,6 +68,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+<?php
+require_once('config.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['del']) && $_POST['del'] === 'delete') {
+    // Check if the item ID is provided
+    if (isset($_POST['id'])) {
+        $itemId = (int)$_POST['id'];
+
+        // Choose the appropriate table based on the type of item (projects or ratings)
+        $tableName = ($_POST['item_type'] === 'project') ? 'projects' : 'ratings';
+
+        // Prepare a query to delete the item by its ID
+        $deleteQuery = "DELETE FROM $tableName WHERE id = ? AND createdBy = ?";
+        $deleteStmt = $link->prepare($deleteQuery);
+        $deleteStmt->bind_param("ii", $itemId, $_SESSION['id']);
+
+        if ($deleteStmt->execute()) {
+            // Success, reload the page or redirect to the appropriate page
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            // Error handling, you may add more detailed error messages
+            echo "Error deleting the item.";
+        }
+
+        $deleteStmt->close();
+    } else {
+        // Item ID not provided
+        echo "Item ID not provided.";
+    }
+}
+?>
 
 <style>
     body {
@@ -296,8 +328,6 @@ $stmt->close();
             xhr.send("projectId=" + projectId);
         }
     }
-    xhr.open("POST", "delete_project.php", true);
-
 </script>
 
 </body>
