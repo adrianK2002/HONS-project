@@ -131,7 +131,7 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
         <button type="button" id="reveal-options-button">Reveal Options</button>
 <div id="search-container">
     <form method="GET" action="">
-        <select name="language" id="search-filter">
+        <select name="language" id="language-filter">
             <option value="">Select Language</option>
             <!-- Add options dynamically based on available languages in your database -->
             <option value="None">None</option>
@@ -147,7 +147,7 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
             <option value="HTML/CSS">HTML/CSS</option>
         </select>
 
-        <select name="tool" id="search-filter">
+        <select name="tool" id="tool-filter">
             <option value="">Select Tool</option>
             <!-- Add options dynamically based on available tools in your database -->
             <option value="None">None</option>
@@ -158,7 +158,7 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
             <option value="Eclipse">Eclipse</option>
         </select>
 
-        <select name="experience" id="search-filter">
+        <select name="experience" id="experience-filter">
             <option value="">Select Experience</option>
             <!-- Add options dynamically based on available experience levels in your database -->
             <option value="None">None</option>
@@ -169,7 +169,7 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
             <option value="15+">15+ years</option>
     
         </select>
-        <select name="rating" id="search-filter">
+        <select name="rating" id="rating-filter">
             <option value="">Select Rating</option>
             <!-- Add options dynamically based on available experience levels in your database -->
             <option value="5">5</option>
@@ -185,55 +185,70 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
     </form>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get references to the button and search container
-        var revealButton = document.getElementById("reveal-options-button");
-        var searchContainer = document.getElementById("search-container");
+            document.addEventListener("DOMContentLoaded", function () {
+                // Get references to the button and search container
+                var revealButton = document.getElementById("reveal-options-button");
+                var searchContainer = document.getElementById("search-container");
 
-        // Add a click event listener to the button
-        revealButton.addEventListener("click", function () {
-            // Toggle the display property of the search container
-            searchContainer.style.display = (searchContainer.style.display === "none" || searchContainer.style.display === "") ? "block" : "none";
-        });
-    });
-</script>
-        <?php
-        
+                // Add a click event listener to the button
+                revealButton.addEventListener("click", function () {
+                    // Toggle the display property of the search container
+                    searchContainer.style.display = (searchContainer.style.display === "none" || searchContainer.style.display === "") ? "block" : "none";
+                });
+            });
+        </script>
+
+<?php
 // Assuming you have established a database connection ($link) before this point
-$results1 = mysqli_query($link, "
-    SELECT * 
-    FROM portfolio_name 
-    WHERE selected_portfolio = 1
-");
 
+// Initialize the WHERE conditions array
+$where_conditions = array();
+
+// Add these lines inside the WHERE clause
+if (isset($_GET['language']) && $_GET['language'] !== "") {
+  $language_filter = mysqli_real_escape_string($link, $_GET['language']);
+  $where_conditions[] = "(user_preferences.language = '$language_filter' OR user_preferences.language IS NULL)";
+}
+
+if (isset($_GET['tool']) && $_GET['tool'] !== "") {
+  $tool_filter = mysqli_real_escape_string($link, $_GET['tool']);
+  $where_conditions[] = "(user_preferences.tool = '$tool_filter' OR user_preferences.tool IS NULL)";
+}
+
+if (isset($_GET['experience']) && $_GET['experience'] !== "") {
+    $experience_filter = mysqli_real_escape_string($link, $_GET['experience']);
+    $where_conditions[] = "user_preferences.experience = '$experience_filter'";
+}
+
+if (isset($_GET['rating']) && $_GET['rating'] !== "") {
+  $rating_filter = floatval($_GET['rating']);
+  $having_conditions[] = "AVG(ratings.rating) >= ?";
+  $having_params[] = $rating_filter;
+}
+
+// Constructing the WHERE clause
+$where_clause = !empty($where_conditions) ? "WHERE " . implode(' AND ', $where_conditions) : '';
+
+// Constructing the HAVING clause
+$having_clause = !empty($having_conditions) ? "HAVING " . implode(' AND ', $having_conditions) : '';
+
+// Adding the HAVING clause to the SQL query
 $search_results = mysqli_query($link, "
     SELECT portfolio_name.*, 
            portfolio_info.firstname,
-           portfolio_info.lastname
+           portfolio_info.lastname,
+           AVG(ratings.rating) AS avg_rating
     FROM portfolio_name
-    
     JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
-    WHERE portfolio_name.selected_portfolio = 1
+    LEFT JOIN user_preferences ON portfolio_name.createdBy = user_preferences.createdBy
+    LEFT JOIN ratings ON portfolio_name.id = ratings.portfolio_id
+    $where_clause
     GROUP BY portfolio_name.createdBy
+    $having_clause
 ");
 
-        // Constructing the WHERE clause
-        $where_clause = !empty($where_conditions) ? "WHERE " . implode(' AND ', $where_conditions) : '';
-
-        // Adding the WHERE clause to the SQL query
-        $search_results = mysqli_query($link, "
-            SELECT portfolio_name.*, 
-                   portfolio_info.firstname,
-                   portfolio_info.lastname
-            FROM portfolio_name
-            
-            JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
-            $where_clause
-            GROUP BY portfolio_name.createdBy
-        ");
-
-  if ($search_results) {
-    ?>
+if ($search_results) {
+?>
     <h1 style="color: black; font-family: Helvetica, Arial, sans-serif;text-align: center">Software Developers</h1>
 
     <table class="styled-table">
