@@ -135,28 +135,28 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
         <select name="language" id="language">
             <option value="">Select Language</option>
             <!-- Add options dynamically based on available languages in your database -->
-            <option value="None">None</option>
-            <option value="JavaScript">JavaScript</option>
-            <option value="Python">Python</option>
-            <option value="Java">Java</option>
-            <option value="C#">C#</option>
-            <option value="PHP">PHP</option>
-            <option value="Ruby">Ruby</option>
-            <option value="Swift">Swift</option>
-            <option value="Go">Go</option>
-            <option value="TypeScript">TypeScript</option>
-            <option value="HTML/CSS">HTML/CSS</option>
+            <option value=" None">None</option>
+            <option value=" JavaScript">JavaScript</option>
+            <option value=" Python">Python</option>
+            <option value=" Java">Java</option>
+            <option value=" C#">C#</option>
+            <option value=" PHP">PHP</option>
+            <option value=" Ruby">Ruby</option>
+            <option value=" Swift">Swift</option>
+            <option value=" Go">Go</option>
+            <option value=" TypeScript">TypeScript</option>
+            <option value=" HTML/CSS">HTML/CSS</option>
         </select>
 
         <select name="tool" id="tool">
             <option value="">Select Tool</option>
             <!-- Add options dynamically based on available tools in your database -->
-            <option value="None">None</option>
-            <option value="Git">Git</option>
-            <option value="Docker">Docker</option>
-            <option value="Visual Studio Code">Visual Studio Code</option>
-            <option value="IntelliK IDEA">IntelliK IDEA</option>
-            <option value="Eclipse">Eclipse</option>
+            <option value=" None">None</option>
+            <option value=" Git">Git</option>
+            <option value=" Docker">Docker</option>
+            <option value=" Visual Studio Code">Visual Studio Code</option>
+            <option value=" IntelliK IDEA">IntelliK IDEA</option>
+            <option value=" Eclipse">Eclipse</option>
         </select>
 
         <select name="experience" id="experience">
@@ -214,25 +214,29 @@ document.addEventListener("DOMContentLoaded", function () {
 // Assuming you have established a database connection ($link) before this point
 
 // Initialize the WHERE conditions array
-// Initialize the WHERE conditions array
 $where_conditions = array();
 
 // Add these lines inside the WHERE clause
 if (isset($_GET['language']) && $_GET['language'] !== "") {
-  $language_filter = mysqli_real_escape_string($link, $_GET['language']);
-  $where_conditions[] = "user_preferences.language = '$language_filter'";
+  $language_filters = explode(',', mysqli_real_escape_string($link, $_GET['language']));
+  $language_conditions = array_map(function($lang) {
+      return "user_preferences.language = '$lang'";
+  }, $language_filters);
+  $where_conditions[] = "(" . implode(' AND ', $language_conditions) . ")";
 }
 
 if (isset($_GET['tool']) && $_GET['tool'] !== "") {
-  $tool_filter = mysqli_real_escape_string($link, $_GET['tool']);
-  $where_conditions[] = "user_preferences.tool = '$tool_filter'";
+  $tool_filters = explode(',', mysqli_real_escape_string($link, $_GET['tool']));
+  $tool_conditions = array_map(function($tool) {
+      return "user_preferences.tool = '$tool'";
+  }, $tool_filters);
+  $where_conditions[] = "(" . implode(' AND ', $tool_conditions) . ")";
 }
 
 if (isset($_GET['experience']) && $_GET['experience'] !== "") {
   $experience_filter = mysqli_real_escape_string($link, $_GET['experience']);
   $where_conditions[] = "user_preferences.experience = '$experience_filter'";
 }
-
 
 // Initialize the HAVING conditions array
 $having_conditions = array();
@@ -268,7 +272,6 @@ $sql = "
     $having_clause
 ";
 
-
 // Prepare the statement
 $stmt = mysqli_prepare($link, $sql);
 
@@ -287,6 +290,7 @@ $search_results = mysqli_stmt_get_result($stmt);
 if ($search_results) {
     // Your code continues here
 ?>
+
     <h1 style="color: black; font-family: Helvetica, Arial, sans-serif;text-align: center">Software Developers</h1>
 
     <table class="styled-table">
@@ -319,8 +323,8 @@ if ($search_results) {
 
                     // Check if skills are found
                     if (mysqli_stmt_fetch($stmt_skills)) {
-                        $skills_html = "<strong>Languages:</strong> $language<br>";
-                        $skills_html .= "<strong>Tools:</strong> $tool<br>";
+                        $skills_html = "<strong>Language:</strong> $language<br>";
+                        $skills_html .= "<strong>Tool:</strong> $tool<br>";
 
                         // Check if experience is set
                         $experience_html = isset($experience) ? "<strong>Experience:</strong> $experience years" : "No experience specified";

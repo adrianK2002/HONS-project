@@ -128,35 +128,48 @@ if ($createdBy) {
     <?php include(ROOT_PATH . '/includes/navbar_logged_in.php') ?>
     <div id="message">
         <p>Select appropriate values that reflect your knowledge/experience</p>
+        <p style="color: red; font-size: small;">In order for the best filtering experience, selecting only selecting one language and tool is allowed. More languages and tools can be listed at "skills" sections (nunmber 6) in portfolio</p>
+
+
     </div>
     <div class="container">
-        <h2>User Profile</h2>
+        <h2>User Preferences</h2>
 
         <!-- Form for logged-in users to select preferences -->
         <form action="includes/user_preferences.php" method="post" class="profile-form" onsubmit="return validateForm()">
             <div class="filter-section">
-                <label>Select Programming Languages:</label><br>
-                <input type="checkbox" name="languages[]" value=" None"> None<br>
-                <input type="checkbox" name="languages[]" value=" Javascript"> JavaScript<br>
-                <input type="checkbox" name="languages[]" value=" Python "> Python<br>
-                <input type="checkbox" name="languages[]" value=" Java"> Java<br>
-                <input type="checkbox" name="languages[]" value=" C#"> C#<br>
-                <input type="checkbox" name="languages[]" value=" PHP"> PHP<br>
-                <input type="checkbox" name="languages[]" value=" Ruby"> Ruby<br>
-                <input type="checkbox" name="languages[]" value=" Rwift"> Swift<br>
-                <input type="checkbox" name="languages[]" value=" Go"> Go<br>
-                <input type="checkbox" name="languages[]" value=" TypeScript"> TypeScript<br>
-                <input type="checkbox" name="languages[]" value=" HTML/CSS"> HTML/CSS<br>
+                <label>Select Main Programming Language:</label><br>
+                <input type="radio" name="languages[]" value=" None"> None<br>
+                <input type="radio" name="languages[]" value=" Javascript"> JavaScript<br>
+                <input type="radio" name="languages[]" value=" Python "> Python<br>
+                <input type="radio" name="languages[]" value=" Java"> Java<br>
+                <input type="radio" name="languages[]" value=" C#"> C#<br>
+                <input type="radio" name="languages[]" value=" PHP"> PHP<br>
+                <input type="radio" name="languages[]" value=" Ruby"> Ruby<br>
+                <input type="radio" name="languages[]" value=" Rwift"> Swift<br>
+                <input type="radio" name="languages[]" value=" Go"> Go<br>
+                <input type="radio" name="languages[]" value=" TypeScript"> TypeScript<br>
+                <input type="radio" name="languages[]" value=" HTML/CSS"> HTML/CSS<br>
+                <input type="radio" name="languages[]" value=" C++"> C++<br>
+                <input type="radio" name="languages[]" value=" Kotlin"> Kotlin<br>
+                <input type="radio" name="languages[]" value=" Rust"> Rust<br>
+                <input type="radio" name="languages[]" value=" Scala"> Scala<br>
+                <input type="radio" name="languages[]" value=" Shell"> Shell/Scripting<br>
             </div>
 
             <div class="filter-section">
-                <label>Select Software Tools:</label><br>
-                <input type="checkbox" name="tools[]" value=" None"> None<br>
-                <input type="checkbox" name="tools[]" value=" Git"> Git<br>
-                <input type="checkbox" name="tools[]" value=" Docker"> Docker<br>
-                <input type="checkbox" name="tools[]" value=" Visual Studio Code"> Visual Studio Code<br>
-                <input type="checkbox" name="tools[]" value=" Intellij IDEA"> IntelliJ IDEA<br>
-                <input type="checkbox" name="tools[]" value=" Eclipse"> Eclipse<br>
+                <label>Select Main Software Tool:</label><br>
+                <input type="radio" name="tools[]" value=" None"> None<br>
+                <input type="radio" name="tools[]" value=" Git"> Git<br>
+                <input type="radio" name="tools[]" value=" Docker"> Docker<br>
+                <input type="radio" name="tools[]" value=" Visual Studio Code"> Visual Studio Code<br>
+                <input type="radio" name="tools[]" value=" Intellij IDEA"> IntelliJ IDEA<br>
+                <input type="radio" name="tools[]" value=" Eclipse"> Eclipse<br>
+                <input type="radio" name="tools[]" value=" Sublime Text"> Sublime Text<br>
+                <input type="radio" name="tools[]" value=" NetBeans"> NetBeans<br>
+                <input type="radio" name="tools[]" value=" Atom"> Atom<br>
+                <input type="radio" name="tools[]" value=" PyCharm"> PyCharm<br>
+                <input type="radio" name="tools[]" value=" Xcode"> Xcode (for iOS development)<br>
             </div>
 
             <div class="filter-section">
