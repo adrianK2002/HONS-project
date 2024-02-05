@@ -139,6 +139,7 @@ if ($userId !== null) {
             </div>
             <h3>Misc</h3>
             <div class="button-group">
+                <a href="reset-password.php" class="button">Change Password</a>
                 <a href="livechat.php" class="button">Live Chat</a>
                 <a href="privacy_policy.php" class="button">Privacy Policy</a>
             </div>
