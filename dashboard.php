@@ -17,7 +17,7 @@ if ($userId !== null) {
         FROM portfolio_name
         JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
         WHERE portfolio_name.selected_portfolio = 1
-        AND portfolio_name.createdBy = $userId
+        AND portfolio_name.createdBy 
         GROUP BY portfolio_name.createdBy
     ");
 } else {
@@ -35,6 +35,6 @@ if ($userId !== null) {
 	<?php while ($portfolio = mysqli_fetch_assoc($search_results)) : ?>
 	<a href="dev_search_loggedin.php" style="display: block; padding: 20px; font-size: 18px; text-align: center; text-decoration: none; margin: 10px; cursor: pointer; background-color: #3498db; color: #fff; border: none; border-radius: 5px;" onmouseover="this.style.backgroundColor='#2980b9'" onmouseout="this.style.backgroundColor='#3498db'">Search for Software Developers</a>
 	<a href="messenger.php?exercise_id=<?php echo $portfolio['id']; ?>" style="display: block; padding: 20px; font-size: 18px; text-align: center; text-decoration: none; margin: 10px; cursor: pointer; background-color: #3498db; color: #fff; border: none; border-radius: 5px;" onmouseover="this.style.backgroundColor='#2980b9'" onmouseout="this.style.backgroundColor='#3498db'">Messages</a>
-	<!-- <a href="admin_panel.php" style="display: block; padding: 20px; font-size: 18px; text-align: center; text-decoration: none; margin: 10px; cursor: pointer; background-color: #3498db; color: #fff; border: none; border-radius: 5px;" onmouseover="this.style.backgroundColor='#2980b9'" onmouseout="this.style.backgroundColor='#3498db'">Admin Panel</a> -->
+	<a href="admin_panel.php" style="display: block; padding: 20px; font-size: 18px; text-align: center; text-decoration: none; margin: 10px; cursor: pointer; background-color: #3498db; color: #fff; border: none; border-radius: 5px;" onmouseover="this.style.backgroundColor='#2980b9'" onmouseout="this.style.backgroundColor='#3498db'">Admin Panel</a>
 	<?php endwhile; ?>
 </body>

@@ -71,54 +71,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php
 require_once('config.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['del']) && $_POST['del'] === 'delete') {
-    // Check if the item ID is provided
-    if (isset($_POST['id'])) {
-        $itemId = (int)$_POST['id'];
+// Check if the project ID is provided
+if (isset($_POST['projectId'])) {
+    $projectId = (int)$_POST['projectId'];
 
-        // Choose the appropriate table based on the type of item (projects or ratings)
-        $tableName = ($_POST['item_type'] === 'project') ? 'projects' : 'ratings';
+    // Prepare a query to delete the project by its ID
+    $deleteQuery = "DELETE FROM projects WHERE id = ? AND createdBy = ?";
+    $deleteStmt = $link->prepare($deleteQuery);
+    $deleteStmt->bind_param("ii", $projectId, $_SESSION['id']);
 
-        // Prepare a query to delete the item by its ID
-        $deleteQuery = "DELETE FROM $tableName WHERE id = ? AND createdBy = ?";
-        $deleteStmt = $link->prepare($deleteQuery);
-        $deleteStmt->bind_param("ii", $itemId, $_SESSION['id']);
-
-        if ($deleteStmt->execute()) {
-            // Success, reload the page or redirect to the appropriate page
-            header("Location: ".$_SERVER['PHP_SELF']);
-            exit();
-        } else {
-            // Error handling, you may add more detailed error messages
-            echo "Error deleting the item.";
-        }
-
-        $deleteStmt->close();
+    if ($deleteStmt->execute()) {
+        // Success, send a response back to the main page
+        echo "success";
     } else {
-        // Item ID not provided
-        echo "Item ID not provided.";
+        // Error handling, send an error response back to the main page
+        echo "Error deleting the project.";
     }
-}
-// Check if the Download button is pressed
-if (isset($_GET['download_project'])) {
-    $fileId = $_GET['download_project'];
 
-    $sql = "SELECT filename, file_content, file_type FROM projects WHERE id = $fileId";
-    $result = $link->query($sql);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-
-        // Set headers for file download
-        header('Content-Type: ' . $row['file_type']);
-        header('Content-Disposition: attachment; filename="' . $row['filename'] . '"');
-
-        // Output the file content
-        echo $row['file_content'];
-        exit(); // Stop further execution after file download
-    } else {
-        echo "File not found";
-    }
+    $deleteStmt->close();
+} else {
+    // Project ID not provided, send an error response back to the main page
+    echo "Project ID not provided.";
 }
 ?>
 
@@ -315,6 +288,7 @@ $stmt->close();
             <tbody>
                 <?php foreach ($projects as $project) : ?>
                     <tr>
+                    <td><?php echo $project['filename']; ?></td>
                         <td><?php echo $project['filename']; ?></td>
                         <td><?php echo $project['file_content']; ?></td>
                         <td><?php echo $project['file_type']; ?></td>
@@ -333,21 +307,30 @@ $stmt->close();
 <?php else : ?>
     <p>No projects available for the current user.</p>
 <?php endif; ?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function deleteProject(projectId) {
         var confirmDelete = confirm("Are you sure you want to delete this project?");
         if (confirmDelete) {
             // Send an AJAX request to delete the project
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "delete_project.php", true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Reload the page after successful deletion
-                    location.reload();
+            $.ajax({
+                type: "POST",
+                url: "delete_project.php",
+                data: { projectId: projectId },
+                success: function (response) {
+                    if (response === "success") {
+                        // Reload the page after successful deletion
+                        location.reload();
+                    } else {
+                        // Handle the case where deletion failed
+                        alert("Error deleting the project.");
+                    }
+                },
+                error: function () {
+                    // Handle AJAX error
+                    alert("Error occurred during the AJAX request.");
                 }
-            };
-            xhr.send("projectId=" + projectId);
+            });
         }
     }
 </script>

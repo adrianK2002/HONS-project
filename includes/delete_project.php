@@ -1,32 +1,26 @@
 <?php
 require_once('config.php');
 
-// Check if the projectId is set
+// Check if the project ID is provided
 if (isset($_POST['projectId'])) {
-    // Retrieve projectId from the POST request
-    $projectId = $_POST['projectId'];
+    $projectId = (int)$_POST['projectId'];
 
-    // Prepare DELETE query
-    $deleteQuery = "DELETE FROM projects WHERE id = ?";
+    // Prepare a query to delete the project by its ID
+    $deleteQuery = "DELETE FROM projects WHERE id = ? AND createdBy = ?";
     $deleteStmt = $link->prepare($deleteQuery);
-    $deleteStmt->bind_param("i", $projectId);
+    $deleteStmt->bind_param("ii", $projectId, $_SESSION['id']);
 
-    // Execute the DELETE query
     if ($deleteStmt->execute()) {
-        // The project has been successfully deleted
-        echo "Project deleted successfully";
+        // Success, send a response back to the main page
+        echo "success";
     } else {
-        // Error occurred while deleting the project
-        echo "Error deleting project: " . $deleteStmt->error;
+        // Error handling, send an error response back to the main page
+        echo "Error deleting the project.";
     }
 
-    // Close the prepared statement
     $deleteStmt->close();
 } else {
-    // projectId is not set in the POST request
-    echo "projectId is not set";
+    // Project ID not provided, send an error response back to the main page
+    echo "Project ID not provided.";
 }
-
-// Close the database connection
-$link->close();
 ?>
