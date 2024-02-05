@@ -1,6 +1,6 @@
 <?php require_once('config.php') ?>
-<?php require_once( ROOT_PATH . '/includes/head_section.php') ?>
-<?php require_once( ROOT_PATH . '/includes/check_user.php') ?>
+<?php require_once(ROOT_PATH . '/includes/head_section.php') ?>
+<?php require_once(ROOT_PATH . '/includes/check_user.php') ?>
 
 <?php
 // Assuming you have established a database connection ($link) before this point
@@ -17,7 +17,7 @@ if ($userId !== null) {
         FROM portfolio_name
         JOIN portfolio_info ON portfolio_name.createdBy = portfolio_info.createdBy
         WHERE portfolio_name.selected_portfolio = 1
-        AND portfolio_name.createdBy 
+        AND portfolio_name.createdBy = $userId
         GROUP BY portfolio_name.createdBy
     ");
 } else {
@@ -26,6 +26,7 @@ if ($userId !== null) {
     header("Location: login.php");
     exit();
 }
+
 
 ?>
  <body>
