@@ -5,7 +5,7 @@
 	<!-- navbar -->
 	<?php include( ROOT_PATH . '/includes/navbar.php') ?>
 	<!-- //navbar -->
-<style>
+  <style>
   [data-custom-class='body'], [data-custom-class='body'] * {
           background: transparent !important;
         }
