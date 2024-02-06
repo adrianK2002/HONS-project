@@ -8,9 +8,11 @@
 	  
 	  <li><a href="viewmyprofile.php">View my Proflie</a>
 	  <li><a href="myportfolio.php">My Profile Settings</a></li>
+	  <li><a href="admin_panel.php">Admin Panel</a></li>
 	  <!-- <li><a href="livechat.php">Live chat with other Developers!</a></li> -->
 	  <li><a class="active" href="logout.php">Logout</a></li>
-	  <!-- <li><a href="privacy_policy_loggedin.php">Privacy Policy</a></li> -->
+	  <!-- <a href="admin_panel.php" style="display: block; padding: 20px; font-size: 18px; text-align: center; text-decoration: none; margin: 10px; cursor: pointer; background-color: #3498db; color: #fff; border: none; border-radius: 5px;" onmouseover="this.style.backgroundColor='#2980b9'" onmouseout="this.style.backgroundColor='#3498db'">Admin Panel</a> -->
+	  
 	</ul>
 
  <span style="color: white; margin-left: 30px; font-size: 25px; font-family: 'Averia Serif Libre' , cursive">Welcome back </span>
