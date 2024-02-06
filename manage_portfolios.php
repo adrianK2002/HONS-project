@@ -90,6 +90,7 @@ if (isset($_GET['del'])) {
             <thead>
                 <tr>
                     <th>Portfolio Name</th>
+                    <th>Owner</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -97,6 +98,7 @@ if (isset($_GET['del'])) {
                 <?php while ($row = $results2->fetch_assoc()) { ?>
                     <tr>
                         <td><?php echo $row['name']; ?></td>
+                        <td><?php echo $row['createdBy']; ?></td>
                         <td>
                             <a href="manage_portfolios.php?del=<?php echo $row['id']; ?>" class="delete-btn">Delete</a>
                         </td>

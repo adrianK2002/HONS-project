@@ -84,23 +84,17 @@ $userInfo = mysqli_fetch_assoc($result);
     <!-- //Navbar -->
 
     <div class="resume-container">
-
     <h2 class="section-header">Send message to <?= $userInfo['firstname'] . ' ' . $userInfo['lastname']; ?></h2>
 
-        <form method="post" class="rating-form">
-           
-
+        <form method="post" action="send_message.php" class="rating-form">
             <div class="review-container">
-
                 <textarea name="message" id="message" rows="4" cols="150"></textarea>
             </div>
-            <input type="hidden" name="created_at" id="created_at">
+            <input type="hidden" name="created_at" id="created_at" value="<?= date('Y-m-d H:i:s'); ?>">
             <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
             <input type="hidden" name="portfolio_id" value="<?= $portfolio_id; ?>">
             <input type="submit" value="Send Message!" class="submit-btn">
         </form>
-
-    
     </div>
     <script>
         // JavaScript code to set the current date and time
