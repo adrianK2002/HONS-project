@@ -65,7 +65,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 
         .delete-btn {
             display: block;
-            width: 100%;
+            width: 75%;
             padding: 10px;
             font-size: 16px;
             text-align: center;
