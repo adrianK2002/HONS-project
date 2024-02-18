@@ -120,25 +120,28 @@ if (isset($_GET['download_project'])) {
         <table class="projects-table">
             <thead>
                 <tr>
-                    <th>Project Name</th>
+                    <th>Documentation Name</th>
                     <th>Information</th>
                     <th>File Type</th>
                     <th>Created At</th>
-
-                    <th>Action</th> <!-- New column for Download button -->
+                   
+                    <th>Action</th> <!-- New column for Delete button -->
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($projects as $project) : ?>
                     <tr>
-                        <td><?php echo $project['filename']; ?></td>
-                        <td class="project-info"><?php echo $project['file_content']; ?></td>
+                    <td><?php echo $project['filename']; ?></td>
+
+                        <td><?php echo $project['file_content']; ?></td>
                         <td><?php echo $project['file_type']; ?></td>
                         <td><?php echo $project['created_at']; ?></td>
-
+                       
                         <td>
-                            <a href="?download_project=<?php echo $project['id']; ?>" class="delete-btn">Download</a>
-                        </td>
+    
+    <a class="download-btn" href="?download_project=<?php echo $project['id']; ?>">Download</a>
+</td>
+
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -147,5 +150,16 @@ if (isset($_GET['download_project'])) {
 <?php else : ?>
     <p>No projects available for the current user.</p>
 <?php endif; ?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 </div>
+<br>
+<div style="text-align: center;">
+    <button onclick="goBack()" class="back-btn" style="text-align:center;padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Previous Page</button>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

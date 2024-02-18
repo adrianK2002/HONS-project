@@ -49,7 +49,15 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
 
     <p>This provides a centralized location for users to explore and download diverse projects shared by the community, fostering collaboration and knowledge exchange.</p>
 </div>
+<div style="text-align: center;">
+    <button onclick="goBack()" class="back-btn" style="text-align:center;padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Previous Page</button>
 
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</div>
 </body>
 
 </html>

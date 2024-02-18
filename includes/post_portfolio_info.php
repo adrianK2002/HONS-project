@@ -31,17 +31,17 @@
 	$respo = mysqli_real_escape_string($link, $_POST['respo']);
 	$extra_emp = mysqli_real_escape_string($link, $_POST['extra_emp']);
 	$project = mysqli_real_escape_string($link, $_POST['project']);
-
+	$git = mysqli_real_escape_string($link, $_POST['git']);
 	$hobbies = mysqli_real_escape_string($link, $_POST['hobbies']);
 	$ref = mysqli_real_escape_string($link, $_POST['ref']);
 	$createdBy = mysqli_real_escape_string($link, $_POST['createdBy']);
 	$portfolio_id = mysqli_real_escape_string($link, $_POST['portfolio_id']);
 	$sql = "INSERT INTO portfolio_info (firstname, lastname, email, aboutme, dob, passingyear, qualification, contactno, address, city, skills, createdBy, portfolio_id,
 	qualification_school_name,certificates,extra_qualification,highschool_name,hs_starting_date,hs_fin_date,hs_qualification,uni_name,uni_starting_date,uni_fin_date,uni_qualification,
-	current_job_title,current_employer_name,emp_starting_date,respo,extra_emp,project,hobbies,ref)
+	current_job_title,current_employer_name,emp_starting_date,respo,extra_emp,project,hobbies,ref,git)
 			VALUES ('$firstname', '$lastname', '$email', '$aboutme', '$dob', '$passingyear', '$qualification', '$contactno', '$address', '$city', '$skills',  '$createdBy','$portfolio_id',
 			'$qualification_school_name','$certificates','$extra_qualification','$highschool_name','$hs_starting_date','$hs_fin_date','$hs_qualification','$uni_name','$uni_starting_date',
-			'$uni_fin_date','$uni_qualification','$current_job_title','$current_employer_name','$emp_starting_date','$respo','$extra_emp','$project', '$hobbies',
+			'$uni_fin_date','$uni_qualification','$current_job_title','$current_employer_name','$emp_starting_date','$respo','$extra_emp','$project', '$hobbies','$git',
 			'$ref')";
 	
 	mysqli_query($link, $sql);

@@ -158,7 +158,16 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
             <option value=" IntelliK IDEA">IntelliK IDEA</option>
             <option value=" Eclipse">Eclipse</option>
         </select>
-
+        <select name="framework" id="framework">
+            <option value="">Select Framework</option>
+            <!-- Add options dynamically based on available tools in your database -->
+            <option value=" None">None</option>
+            <option value=" Git">Git</option>
+            <option value=" Docker">Docker</option>
+            <option value=" Visual Studio Code">Visual Studio Code</option>
+            <option value=" IntelliK IDEA">IntelliK IDEA</option>
+            <option value=" Eclipse">Eclipse</option>
+        </select>
         <select name="experience" id="experience">
             <option value="">Select Experience</option>
             <!-- Add options dynamically based on available experience levels in your database -->
@@ -323,8 +332,8 @@ if ($search_results) {
 
                     // Check if skills are found
                     if (mysqli_stmt_fetch($stmt_skills)) {
-                        $skills_html = "<strong>Language:</strong> $language<br>";
-                        $skills_html .= "<strong>Tool:</strong> $tool<br>";
+                        $skills_html = "<strong>Main Language:</strong> $language<br>";
+                        $skills_html .= "<strong>Main Tool:</strong> $tool<br>";
 
                         // Check if experience is set
                         $experience_html = isset($experience) ? "<strong>Experience:</strong> $experience years" : "No experience specified";
@@ -370,7 +379,7 @@ if ($search_results) {
               <td>
                   <a href="view_portfolio1.php?exercise_id=<?php echo $portfolio['id']?>" class="view-btn">View Portfolio</a>
               </td>
-              <td><a href="user_projects.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View Projects</a></td>
+              <td><a href="user_projects.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View Documentations</a><a href="github.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">Visit Github</a></td>
               <td><a href="rate_profile.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">Rate and Review Profile</a></td>
               <td><a href="contact_developer.php?exercise_id=<?php echo $portfolio['id']; ?>"class="view-btn">Contact Developer</a></td>
 
@@ -390,6 +399,13 @@ if ($search_results) {
 // Close the connection
 mysqli_close($link);
 ?>
-<!-- Your existing JavaScript code for handling AJAX -->
+<br>
+<div style="text-align: center;">
+    <button onclick="goBack()" class="back-btn" style="text-align:center;padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Previous Page</button>
 
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 </body>

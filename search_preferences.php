@@ -212,6 +212,15 @@ if ($createdBy) {
             return true;
         }
     </script>
+        <div style="text-align: center;">
+    <button onclick="goBack()" class="back-btn" style="text-align:center;padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Previous Page</button>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</div>
 </body>
 
 </html>

@@ -240,24 +240,32 @@ form {
 							<textarea class="form-control input-lg" rows="4" id="skills" name="skills" placeholder="List all the skills *" required></textarea>
 						</div>	
 						</div>
-
-						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 7: Projects</h1>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 7: Link to Github</h1>
+						<div class="col-md-6 latest-job">
+							<div class="form-group">
+								<!-- Use <textarea> instead of <input> for multiline input -->
+								<textarea class="form-control input-lg" id="git" name="git" placeholder="Paste link to your github *" rows="4"><?= isset($row['git']) ? $row['git'] : ''; ?></textarea>
+								
+								<!-- <input type="file" name="project_files" class="btn btn-flat btn-danger"> -->
+							</div>
+						</div>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 8: Links to Projects</h1>
 						<div class="col-md-6 latest-job ">
 						<div class="form-group">
 							<textarea class="form-control input-lg" rows="4" id="project" name="project" placeholder="List all the projects; either paste a link here or upload documents below *" required></textarea>
 							<label style="color: red;">Project files can be uploaded at "My portfolio". Links to projects can be pasted in section 7.</label>
 							<!-- <input type="file" name="project_files" class="btn btn-flat btn-danger"> -->
 						</div>	
-						</div>
+						
 
-						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 8: Hobbies</h1>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 9: Hobbies</h1>
 						<div class="col-md-6 latest-job ">
 						<div class="form-group">
 							<textarea class="form-control input-lg" rows="4" id="hobbies" name="hobbies" placeholder="Talk briefly about yout hobbies(not required) *" ></textarea>
 						</div>	
 						</div>
 
-						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 9: References</h1>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 10: References</h1>
 						<div class="col-md-6 latest-job ">
 						<div class="form-group">
 							<textarea class="form-control input-lg" rows="4" id="ref" name="ref" placeholder="List all references with contact details *" ></textarea>

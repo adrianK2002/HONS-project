@@ -322,9 +322,20 @@ error_reporting(NONE);*/
     </tbody>
     <thead>
         <tr>
+            <th class="section-header" colspan="4">Link to github</th>
+        </tr>
+    </thead>
+        
+    <tbody>
+    <td colspan="4"><a href="<?php echo $row['git']; ?>" target="_blank"><button class="button-link">User's GitHub</button></a></td>
+
+    </tbody>
+    <thead>
+        <tr>
             <th class="section-header" colspan="4">Links to projects</th>
         </tr>
     </thead>
+    
     <tbody>
         <tr>
             <td colspan="4"><?php echo $row['project']; ?></td>

@@ -132,7 +132,7 @@ if ($userId !== null) {
             <!-- Miscellaneous Section -->
             <div class="button-group">
                 <?php while ($portfolio = mysqli_fetch_assoc($search_results)) : ?>
-                    <a href="upload_projects.php?exercise_id=<?php echo $portfolio['id']; ?>" class="button">Manage my Projects</a>
+                    <a href="upload_projects.php?exercise_id=<?php echo $portfolio['id']; ?>" class="button">Manage my Documentations</a>
                 <?php endwhile; ?>
                 <a href="guide_projects.php" class="button">Guide to Display Projects</a>
                 <a href="my_reviews.php" class="button">My Reviews</a>
@@ -141,10 +141,11 @@ if ($userId !== null) {
             <div class="button-group">
                 <a href="reset-password.php" class="button">Change Password</a>
                 <a href="livechat.php" class="button">Live Chat</a>
-                <a href="privacy_policy.php" class="button">Privacy Policy</a>
+                <a href="privacy_policy_loggedin.php" class="button">Privacy Policy</a>
             </div>
         </div>
     </div>
+    
 </body>
 
 </html>

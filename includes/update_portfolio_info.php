@@ -31,7 +31,7 @@ $emp_starting_date = mysqli_real_escape_string($link, $_POST['emp_starting_date'
 $respo = mysqli_real_escape_string($link, $_POST['respo']);
 $extra_emp = mysqli_real_escape_string($link, $_POST['extra_emp']);
 $project = mysqli_real_escape_string($link, $_POST['project']);
-
+$git = mysqli_real_escape_string($link, $_POST['git']);
 $hobbies = mysqli_real_escape_string($link, $_POST['hobbies']);
 $ref = mysqli_real_escape_string($link, $_POST['ref']);
 $createdBy = mysqli_real_escape_string($link, $_POST['createdBy']);
@@ -83,6 +83,7 @@ if (mysqli_num_rows($result) > 0) {
     addFieldToUpdate('respo', $respo);
     addFieldToUpdate('extra_emp', $extra_emp);
     addFieldToUpdate('project', $project);
+    addFieldToUpdate('git', $git);
     addFieldToUpdate('hobbies', $hobbies);
     addFieldToUpdate('ref', $ref);
 

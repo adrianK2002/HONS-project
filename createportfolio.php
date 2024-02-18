@@ -74,5 +74,14 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
         // JavaScript code to set the current date and time
         document.getElementById("created_at").value = new Date().toISOString().slice(0, 19).replace("T", " ");
     </script>
+        <div style="text-align: center;">
+    <button onclick="goBack()" class="back-btn" style="text-align:center;padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Previous Page</button>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</div>
 </body>
 </html>

@@ -76,22 +76,49 @@ if (isset($_POST['projectId'])) {
     $projectId = (int)$_POST['projectId'];
 
     // Prepare a query to delete the project by its ID
-    $deleteQuery = "DELETE FROM projects WHERE id = ? AND createdBy = ?";
-    $deleteStmt = $link->prepare($deleteQuery);
-    $deleteStmt->bind_param("ii", $projectId, $_SESSION['id']);
+    $deleteQuery = $link->prepare("DELETE FROM projects WHERE id = ?");
+    $deleteQuery->bind_param("i", $projectId);
 
-    if ($deleteStmt->execute()) {
-        // Success, send a response back to the main page
-        echo "success";
+    // Execute the delete query
+    if ($deleteQuery->execute()) {
+        // Redirect to the current page after deletion
+        header("Location: {$_SERVER['PHP_SELF']}");
+        exit();
     } else {
-        // Error handling, send an error response back to the main page
-        echo "Error deleting the project.";
+        // Handle deletion failure
+        echo "Error: " . $deleteQuery->error;
     }
 
-    $deleteStmt->close();
+    // Close the prepared statement
+    $deleteQuery->close();
 } else {
     // Project ID not provided, send an error response back to the main page
     echo "Project ID not provided.";
+}
+
+// Check if the Download button is pressed
+if (isset($_GET['download_project'])) {
+    $fileId = $_GET['download_project'];
+
+    $sql = "SELECT filename, file_content, file_type FROM projects WHERE id = ?";
+    $stmt = $link->prepare($sql);
+    $stmt->bind_param("i", $fileId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
+        // Set headers for file download
+        header('Content-Type: ' . $row['file_type']);
+        header('Content-Disposition: attachment; filename="' . $row['filename'] . '"');
+
+        // Output the file content
+        echo $row['file_content'];
+        exit(); // Stop further execution after file download
+    } else {
+        echo "File not found";
+    }
 }
 ?>
 
@@ -219,13 +246,13 @@ if (isset($_POST['projectId'])) {
     ?>
         <div class="container">
             <div class="profile-form">
-                <h2>Upload Projects</h2>
+                <h2>Upload Documentations</h2>
 
                 <form method="post" enctype="multipart/form-data">
                     <div class="file-tile">
                         <!-- File Input for Project <?php echo $i; ?> -->
                         <div class="file-input">
-                            <label for="project<?php echo $i; ?>">Project <?php echo $i; ?>:</label>
+                     
                             <input type="file" id="project<?php echo $i; ?>" name="project<?php echo $i; ?>" class="upload-btn">
                             <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
                             <input type="hidden" name="portfolio_id" value="<?= $portfolio_id; ?>">
@@ -234,7 +261,7 @@ if (isset($_POST['projectId'])) {
 
                         <!-- Add box for Project <?php echo $i; ?> information -->
                         <div class="file-input">
-                            <label for="project<?php echo $i; ?>-info">Project <?php echo $i; ?> Information:</label>
+                            <label> Information:</label>
                             <textarea id="project<?php echo $i; ?>-info" name="project<?php echo $i; ?>-info"></textarea>
 
                         </div>
@@ -270,6 +297,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $projects = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+
 ?>
 
 <?php if (!empty($projects)) : ?>
@@ -277,7 +305,7 @@ $stmt->close();
         <table class="projects-table">
             <thead>
                 <tr>
-                    <th>Project Name</th>
+                    <th>Documentation Name</th>
                     <th>Information</th>
                     <th>File Type</th>
                     <th>Created At</th>
@@ -289,7 +317,7 @@ $stmt->close();
                 <?php foreach ($projects as $project) : ?>
                     <tr>
                     <td><?php echo $project['filename']; ?></td>
-                        <td><?php echo $project['filename']; ?></td>
+
                         <td><?php echo $project['file_content']; ?></td>
                         <td><?php echo $project['file_type']; ?></td>
                         <td><?php echo $project['created_at']; ?></td>
@@ -328,12 +356,22 @@ $stmt->close();
                 },
                 error: function () {
                     // Handle AJAX error
-                    alert("Error occurred during the AJAX request.");
+                    alert("Error occurred during the AJAX request. Please contact an Admin to delete the documentation!");
                 }
             });
         }
     }
 </script>
+<br>
+<div style="text-align: center;">
+    <button onclick="goBack()" class="back-btn" style="text-align:center;padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Previous Page</button>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</div>
 
 </body>
 </body>

@@ -116,6 +116,15 @@ error_reporting(NONE);*/
 
         }
     </style>
+    <br>
+            <div style="text-align: center;">
+    <button onclick="goBack()" class="back-btn" style="text-align:center;padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Previous Page</button>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
     <div class="rating-container">
         Developer's rating(out of 5) <div class="custom1"><?php echo number_format($averageRating, 1); ?></div> 
     </div>
@@ -343,6 +352,16 @@ error_reporting(NONE);*/
     </tbody>
     <thead>
         <tr>
+            <th class="section-header" colspan="4">Link to github</th>
+        </tr>
+    </thead>
+        
+    <tbody>
+    <td colspan="4"><a href="<?php echo $row['git']; ?>" target="_blank"><button class="button-link">User's GitHub</button></a></td>
+
+    </tbody>
+    <thead>
+        <tr>
             <th class="section-header" colspan="4">Links to projects</th>
         </tr>
     </thead>
@@ -457,5 +476,6 @@ error_reporting(NONE);*/
             <?php } ?>
         </tbody>
     <?php } ?>
+    
 </body>
 

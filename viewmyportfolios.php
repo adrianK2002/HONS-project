@@ -113,6 +113,7 @@ require_once('config.php');
     <?php include(ROOT_PATH . '/includes/navbar_logged_in.php'); ?>
     <!-- //navbar -->
 
+
     <table class="styled-table">
         <thead>
             <tr>
@@ -141,10 +142,19 @@ require_once('config.php');
                           <input type="radio" onclick="window.location.href='select_portfolio.php?exercise_id=<?php echo $row['id'];?>&&createdBy=<?php echo $row['createdBy'];?>'">
                 <?php } ?>
                     </td>
-                }
+                
                 </tr>
                 
             <?php } ?>
         </tbody>
     </table>
+    <div style="text-align: center;">
+    <button onclick="goBack()" class="back-btn" style="text-align:center;padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Previous Page</button>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</div>
 </body>

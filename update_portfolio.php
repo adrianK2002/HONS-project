@@ -246,8 +246,16 @@ form {
 								<textarea class="form-control input-lg" id="skills" name="skills" placeholder="List all the skills *" rows="4"><?= isset($row['skills']) ? $row['skills'] : ''; ?></textarea>
 							</div>
 						</div>
-
-						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 7: Projects</h1>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 7: Link to Github</h1>
+						<div class="col-md-6 latest-job">
+							<div class="form-group">
+								<!-- Use <textarea> instead of <input> for multiline input -->
+								<textarea class="form-control input-lg" id="git" name="git" placeholder="Paste link to your github *" rows="4"><?= isset($row['git']) ? $row['git'] : ''; ?></textarea>
+								
+								<!-- <input type="file" name="project_files" class="btn btn-flat btn-danger"> -->
+							</div>
+						</div>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 8: Projects</h1>
 						<div class="col-md-6 latest-job">
 							<div class="form-group">
 								<!-- Use <textarea> instead of <input> for multiline input -->
@@ -257,7 +265,7 @@ form {
 							</div>
 						</div>
 
-						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 8: Hobbies</h1>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 9: Hobbies</h1>
 						<div class="col-md-6 latest-job">
 							<div class="form-group">
 								<!-- Use <textarea> instead of <input> for multiline input -->
@@ -265,7 +273,7 @@ form {
 							</div>
 						</div>
 
-						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 9: References</h1>
+						<h1 style="font-family: 'Arial', sans-serif; background-color: #f5f5f5;color: black;text-align: center;">Section 10: References</h1>
 						<div class="col-md-6 latest-job">
 							<div class="form-group">
 								<!-- Use <textarea> instead of <input> for multiline input -->

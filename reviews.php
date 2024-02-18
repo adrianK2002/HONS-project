@@ -59,6 +59,8 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
 <body>
     <?php include(ROOT_PATH . '/includes/navbar_logged_in.php'); ?>
 
+
+
     <?php
     $exercise_id = $_GET['exercise_id'];
 
@@ -103,4 +105,13 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
 
     echo "</div>";
     ?>
+
+<div style="text-align: center;">
+    <button onclick="goBack()" class="back-btn" style="text-align:center;padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">Previous Page</button>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 </body>
