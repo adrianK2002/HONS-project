@@ -162,11 +162,24 @@ require_once(ROOT_PATH . '/includes/rate_profile.php');
             <option value="">Select Framework</option>
             <!-- Add options dynamically based on available tools in your database -->
             <option value=" None">None</option>
-            <option value=" Git">Git</option>
-            <option value=" Docker">Docker</option>
-            <option value=" Visual Studio Code">Visual Studio Code</option>
-            <option value=" IntelliK IDEA">IntelliK IDEA</option>
-            <option value=" Eclipse">Eclipse</option>
+            <option value=" Django">Django</option>
+            <option value=" Flask">Flask</option>
+            <option value=" TurboGears">TurboGears</option>
+            <option value=" PyTorch">PyTorch</option>
+            <option value=" Ruby on Rails">Ruby on Rails</option>
+            <option value=" Garden">Garden</option>
+            <option value=" Spring">Spring</option>
+            <option value=" Play">Play</option>
+            <option value=" Spark">Spark</option>
+            <option value=" Wicket">Wicket</option>
+            <option value=" Javalin">Javalin</option>
+            <option value=" Laravel">Laravel</option>
+            <option value=" CakePHP">CakePHP</option>
+            <option value=" ReactJS">ReactJS</option>
+            <option value=" AngularJS">AngularJS</option>
+            <option value=" Aeron">Aeron</option>
+            <option value=" Apache MXNet">Apache MXNet</option>
+            <option value=" Framework7">Framework7</option>
         </select>
         <select name="experience" id="experience">
             <option value="">Select Experience</option>
@@ -311,9 +324,10 @@ if ($search_results) {
                 <th>Rating</th>
                 <th>Reviews</th>
                 <!-- <th>View Full Profile (not working yet)</th> -->
-                <th>View Profile</th>           
-                <th>View Portfolio</th>                
-                <th>View User Projects (not working yet)</th>
+                <th>Profile</th>           
+                <th>Portfolio</th>                
+                <th>User Documentations</th>
+                <th>GitHub</th>
                 <th>Review and Rate Developer</th>
                 <th>Contact Developer</th>
             </tr>
@@ -322,19 +336,22 @@ if ($search_results) {
             <?php
             while ($portfolio = mysqli_fetch_assoc($search_results)) {
                 // Fetch skills for the current user from the user_preferences table
-                $query_skills = "SELECT language, tool, experience FROM user_preferences WHERE createdBy = ?";
+                $query_skills = "SELECT language, tool, experience, 1languages, 1tools, framework, 1frameworks FROM user_preferences WHERE createdBy = ?";
                 $stmt_skills = mysqli_prepare($link, $query_skills);
 
                 if ($stmt_skills) {
                     mysqli_stmt_bind_param($stmt_skills, 'i', $portfolio['createdBy']);
                     mysqli_stmt_execute($stmt_skills);
-                    mysqli_stmt_bind_result($stmt_skills, $language, $tool, $experience);
+                    mysqli_stmt_bind_result($stmt_skills, $language, $tool, $experience,$languages, $tools, $framework, $frameworks);
 
                     // Check if skills are found
                     if (mysqli_stmt_fetch($stmt_skills)) {
                         $skills_html = "<strong>Main Language:</strong> $language<br>";
                         $skills_html .= "<strong>Main Tool:</strong> $tool<br>";
-
+                        $skills_html .= "<strong>Main Framework:</strong> $framework<br>";
+                        $skills_html .= "<strong>Other Languages:</strong> $languages<br>";
+                        $skills_html .= "<strong>Other Tools:</strong> $tools<br>";
+                        $skills_html .= "<strong>Other Frameworks:</strong> $frameworks<br>";
                         // Check if experience is set
                         $experience_html = isset($experience) ? "<strong>Experience:</strong> $experience years" : "No experience specified";
                     } else {
@@ -379,7 +396,8 @@ if ($search_results) {
               <td>
                   <a href="view_portfolio1.php?exercise_id=<?php echo $portfolio['id']?>" class="view-btn">View Portfolio</a>
               </td>
-              <td><a href="user_projects.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View Documentations</a><a href="github.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">Visit Github</a></td>
+              <td><a href="user_projects.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">View Documentations</a></td>
+              <td><a href="github.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">Visit Github</a></TD>
               <td><a href="rate_profile.php?exercise_id=<?php echo $portfolio['id']; ?>" class="view-btn">Rate and Review Profile</a></td>
               <td><a href="contact_developer.php?exercise_id=<?php echo $portfolio['id']; ?>"class="view-btn">Contact Developer</a></td>
 

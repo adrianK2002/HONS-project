@@ -128,8 +128,7 @@ if ($createdBy) {
     <?php include(ROOT_PATH . '/includes/navbar_logged_in.php') ?>
     <div id="message">
         <p>Select appropriate values that reflect your knowledge/experience</p>
-        <p style="color: red; font-size: small;">In order for the best filtering experience, selecting only selecting one language and tool is allowed. More languages and tools can be listed at "skills" sections (nunmber 6) in portfolio</p>
-
+       
 
     </div>
     <div class="container">
@@ -156,7 +155,25 @@ if ($createdBy) {
                 <input type="radio" name="languages[]" value=" Scala"> Scala<br>
                 <input type="radio" name="languages[]" value=" Shell"> Shell/Scripting<br>
             </div>
-
+            <div class="filter-section">
+                <label>Select Other Programming Language:</label><br>
+                <input type="checkbox" name="1languages[]" value=" None"> None<br>
+                <input type="checkbox" name="1languages[]" value=" Javascript"> JavaScript<br>
+                <input type="checkbox" name="1languages[]" value=" Python "> Python<br>
+                <input type="checkbox" name="1languages[]" value=" Java"> Java<br>
+                <input type="checkbox" name="1languages[]" value=" C#"> C#<br>
+                <input type="checkbox" name="1languages[]" value=" PHP"> PHP<br>
+                <input type="checkbox" name="1languages[]" value=" Ruby"> Ruby<br>
+                <input type="checkbox" name="1languages[]" value=" Rwift"> Swift<br>
+                <input type="checkbox" name="1languages[]" value=" Go"> Go<br>
+                <input type="checkbox" name="1languages[]" value=" TypeScript"> TypeScript<br>
+                <input type="checkbox" name="1languages[]" value=" HTML/CSS"> HTML/CSS<br>
+                <input type="checkbox" name="1languages[]" value=" C++"> C++<br>
+                <input type="checkbox" name="1languages[]" value=" Kotlin"> Kotlin<br>
+                <input type="checkbox" name="1languages[]" value=" Rust"> Rust<br>
+                <input type="checkbox" name="1languages[]" value=" Scala"> Scala<br>
+                <input type="checkbox" name="1languages[]" value=" Shell"> Shell/Scripting<br>
+            </div>
             <div class="filter-section">
                 <label>Select Main Software Tool:</label><br>
                 <input type="radio" name="tools[]" value=" None"> None<br>
@@ -171,7 +188,64 @@ if ($createdBy) {
                 <input type="radio" name="tools[]" value=" PyCharm"> PyCharm<br>
                 <input type="radio" name="tools[]" value=" Xcode"> Xcode (for iOS development)<br>
             </div>
-
+            <div class="filter-section">
+                <label>Select Other Software Tool:</label><br>
+                <input type="checkbox" name="1tools[]" value=" None"> None<br>
+                <input type="checkbox" name="1tools[]" value=" Git"> Git<br>
+                <input type="checkbox" name="1tools[]" value=" Docker"> Docker<br>
+                <input type="checkbox" name="1tools[]" value=" Visual Studio Code"> Visual Studio Code<br>
+                <input type="checkbox" name="1tools[]" value=" Intellij IDEA"> IntelliJ IDEA<br>
+                <input type="checkbox" name="1tools[]" value=" Eclipse"> Eclipse<br>
+                <input type="checkbox" name="1tools[]" value=" Sublime Text"> Sublime Text<br>
+                <input type="checkbox" name="1tools[]" value=" NetBeans"> NetBeans<br>
+                <input type="checkbox" name="1tools[]" value=" Atom"> Atom<br>
+                <input type="checkbox" name="1tools[]" value=" PyCharm"> PyCharm<br>
+                <input type="checkbox" name="1tools[]" value=" Xcode"> Xcode (for iOS development)<br>
+            </div>
+            <div class="filter-section">
+                <label>Select Main Framework:</label><br>
+                <input type="radio" name="framework[]" value=" None"> None<br>
+                <input type="radio" name="framework[]" value=" Django"> Django<br>
+                <input type="radio" name="framework[]" value=" Flask"> Flask<br>
+                <input type="radio" name="framework[]" value=" TurboGears"> TurboGears<br>
+                <input type="radio" name="framework[]" value=" PyTorch"> PyTorch<br>
+                <input type="radio" name="framework[]" value=" Ruby on Rails"> Ruby on Rails<br>
+                <input type="radio" name="framework[]" value=" Garden"> Garden<br>
+                <input type="radio" name="framework[]" value=" Spring"> Spring<br>
+                <input type="radio" name="framework[]" value=" Play"> Play<br>
+                <input type="radio" name="framework[]" value=" Spark"> Spark<br>
+                <input type="radio" name="framework[]" value=" Wicket"> Wicket<br>
+                <input type="radio" name="framework[]" value=" Javalin"> Javalin<br>
+                <input type="radio" name="framework[]" value=" Laravel"> Laravel<br>
+                <input type="radio" name="framework[]" value=" CakePHP"> CakePHP<br>
+                <input type="radio" name="framework[]" value=" ReactJS"> ReactJS<br>
+                <input type="radio" name="framework[]" value=" AngularJS"> AngularJS<br>
+                <input type="radio" name="framework[]" value=" Aeron "> Aeron<br>
+                <input type="radio" name="framework[]" value=" Apache MXNet"> Apache MXNet<br>
+                <input type="radio" name="framework[]" value=" Framework7"> Framework7<br>
+            </div>
+            <div class="filter-section">
+                <label>Select Other Frameworks:</label><br>
+                <input type="checkbox" name="1frameworks[]" value=" None"> None<br>
+                <input type="checkbox" name="1frameworks[]" value=" Django"> Django<br>
+                <input type="checkbox" name="1frameworks[]" value=" Flask"> Flask<br>
+                <input type="checkbox" name="1frameworks[]" value=" TurboGears"> TurboGears<br>
+                <input type="checkbox" name="1frameworks[]" value=" PyTorch"> PyTorch<br>
+                <input type="checkbox" name="1frameworks[]" value=" Ruby on Rails"> Ruby on Rails<br>
+                <input type="checkbox" name="1frameworks[]" value=" Garden"> Garden<br>
+                <input type="checkbox" name="1frameworks[]" value=" Spring"> Spring<br>
+                <input type="checkbox" name="1frameworks[]" value=" Play"> Play<br>
+                <input type="checkbox" name="1frameworks[]" value=" Spark"> Spark<br>
+                <input type="checkbox" name="1frameworks[]" value=" Wicket"> Wicket<br>
+                <input type="checkbox" name="1frameworks[]" value=" Javalin"> Javalin<br>
+                <input type="checkbox" name="1frameworks[]" value=" Laravel"> Laravel<br>
+                <input type="checkbox" name="1frameworks[]" value=" CakePHP"> CakePHP<br>
+                <input type="checkbox" name="1frameworks[]" value=" ReactJS"> ReactJS<br>
+                <input type="checkbox" name="1frameworks[]" value=" AngularJS"> AngularJS<br>
+                <input type="checkbox" name="1frameworks[]" value=" Aeron "> Aeron<br>
+                <input type="checkbox" name="1frameworks[]" value=" Apache MXNet"> Apache MXNet<br>
+                <input type="checkbox" name="1frameworks[]" value=" Framework7"> Framework7<br>
+            </div>
             <div class="filter-section">
                 <label>Select Experience Level:</label><br>
                 <label><input type="radio" name="experience" value="None"> None</label>
@@ -181,6 +255,7 @@ if ($createdBy) {
                 <label><input type="radio" name="experience" value="11-15"> 11-15 years</label>
                 <label><input type="radio" name="experience" value="15+"> 15+ years</label>
             </div>
+            
             <input type="hidden" name="createdBy" value="<?= $_SESSION['id']; ?>">
             <br>
 
@@ -192,7 +267,7 @@ if ($createdBy) {
         function validateForm() {
             // Get all selected programming languages checkboxes
             var checkboxes = document.querySelectorAll('input[name="languages[]"]:checked');
-
+            var checkboxes = document.querySelectorAll('input[name="1languages[]"]:checked');
             // Check if at least one checkbox is checked
             if (checkboxes.length === 0) {
                 alert('Please select at least one programming language.');

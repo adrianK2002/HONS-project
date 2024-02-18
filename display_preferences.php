@@ -91,12 +91,20 @@ require_once(ROOT_PATH . '/includes/retrieve_data.php');
                 ?>
 
                 <tr>
-                    <th>Programming Languages</th>
+                    <th>Main Programming Language</th>
                     <td><?php echo $row['language']; ?></td>
                 </tr>
                 <tr>
-                    <th>Software Tools</th>
+                    <th>Other Programming Language</th>
+                    <td><?php echo $row['1languages']; ?></td>
+                </tr>
+                <tr>
+                    <th>Main Software Tool</th>
                     <td><?php echo $row['tool']; ?></td>
+                </tr>
+                <tr>
+                    <th>Other Software Tool</th>
+                    <td><?php echo $row['1tools']; ?></td>
                 </tr>
                 <tr>
                     <th>Experience Level</th>
