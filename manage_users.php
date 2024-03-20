@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id'])) {
                                     <label>
                                         <input type='radio' name='admin_action_{$row['id']}' value='make_normal_user' " . ($row['is_admin'] == 0 ? 'checked' : '') . ">Normal User
                                     </label>
-                                    <button type='submit' class='admin-btn'>Submit</button>
+                                 
                                 </form>
                               </td>";
                         echo "</tr>";
